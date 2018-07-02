@@ -7,15 +7,11 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api' : {
+      '/api/*' : {
         target: 'http://localhost:8000',
         changeOrigin: true,
-        pathRewrite: {  // can used api!!!
-          '^/api': 'api'
-        }
       }
     },
-
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
@@ -47,7 +43,6 @@ module.exports = {
     cssSourceMap: false
 
   },
-
   build: {
     // Template for index.html
     index: path.resolve(__dirname, '../dist/index.html'),

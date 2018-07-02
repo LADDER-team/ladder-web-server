@@ -68,7 +68,14 @@
       }]
     }),
     mounted(){
-      axios.get('/api/ladder/15')
+      axios.get('/api/ladder/1', {
+          headers: {
+              'Access-Control-Allow-Origin': 'http://localhost:8000',
+              'Access-Control-Allow-Headers': 'X-PINGOTHER, Content-Type',
+              'Access-Control-Allow-Methods': 'GET, POST, HEAD, OPTIONS',
+              'Access-Control-Max-Age': '1728000',
+          }
+      })
         .then((response) => {
           this.ladderList = response.data
         })
