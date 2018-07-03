@@ -4,5 +4,5 @@
     </v-footer>
 </template>
 <style scoped lang="sass">
-    @import "../assets/styles/footer"
+    @import "../styles/footer"
 </style>

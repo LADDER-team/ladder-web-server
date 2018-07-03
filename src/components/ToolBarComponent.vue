@@ -1,6 +1,8 @@
 <template>
-    <v-toolbar class="g-toolbar" fixed>
-        <v-toolbar-title class="g-toolbar-logo">LADDER</v-toolbar-title>
+    <v-toolbar class="g-toolbar" fixed align-center>
+        <h1 class="g-toolbar-title">
+            <img src="../assets/img/logo_title.png" class="g-toolbar-logo">
+        </h1>
         <v-flex xs5 sm4 md2 class="g-search-wrap">
             <v-text-field
                     class="g-search-field"
@@ -16,7 +18,6 @@
             <v-btn
                     class="contribution-btn"
                     depressed
-                    round
             >投稿する</v-btn>
             <v-flex
                 xs12
@@ -47,5 +48,5 @@
 </script>
 
 <style scoped lang="sass">
-    @import "../assets/styles/toolbar"
+    @import "../styles/toolbar"
 </style>

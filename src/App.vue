@@ -1,22 +1,22 @@
 <!--suppress ALL -->
 <template>
-    <v-app id="inspire" indig　v-scroll="onScroll">
+    <v-app id="inspire" indig v-scroll="onScroll">
         <ToolBar/>
         <v-content>
             <v-container fluid fill-height class="g-container">
                 <v-layout justify-center align-start wrap class="project-wrap">
-                    <v-flex md3 justify-center align-cener class="ladder-wrap">
+                    <v-flex md3 lg2 justify-center align-cener class="ladder-wrap">
                         <div md3 class="ladder-inner">
-                            <div v-for="item in ladderList.unit"
+                            <div v-for="unit in ladderList.unit"
                                  :class="{'ladder-item-active': ladderActive}"
                                  v-on:click="ladderActived"
                                  class="ladder-item">
-                                <p>unit:{{ item.index }}</p>
-                                <p>{{ item.title }}</p>
+                                <p>unit:{{ unit.index }}</p>
+                                <p>{{ unit.title }}</p>
                             </div>
                         </div>
                     </v-flex>
-                    <v-flex md8 justify-center align-start class="unit-wrap">
+                    <v-flex md8 lg7 justify-center align-start class="unit-wrap">
                         <div v-for="unit in ladderList.unit" class="unit-item">
                             <p class="unit-head">unit:{{ unit.index }}</p>
                             <h2 class="unit-title">{{ unit.title }}</h2>
@@ -88,12 +88,8 @@
         console.log('clicked!')
       },
       onScroll (e) {
-        this.offsetTop = window.pageYOffset || document.documentElement.scrollTop
-      }
-    },
-    computed: {
-      scrollY(){
-        return this.$window.scrollY
+          this.offsetTop = window.pageYOffset || document.documentElement.scrollTop
+          console.log(this.offsetTop)
       }
     },
     components: {
@@ -103,6 +99,6 @@
   }
 </script>
 <style scoped lang="sass">
-    @import "assets/styles/app"
+    @import "styles/app"
 
 </style>
