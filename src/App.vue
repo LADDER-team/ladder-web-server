@@ -1,26 +1,44 @@
 <!--suppress ALL -->
 <template>
-    <v-app id="inspire" indig v-scroll="onScroll">
+    <v-app id="inspire" indig>
         <ToolBar/>
-        <v-content>
+        <v-content id="window">
             <v-container fluid fill-height class="g-container">
-                <v-layout justify-center align-start wrap class="project-wrap">
-                    <v-flex md3 lg2 justify-center align-cener class="ladder-wrap">
+                <v-layout
+                        justify-center
+                        align-start
+                        wrap
+                        ref="scrolledWrapRef"
+                        id="scrolled-wrap"
+                        class="project-wrap">
+                    <v-flex md3 lg2
+                            justify-center
+                            align-cener
+                            @click="ladderClicked"
+                            class="ladder-wrap">
                         <div md3 class="ladder-inner">
                             <div v-for="unit in ladderList.unit"
-                                 :class="{'ladder-item-active': ladderActive}"
-                                 v-on:click="ladderActived"
+                                 ref="unitActivateRef"
                                  class="ladder-item">
                                 <p>unit:{{ unit.index }}</p>
                                 <p>{{ unit.title }}</p>
                             </div>
                         </div>
                     </v-flex>
-                    <v-flex md8 lg7 justify-center align-start class="unit-wrap">
-                        <div v-for="unit in ladderList.unit" class="unit-item">
+                    <v-flex md8 lg7
+                            justify-center
+                            align-start
+                            ref="unitItemsRef"
+                            id="unit-items"
+                            class="unit-wrap">
+                        <div v-for="unit in ladderList.unit"
+                             class="unit-item">
                             <p class="unit-head">unit:{{ unit.index }}</p>
                             <h2 class="unit-title">{{ unit.title }}</h2>
-                            <v-flex class="unit-image-wrap" justify-center align-center>
+                            <v-flex
+                                    justify-center
+                                    align-center
+                                    class="unit-image-wrap">
                                 <img src="./assets/img/book1.jpg"
                                      :alt="defaultImage.alt"
                                      class="unit-image">
@@ -33,10 +51,9 @@
                 </v-layout>
             </v-container>
         </v-content>
-        <Footer/>
+        <!--<Footer/>-->
     </v-app>
 </template>
-
 <script>
   import axios from 'axios'
   import ToolBarComponent from './components/ToolBarComponent'
@@ -53,44 +70,66 @@
       rightDrawer: false,
       ladderActive: false,
       offsetTop: 0,
+      scrollWrapH: 0,
+      unitH: 0,
+      unitPosition: 0,
+      unitScroll: 0,
+      unitActivate: 0,
       defaultImage: {
         src: "http://via.placeholder.com/350x150",
         src1: "./assets/img/book1.jpg",
-        src2: "./assets/img/book2.jpg",
-        src3: "./assets/img/book3.jpg",
         alt: "placeholder-image"
       },
-      title: 'Vuetify.js',
-      ladderList: [],
-      items: [{
-        icon: 'bubble_chart',
-        title: 'Inspire'
-      }]
+      ladderList: []
     }),
-    mounted(){
+    created() {},
+    mounted() {
       axios.get('/api/ladder/1', {
-          headers: {
-              'Access-Control-Allow-Origin': 'http://localhost:8000',
-              'Access-Control-Allow-Headers': 'X-PINGOTHER, Content-Type',
-              'Access-Control-Allow-Methods': 'GET, POST, HEAD, OPTIONS',
-              'Access-Control-Max-Age': '1728000',
-          }
+        headers: {
+          'Access-Control-Allow-Origin': 'http://localhost:8000',
+          'Access-Control-Allow-Headers': 'X-PINGOTHER, Content-Type',
+          'Access-Control-Allow-Methods': 'GET, POST, HEAD, OPTIONS',
+          'Access-Control-Max-Age': '1728000',
+        }
       })
-        .then((response) => {
-          this.ladderList = response.data
-        })
-        .catch((error) => {
-          console.log(error)
-        })
+          .then((response) => {
+            this.ladderList = response.data
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+
+      document.getElementById('scrolled-wrap').addEventListener('scroll', this.handleScroll)
     },
     methods: {
-      ladderActived(){
-        console.log('clicked!')
+      handleScroll() {
+        this.offsetTop = document.getElementById('scrolled-wrap').scrollTop
       },
-      onScroll (e) {
-          this.offsetTop = window.pageYOffset || document.documentElement.scrollTop
-          console.log(this.offsetTop)
+      ladderClicked(){
+
       }
+    },
+    watch: {
+      offsetTop: {
+        handler(){
+          this.unitScroll = this.unitScrolled 
+          this.unitActivate = this.unitActivated + 1
+          for (let i=0; i<this.unitActivate; i++){
+            document.getElementsByClassName('ladder-item')[i].classList.add('ladder-item-active')
+          }
+        }
+      },
+      ladderList: {
+        handler() {
+          this.$nextTick(() => {
+            this.scrollWrapH = this.$refs.scrolledWrapRef.getBoundingClientRect().height
+          })
+        }
+      }
+    },
+    computed: {
+      unitScrolled(){return (this.offsetTop - 420) / this.scrollWrapH},
+      unitActivated(){return Math.round(this.unitScroll)}
     },
     components: {
       'ToolBar': ToolBarComponent,
