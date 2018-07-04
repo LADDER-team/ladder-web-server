@@ -41,6 +41,7 @@
   width: 80%
   margin: 0 auto
 .ladder-item
+  position: relative
   background: #CFD8DC
   padding: 10px
   border-bottom: 1px solid #546E7A
@@ -49,9 +50,66 @@
     margin: 0
     color: #fff
     font-weight: bold
+  &:first-of-type
+    &:after
+      content: ''
+      position: absolute
+      top: -40px
+      left: 0
+      display: inline-block
+      width: 6px
+      height: 40px
+      background: #CFD8DC
+    &:before
+      content: ''
+      position: absolute
+      top: -40px
+      right: 0
+      display: inline-block
+      width: 6px
+      height: 40px
+      background: #CFD8DC
   &:last-of-type
     border-bottom: none
-.ladder-item-active
-  background: #64B5F6
+    &:after
+      content: ''
+      position: absolute
+      bottom: -40px
+      left: 0
+      display: inline-block
+      width: 6px
+      height: 40px
+      background: #CFD8DC
+    &:before
+      content: ''
+      position: absolute
+      bottom: -40px
+      right: 0
+      display: inline-block
+      width: 6px
+      height: 40px
+      background: #CFD8DC
 .ladder-inner
   position: fixed
+  top: 25%
+.ladder-item-active
+  background: #89bbf5
+  &:first-of-type
+    &:after
+      content: ''
+      position: absolute
+      top: -40px
+      left: 0
+      display: inline-block
+      width: 6px
+      height: 40px
+      background: #89bbf5
+    &:before
+      content: ''
+      position: absolute
+      top: -40px
+      right: 0
+      display: inline-block
+      width: 6px
+      height: 40px
+      background: #89bbf5

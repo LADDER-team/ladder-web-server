@@ -3,7 +3,11 @@
     <v-app id="inspire" indig>
         <ToolBar/>
         <v-content id="window">
-            <v-container fluid fill-height class="g-container">
+            <v-container
+                    fluid
+                    fill-height
+                    justify-center
+                    class="g-container">
                 <v-layout
                         justify-center
                         align-start
@@ -11,12 +15,12 @@
                         ref="scrolledWrapRef"
                         id="scrolled-wrap"
                         class="project-wrap">
-                    <v-flex md3 lg2
+                    <v-flex md2 lg2
                             justify-center
                             align-cener
                             @click="ladderClicked"
                             class="ladder-wrap">
-                        <div md3 class="ladder-inner">
+                        <div class="ladder-inner">
                             <div v-for="unit in ladderList.unit"
                                  ref="unitActivateRef"
                                  class="ladder-item">
@@ -84,6 +88,7 @@
     }),
     created() {},
     mounted() {
+      document.getElementById('scrolled-wrap').addEventListener('scroll', this.handleScroll)
       axios.get('/api/ladder/1', {
         headers: {
           'Access-Control-Allow-Origin': 'http://localhost:8000',
@@ -98,8 +103,6 @@
           .catch((error) => {
             console.log(error)
           })
-
-      document.getElementById('scrolled-wrap').addEventListener('scroll', this.handleScroll)
     },
     methods: {
       handleScroll() {
@@ -112,7 +115,7 @@
     watch: {
       offsetTop: {
         handler(){
-          this.unitScroll = this.unitScrolled 
+          this.unitScroll = this.unitScrolled
           this.unitActivate = this.unitActivated + 1
           for (let i=0; i<this.unitActivate; i++){
             document.getElementsByClassName('ladder-item')[i].classList.add('ladder-item-active')
