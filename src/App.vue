@@ -8,8 +8,6 @@
                     justify-center
                     align-start
                     class="g-container">
-                <router-link to="/">TOP</router-link>
-                <router-link to="/detail">Detail</router-link>
                 <router-view />
             </v-container>
         </v-content>
@@ -19,6 +17,7 @@
 <script>
   import ToolBar from './components/ToolBarComponent'
   import Footer from './components/FooterComponent'
+  import LadderList from './pages/LadderList'
 
   export default {
     name: 'Ladder',
@@ -32,10 +31,12 @@
     }),
     components: {
       ToolBar,
+      LadderList,
       Footer
     }
   }
 </script>
 <style scoped lang="sass">
+    @import "./styles/colors"
     @import "./styles/layout"
 </style>

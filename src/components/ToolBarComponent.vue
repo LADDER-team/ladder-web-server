@@ -48,5 +48,6 @@
 </script>
 
 <style scoped lang="sass">
+    @import "../styles/colors"
     @import "../styles/toolbar"
 </style>

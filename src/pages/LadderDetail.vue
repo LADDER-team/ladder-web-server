@@ -11,7 +11,7 @@
                 align-cener
                 class="ladder-wrap">
             <div id="ladder-action-wrap" class="ladder-inner">
-                <div v-for="unit in ladderList.unit"
+                <div v-for="unit in ladderDetailList.unit"
                      @click="ladderClicked"
                      class="ladder-item">
                     <p>unit:{{ unit.index }}</p>
@@ -24,7 +24,7 @@
                 align-start
                 id="unit-items"
                 class="unit-wrap">
-            <div v-for="unit in ladderList.unit"
+            <div v-for="unit in ladderDetailList.unit"
                  class="unit-item">
                 <p class="unit-head">unit:{{ unit.index }}</p>
                 <h2 class="unit-title">{{ unit.title }}</h2>
@@ -66,7 +66,7 @@
         src1: "../assets/img/book1.jpg",
         alt: "placeholder-image"
       },
-      ladderList: []
+      ladderDetailList: []
     }),
     created() {},
     mounted() {
@@ -79,7 +79,7 @@
         }
       })
           .then((response) => {
-            this.ladderList = response.data
+            this.ladderDetailList = response.data
           })
           .catch((error) => {
             console.log(error)
@@ -116,7 +116,7 @@
           }
         }
       },
-      ladderList: {
+      ladderDetailList: {
         handler() {
           this.$nextTick(() => {
             this.scrollWrapH = this.$refs.scrolledWrapRef.getBoundingClientRect().height
@@ -138,5 +138,6 @@
   }
 </script>
 <style scoped lang="sass">
+    @import "../styles/colors"
     @import "../styles/ladderDetail"
 </style>
