@@ -18,18 +18,18 @@
                     <v-flex md2 lg2
                             justify-center
                             align-cener
-                            @click="ladderClicked"
                             class="ladder-wrap">
-                        <div class="ladder-inner">
+                        <div id="ladder-action-wrap" class="ladder-inner">
                             <div v-for="unit in ladderList.unit"
                                  ref="unitActivateRef"
+                                 @click="ladderClicked"
                                  class="ladder-item">
                                 <p>unit:{{ unit.index }}</p>
                                 <p>{{ unit.title }}</p>
                             </div>
                         </div>
                     </v-flex>
-                    <v-flex md8 lg7
+                    <v-flex md7 lg7
                             justify-center
                             align-start
                             ref="unitItemsRef"
@@ -62,6 +62,7 @@
   import axios from 'axios'
   import ToolBarComponent from './components/ToolBarComponent'
   import FoorerComponent from './components/FooterComponent'
+  import * as easings from 'vuetify/es5/util/easing-patterns'
 
   export default {
     name: 'Ladder',
@@ -73,12 +74,17 @@
       miniVariant: false,
       rightDrawer: false,
       ladderActive: false,
+      ladderToUnit: false,
       offsetTop: 0,
       scrollWrapH: 0,
       unitH: 0,
       unitPosition: 0,
       unitScroll: 0,
       unitActivate: 0,
+      selectedLadder: 0,
+      duration: 300,
+      scrollOffset: 0,
+      easing: '',
       defaultImage: {
         src: "http://via.placeholder.com/350x150",
         src1: "./assets/img/book1.jpg",
@@ -88,7 +94,6 @@
     }),
     created() {},
     mounted() {
-      document.getElementById('scrolled-wrap').addEventListener('scroll', this.handleScroll)
       axios.get('/api/ladder/1', {
         headers: {
           'Access-Control-Allow-Origin': 'http://localhost:8000',
@@ -103,20 +108,33 @@
           .catch((error) => {
             console.log(error)
           })
+      window.addEventListener('scroll', this.handleScroll)
     },
     methods: {
       handleScroll() {
-        this.offsetTop = document.getElementById('scrolled-wrap').scrollTop
+        this.offsetTop = window.pageYOffset
       },
-      ladderClicked(){
+      ladderClicked(e) {
+        this.duration = 600
+        this.easing = 'easeInOutCubic'
+        let index = this.foundIndex(e)
 
+        this.$nextTick(() => {
+          this.scrollOffset = this.$el.getElementsByClassName('unit-item')[index].offsetTop - 100
+          this.$vuetify.goTo('#scrolled-wrap', this.options)
+        })
+      },
+      foundIndex(e){
+        let nodeList = document.querySelectorAll('.ladder-item'),
+            target = e.target
+        return Array.prototype.indexOf.call(nodeList, target)
       }
     },
     watch: {
       offsetTop: {
         handler(){
           this.unitScroll = this.unitScrolled
-          this.unitActivate = this.unitActivated + 1
+          this.unitActivate = this.unitActivated
           for (let i=0; i<this.unitActivate; i++){
             document.getElementsByClassName('ladder-item')[i].classList.add('ladder-item-active')
           }
@@ -126,13 +144,22 @@
         handler() {
           this.$nextTick(() => {
             this.scrollWrapH = this.$refs.scrolledWrapRef.getBoundingClientRect().height
+            console.log(this.$refs.scrolledWrapRef)
+            console.log(this.$refs.scrolledWrapRef.getBoundingClientRect().height)
           })
         }
       }
     },
     computed: {
-      unitScrolled(){return (this.offsetTop - 420) / this.scrollWrapH},
-      unitActivated(){return Math.round(this.unitScroll)}
+      unitScrolled(){return (this.offsetTop - 340) / (window.innerHeight * 0.9)},
+      unitActivated(){return Math.round(this.unitScroll)},
+      options () {
+        return {
+          duration: this.duration,
+          offset: this.scrollOffset,
+          easing: this.easing
+        }
+      }
     },
     components: {
       'ToolBar': ToolBarComponent,

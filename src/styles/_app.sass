@@ -1,14 +1,16 @@
 .g-container
   padding-top: 0 !important
   padding-bottom: 0 !important
+  overflow: hidden
 .project-wrap
-  position: fixed
+  position: relative
   top: 100px
   left: 0
   padding: 0 0 50px
   overflow: scroll
 .unit-wrap
   align-items: flex-start
+  margin: 0 0 0 4%
 .unit-head
   margin: 0 0 20px
   font-size: 18px
@@ -50,6 +52,7 @@
     margin: 0
     color: #fff
     font-weight: bold
+    pointer-events: none
   &:first-of-type
     &:after
       content: ''
@@ -113,3 +116,6 @@
       width: 6px
       height: 40px
       background: #89bbf5
+
+.activate
+  background-color: red
