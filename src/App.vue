@@ -18,7 +18,6 @@
   import ToolBar from './components/ToolBarComponent'
   import Footer from './components/FooterComponent'
   import LadderList from './Views/LadderList'
-  import store from "./store";
 
   export default {
     name: 'Ladder',
@@ -31,7 +30,7 @@
       rightDrawer: false
     }),
     mounted(){
-      console.log(store.state.test)
+      console.log(this.$store.state.test)
     },
     components: {
       ToolBar,
