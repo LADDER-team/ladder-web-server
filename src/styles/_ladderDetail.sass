@@ -40,7 +40,7 @@
   margin: 0 auto
 .ladder-item
   position: relative
-  background: #CFD8DC
+  background: $default_ladder_disable_color
   padding: 10px
   border-bottom: 1px solid #546E7A
   cursor: pointer
@@ -58,7 +58,7 @@
       display: inline-block
       width: 6px
       height: 40px
-      background: #CFD8DC
+      background: $default_ladder_disable_color
     &:before
       content: ''
       position: absolute
@@ -67,7 +67,7 @@
       display: inline-block
       width: 6px
       height: 40px
-      background: #CFD8DC
+      background: $default_ladder_disable_color
   &:last-of-type
     border-bottom: none
     &:after
@@ -78,7 +78,7 @@
       display: inline-block
       width: 6px
       height: 40px
-      background: #CFD8DC
+      background: $default_ladder_disable_color
     &:before
       content: ''
       position: absolute
@@ -87,12 +87,12 @@
       display: inline-block
       width: 6px
       height: 40px
-      background: #CFD8DC
+      background: $default_ladder_disable_color
 .ladder-inner
   position: fixed
   top: 25%
 .ladder-item-active
-  background: #89bbf5
+  background: $default_ladder_activate_color
   &:first-of-type
     &:after
       content: ''
@@ -102,7 +102,7 @@
       display: inline-block
       width: 6px
       height: 40px
-      background: #89bbf5
+      background: $default_ladder_activate_color
     &:before
       content: ''
       position: absolute
@@ -111,7 +111,7 @@
       display: inline-block
       width: 6px
       height: 40px
-      background: #89bbf5
+      background: $default_ladder_activate_color
 
 .activate
   background-color: red
