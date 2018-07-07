@@ -44,6 +44,8 @@
   padding: 10px
   border-bottom: 1px solid #546E7A
   cursor: pointer
+  &:hover
+    opacity: .7
   p
     margin: 0
     color: #fff
@@ -91,6 +93,8 @@
 .ladder-inner
   position: fixed
   top: 25%
+  max-width: inherit
+  width: 100%
 .ladder-item-active
   background: $default_ladder_activate_color
   &:first-of-type
@@ -112,6 +116,3 @@
       width: 6px
       height: 40px
       background: $default_ladder_activate_color
-
-.activate
-  background-color: red
