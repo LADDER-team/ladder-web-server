@@ -14,7 +14,7 @@ export default new Router({
       component: LadderList
     },
     {
-      path: '/detail',
+      path: '/detail/:id',
       name: 'detail',
       component: LadderDetail
     }

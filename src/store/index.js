@@ -6,7 +6,10 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    test: 'Connecting store'
+    test: 1
+  },
+  mutations: {
+    increment: state=>{state.test++}
   }
 })
 export default store

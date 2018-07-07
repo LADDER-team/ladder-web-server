@@ -70,7 +70,8 @@
     }),
     created() {},
     mounted() {
-      axios.get('/api/ladder/1', {
+      const param = this.$route.params.id
+      axios.get('/api/ladder/'+param, {
         headers: {
           'Access-Control-Allow-Origin': 'http://localhost:8000',
           'Access-Control-Allow-Headers': 'X-PINGOTHER, Content-Type',

@@ -5,7 +5,7 @@
             container
             class="ladder-links-route">
         <div v-for="ladder in ladderList" class="ladder-links-wrap">
-            <router-link to="/detail" class="ladder-link">
+            <router-link :to="`detail/${ ladder.id }`" class="ladder-link">
                 <div class="ladder-thumb-wrap" >
                     <img :src="defaultImage.src"
                          :alt="defaultImage.alt"

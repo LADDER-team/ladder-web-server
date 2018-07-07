@@ -30,6 +30,10 @@
       rightDrawer: false
     }),
     mounted(){
+      console.log('Initial Store access')
+      console.log(this.$store.state.test)
+      console.log('Store commit')
+      this.$store.commit('increment')
       console.log(this.$store.state.test)
     },
     components: {
