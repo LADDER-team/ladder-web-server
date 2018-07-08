@@ -1,21 +1,25 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './store'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
-import scroll from 'vue-scrollto'
-
-Vue.use(
-  Vuetify,
-)
-
 
 Vue.config.productionTip = false
 
-/* eslint-disable no-new */
+Vue.use(
+    Vuetify
+)
+
 new Vue({
   el: '#app',
   router,
+  store,
   scroll,
+  Vuetify,
   render: h => h(App)
 })
+
+Vue.use(
+    Vuetify
+)
