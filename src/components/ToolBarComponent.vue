@@ -8,7 +8,6 @@
                     class="g-search-field"
                     name="input-1"
                     rows=1
-                    row-height=10
                     prepend-icon="search"
                     hide-details
             />
