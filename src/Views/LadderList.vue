@@ -1,5 +1,7 @@
 <template>
-    <v-layout md8 lg8 justify-center class="view-ladder-list">
+    <v-layout md8 lg8
+              justify-center
+              class="layout-ladder-list">
         <v-flex justify-center
                 align-start
                 class="ladder-links-wrap">
@@ -57,7 +59,8 @@
 </script>
 
 <style scoped lang="sass">
-    @import "../styles/base"
     @import "../styles/colors"
+    @import "../styles/layout"
+    @import "../styles/base"
     @import "../styles/ladderList"
 </style>

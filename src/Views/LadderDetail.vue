@@ -5,7 +5,7 @@
             wrap
             ref="scrolledWrapRef"
             id="scrolled-wrap"
-            class="project-wrap">
+            class="layout-ladder-detail">
         <v-flex md2 lg2
                 justify-center
                 align-cener
@@ -140,5 +140,7 @@
 </script>
 <style scoped lang="sass">
     @import "../styles/colors"
+    @import "../styles/layout"
+    @import "../styles/base"
     @import "../styles/ladderDetail"
 </style>

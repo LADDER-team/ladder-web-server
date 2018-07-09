@@ -11,12 +11,11 @@
                     name="input-1"
                     rows=1
                     prepend-icon="search"
-                    hide-details
-            />
+                    hide-details/>
         </v-flex>
         <v-spacer/>
         <v-toolbar-items class="hidden-sm-and-down avatar align-center">
-            <router-link :to="{name: 'list'}">
+            <router-link :to="{name: 'post'}">
                 <v-btn class="contribution-btn"
                        depressed
                        ripple
@@ -30,15 +29,15 @@
                 layout
                 align-center
                 justify-center
-                class="avatar-wrap"
-            >
-                <v-avatar
-                    :tile=false
-                    :size=40
-                    color="grey lighten-4"
-                >
-                    <img src="../assets/img/logo.png" alt="avatar">
-                </v-avatar>
+                class="avatar-wrap">
+                <router-link :to="{name: 'list'}">
+                    <v-avatar
+                        :tile=false
+                        :size=40
+                        color="">
+                        <v-icon dark class="avatar-icon">person_outline</v-icon>
+                    </v-avatar>
+                </router-link>
             </v-flex>
         </v-toolbar-items>
     </v-toolbar>
