@@ -1,25 +1,25 @@
 <template>
-    <v-flex md6 lg6
-            justify-center
-            align-start
-            container
-            class="ladder-links-route">
-        <div v-for="ladder in ladderList" class="ladder-links-wrap">
-            <router-link :to="`detail/${ ladder.id }`" class="ladder-link">
-                <div class="ladder-thumb-wrap" >
-                    <img :src="defaultImage.src"
-                         :alt="defaultImage.alt"
-                         class="ladder-thumb">
-                </div>
-                <div class="ladder-info-wrap">
-                    <h2 class="ladder-link-title">{{ ladder.title }}</h2>
-                    <p class="ladder-link-attach">
-                        学習中: <span>{{ ladder.count_learning_number }}</span>
-                    </p>
-                </div>
-            </router-link>
-        </div>
-    </v-flex>
+    <v-layout md8 lg8 justify-center class="view-ladder-list">
+        <v-flex justify-center
+                align-start
+                class="ladder-links-wrap">
+            <div v-for="ladder in ladderList" class="ladder-link-wrap">
+                <router-link :to="`detail/${ ladder.id }`" class="ladder-link">
+                    <div class="ladder-thumb-wrap" >
+                        <img :src="defaultImage.src"
+                             :alt="defaultImage.alt"
+                             class="ladder-thumb">
+                    </div>
+                    <div class="ladder-info-wrap">
+                        <h2 class="ladder-link-title">{{ ladder.title }}</h2>
+                        <p class="ladder-link-attach">
+                            学習中: <span>{{ ladder.count_learning_number }}</span>
+                        </p>
+                    </div>
+                </router-link>
+            </div>
+        </v-flex >
+    </v-layout>
 </template>
 
 <script>
