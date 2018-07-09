@@ -1,7 +1,9 @@
 <template>
     <v-toolbar class="g-toolbar" fixed align-center>
         <h1 class="g-toolbar-title">
-            <img src="../assets/img/logo_title.png" class="g-toolbar-logo">
+            <router-link :to="{name: 'list'}">
+                <img src="../assets/img/logo_title.png" class="g-toolbar-logo">
+            </router-link>
         </h1>
         <v-flex xs5 sm4 md2 class="g-search-wrap">
             <v-text-field
@@ -14,10 +16,12 @@
         </v-flex>
         <v-spacer/>
         <v-toolbar-items class="hidden-sm-and-down avatar align-center">
-            <v-btn
-                    class="contribution-btn"
-                    depressed
-            >投稿する</v-btn>
+            <router-link :to="{name: 'list'}">
+                <v-btn class="contribution-btn"
+                       depressed
+                       ripple
+                >投稿する</v-btn>
+            </router-link>
             <v-flex
                 xs12
                 sm6
@@ -47,6 +51,7 @@
 </script>
 
 <style scoped lang="sass">
+    @import "../styles/base"
     @import "../styles/colors"
     @import "../styles/toolbar"
 </style>
