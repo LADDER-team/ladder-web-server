@@ -41,22 +41,26 @@
             </div>
         </v-flex>
         <transition name="peg-ladder">
-            <div v-show="prevLadder" class="prev-ladder peg-link">
+            <router-link :to="`/detail/${ prevLadderId }`"
+                         v-show="prevLadder"
+                         class="prev-ladder peg-link">
                 <h3 class="peg-link-catch">このLADDERの前に最もペグされたLADDER</h3>
                 <p class="peg-link-title">
                     <v-icon size="60" light class="peg-link-icon">person</v-icon>
                     <span>{{ prevLadderList.title}}</span>
                 </p>
-            </div>
+            </router-link>
         </transition>
         <transition name="peg-ladder">
-            <div v-show="nextLadder" class="next-ladder peg-link">
+            <router-link :to="`/detail/${ nextLadderId }`"
+                         v-show="nextLadder"
+                         class="next-ladder peg-link">
                 <h3 class="peg-link-catch">このLADDERの後に最もペグされたLADDER</h3>
                 <p class="peg-link-title">
                     <v-icon size="60" light class="peg-link-icon">person</v-icon>
                     <span>{{ nextLadderList.title}}</span>
                 </p>
-            </div>
+            </router-link>
         </transition>
     </v-layout>
 </template>
@@ -70,8 +74,8 @@
       ladderToUnit: false,
       prevLadder: false,
       nextLadder: false,
-      prevLadderId: 0,
-      nextLadderId: 0,
+      prevLadderId: null,
+      nextLadderId: null,
       offsetTop: 0,
       scrollWrapH: 0,
       unitH: 0,
@@ -81,6 +85,7 @@
       selectedLadder: 0,
       duration: 300,
       scrollOffset: 0,
+      getLadderParam: null,
       easing: '',
       defaultImage: {
         src: "http://via.placeholder.com/350x150",
@@ -91,10 +96,9 @@
       prevLadderList: [],
       nextLadderList: []
     }),
-    created() {},
     mounted() {
-      const param = this.$route.params.id
-      axios.get('/api/ladder/'+param, {
+      this.getLadderParam = this.$route.params.id
+      axios.get('/api/ladder/'+this.getLadderParam, {
         headers: {
           'Access-Control-Allow-Origin': 'http://localhost:8000',
           'Access-Control-Allow-Headers': 'X-PINGOTHER, Content-Type',
@@ -157,6 +161,9 @@
         this.prevLadder = true
       } else if(this.offsetTop>this.scrollWrapH-window.innerHeight*0.9-200 && this.nextLadderList.length !== 0){
         this.nextLadder = true
+      } else {
+        this.prevLadder = false
+        this.nextLadder = false
       }
     },
     methods: {
@@ -177,7 +184,7 @@
         let nodeList = document.querySelectorAll('.ladder-item'),
             target = e.target
         return Array.prototype.indexOf.call(nodeList, target)
-      }
+      },
     },
     watch: {
       offsetTop: {
@@ -200,7 +207,6 @@
             this.prevLadder = false;
             this.nextLadder = false;
           }
-          console.log('nextLadder: '+this.nextLadder)
         }
       },
       ladderDetailList: {
@@ -208,6 +214,28 @@
           this.$nextTick(() => {
             this.scrollWrapH = this.$refs.scrolledWrapRef.getBoundingClientRect().height
           })
+        }
+      },
+      $route:{
+        handler(){
+          this.ladderDetailList = [];
+          this.nextLadderList = [];
+          this.prevLadderList = [];
+          this.getLadderParam = this.$route.params.id
+          axios.get('/api/ladder/'+this.getLadderParam, {
+            headers: {
+              'Access-Control-Allow-Origin': 'http://localhost:8000',
+              'Access-Control-Allow-Headers': 'X-PINGOTHER, Content-Type',
+              'Access-Control-Allow-Methods': 'GET, POST, HEAD, OPTIONS',
+              'Access-Control-Max-Age': '1728000',
+            }
+          })
+              .then((response) => {
+                this.ladderDetailList = response.data
+              })
+              .catch((error) => {
+                console.log(error)
+              })
         }
       }
     },
