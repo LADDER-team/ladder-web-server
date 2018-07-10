@@ -51,6 +51,5 @@
 
 <style scoped lang="sass">
     @import "../styles/base"
-    @import "../styles/colors"
     @import "../styles/toolbar"
 </style>

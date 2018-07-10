@@ -40,20 +40,24 @@
                 </div>
             </div>
         </v-flex>
-        <div v-show="prevLadder" class="prev-ladder peg-link">
-            <h3 class="peg-link-catch">このLADDERの前に最もペグされたLADDER</h3>
-            <p class="peg-link-title">
-                <v-icon size="60" light class="peg-link-icon">person</v-icon>
-                <span>{{ prevLadderList.title}}</span>
-            </p>
-        </div>
-        <div v-show="nextLadder" class="next-ladder peg-link">
-            <h3 class="peg-link-catch">このLADDERの後に最もペグされたLADDER</h3>
-            <p class="peg-link-title">
-                <v-icon size="60" light class="peg-link-icon">person</v-icon>
-                <span>{{ nextLadderList.title}}</span>
-            </p>
-        </div>
+        <transition name="peg-ladder">
+            <div v-show="prevLadder" class="prev-ladder peg-link">
+                <h3 class="peg-link-catch">このLADDERの前に最もペグされたLADDER</h3>
+                <p class="peg-link-title">
+                    <v-icon size="60" light class="peg-link-icon">person</v-icon>
+                    <span>{{ prevLadderList.title}}</span>
+                </p>
+            </div>
+        </transition>
+        <transition name="peg-ladder">
+            <div v-show="nextLadder" class="next-ladder peg-link">
+                <h3 class="peg-link-catch">このLADDERの後に最もペグされたLADDER</h3>
+                <p class="peg-link-title">
+                    <v-icon size="60" light class="peg-link-icon">person</v-icon>
+                    <span>{{ nextLadderList.title}}</span>
+                </p>
+            </div>
+        </transition>
     </v-layout>
 </template>
 <script>

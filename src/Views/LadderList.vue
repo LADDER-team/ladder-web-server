@@ -59,8 +59,6 @@
 </script>
 
 <style scoped lang="sass">
-    @import "../styles/colors"
-    @import "../styles/layout"
     @import "../styles/base"
     @import "../styles/ladderList"
 </style>
