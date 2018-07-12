@@ -21,20 +21,26 @@
                        ripple
                 >投稿する</v-btn>
             </router-link>
-            <SignUpDialog/>
+            <!--<SignUpDialog/>-->
+            <SignInDialog/>
         </v-toolbar-items>
     </v-toolbar>
 </template>
 
 <script>
   import SignUpDialog from '../components/SignUpDialogComponent'
+  import SignInDialog from '../components/SignInDialogComponent'
+
   export default {
     name: "toolbar-component",
     data(){
-      return{}
+      return{
+        avatarPath: '',
+      }
     },
     components: {
-      SignUpDialog
+      SignUpDialog,
+      SignInDialog
     }
   }
 </script>
