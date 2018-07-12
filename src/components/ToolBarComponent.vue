@@ -110,7 +110,6 @@
       },
       postUser() {
         this.addUser()
-        console.log(this.$store.state)
         axios.post('/api/users/',
             {
               name: this.$store.state.name,
@@ -127,6 +126,7 @@
             .catch((error) => {
               console.log(error)
             })
+        this.dialog = false
       },
       ...mapActions(['addNameAction','addEmailAction','addPassAction'])
     },
