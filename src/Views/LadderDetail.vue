@@ -31,9 +31,11 @@
                 <v-flex justify-center
                         align-center
                         class="unit-image-wrap">
-                    <img :src="url+unit.url"
+                    <a :href="unit.url" target="_blank">
+                        <img :src="url+unit.url"
                          :alt="defaultImage.alt"
-                         class="unit-image">
+                             class="unit-image">
+                    </a>
                 </v-flex>
                 <div class="unit-description">
                     {{ unit.description }}
