@@ -21,15 +21,13 @@
                        ripple
                 >投稿する</v-btn>
             </router-link>
-            <!--<SignUpDialog/>-->
-            <SignInDialog/>
+            <SignDialog/>
         </v-toolbar-items>
     </v-toolbar>
 </template>
 
 <script>
-  import SignUpDialog from '../components/SignUpDialogComponent'
-  import SignInDialog from '../components/SignInDialogComponent'
+  import SignDialog from '../components/SignDialogComponent'
 
   export default {
     name: "toolbar-component",
@@ -39,8 +37,7 @@
       }
     },
     components: {
-      SignUpDialog,
-      SignInDialog
+      SignDialog,
     }
   }
 </script>
