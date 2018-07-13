@@ -33,7 +33,7 @@ const store = new Vuex.Store({
 
     addTokenMutation(state, payload){
       state.token = payload.token
-      localStorage.setItem('token', state.token)
+      localStorage.setItem('token', state.token.replace(/[\"]/g,""))
       console.log(localStorage)
     },
     loginEmailMutation(state, payload){state.email = payload.email},

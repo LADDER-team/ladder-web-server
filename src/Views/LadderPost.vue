@@ -25,7 +25,10 @@
   export default {
     name: "LadderPost",
     methods: {
-      postLadder(token){
+      postLadder(){
+        let token = this.$store.state.token
+        token = token.replace(/[\"]/g,"")
+
         axios.post('/api/ladder',
             {
               'headers': {
