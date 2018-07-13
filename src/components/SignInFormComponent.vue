@@ -66,7 +66,9 @@
         this.loginEmailAction(this.$refs.emailRef.value),
         this.loginPassAction(this.$refs.passRef.value)
       },
-      addToken(){this.addTokenAction(this.loginToken)},
+      addToken(){
+        this.addTokenAction(this.loginToken)
+      },
       loginPromise(){this.loginAction(this.login)},
       postLogin() {
         this.loginUser()
@@ -77,15 +79,15 @@
               headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
               }
-            }).then(()=>{
+            }).then((response)=>{
+                this.loginToken = JSON.stringify(response.data.token)
                 this.addToken()
             }).then(() => {
                 if (!this.login){this.login = true}
             }).then(() => {
                 this.loginPromise()
             }).then(()=>{
-              console.log(this.$store.state.isLogin)
-              console.log(this.$store.state.isSign)
+              console.log(this.$store.state.token)
                 this.sendLogin()
                 this.$router.push('/')
             }).catch((error) => {

@@ -31,7 +31,7 @@
                 <v-flex justify-center
                         align-center
                         class="unit-image-wrap">
-                    <img src="../assets/img/book1.jpg"
+                    <img :src="url+unit.url"
                          :alt="defaultImage.alt"
                          class="unit-image">
                 </v-flex>
@@ -87,6 +87,7 @@
       scrollOffset: 0,
       getLadderParam: null,
       easing: '',
+      url: 'https://blinky.nemui.org/shot/xlarge?',
       defaultImage: {
         src: "http://via.placeholder.com/350x150",
         src1: "../assets/img/book1.jpg",

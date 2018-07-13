@@ -14,7 +14,7 @@
                 label="Image URL"
                 outline
                 class="post-text-field post-title"
-                placeholder="https://example.com"/>
+                placeholder="https://example.com（ごめんなさい！入力しても画像は初期のものになります！）"/>
         <v-textarea
                 label="Description"
                 outline
