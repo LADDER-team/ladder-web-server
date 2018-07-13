@@ -25,45 +25,31 @@
   export default {
     name: "LadderPost",
     methods: {
-      postUnit(token){
-        axios.post('/api/ladder/unit/',
+      postLadder(token){
+        axios.post('/api/ladder',
             {
-              id: 1,
-              title: 'テスト',
-              description: 'テスト',
-              ladder: 'テスト',
-              url: 'http://test.com',
-              index: 1,
-              headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Authorization': 'JWT ' + token
-              }
+              'headers': {
+                'Authorization': 'JWT'+token,
+                'Content-Type': 'application/json',
+                'Cache-Control': 'no-cache'
+              },
+              'body': {
+                'title': "テスト",
+                'units': [
+                  {
+                    'title': "test",
+                    'description': "テスト",
+                    'url': "https://www.google.co.jp/",
+                    'index': 1,
+                  }
+                ],
+              },
             }).then((response)=>{
               console.log(response.data)
             }).catch((error) => {
               console.log(error)
             })
       },
-       postLadder(){
-         let token = this.$store.state.token
-         token = token.replace(/[\"]/g,"")
-         console.log('JWT '+token)
-
-         axios.post('/api/ladder',
-             {
-               title: 'テスト',
-               headers: {
-                 'Content-Type': 'application/x-www-form-urlencoded',
-                 'Authorization' : 'JWT '+ token
-               }
-             }).then(()=>{
-                this.postUnit(token)
-             }).then((response)=>{
-               console.log(response.data)
-             }).catch((error) => {
-               console.log(error)
-             })
-       }
     },
     components: {
       LadderPostItem

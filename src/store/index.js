@@ -31,7 +31,11 @@ const store = new Vuex.Store({
     addPassMutation(state, payload){state.password = payload.password},
     signMutation(state, payload){state.isSign = payload.isSign},
 
-    addTokenMutation(state, payload){state.token = payload.token},
+    addTokenMutation(state, payload){
+      state.token = payload.token
+      localStorage.setItem('token', state.token)
+      console.log(localStorage)
+    },
     loginEmailMutation(state, payload){state.email = payload.email},
     loginPassMutation(state, payload){state.password = payload.password},
     loginMutation(state, payload){state.isLogin = payload.isLogin},

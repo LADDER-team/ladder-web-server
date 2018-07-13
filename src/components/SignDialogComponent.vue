@@ -15,10 +15,10 @@
                 <v-icon>{{avatar}}</v-icon>
             </v-avatar>
         </v-btn>
-        <SignUpForm v-show="isSign"
+        <SignUpForm v-show="sign"
                     v-on:cancel="canceledDialog"
                     v-on:sign="signin"/>
-        <SignInForm v-show="isLogin"
+        <SignInForm v-show="login"
                     v-on:cancel="canceledDialog"
                     v-on:login="receivedLogin"/>
     </v-dialog>
@@ -27,31 +27,47 @@
 <script>
   import SignUpForm from './SignUpFormComponent'
   import SignInForm from './SignInFormComponent'
+  import { mapState, mapGetters, mapMutations, mapActions} from 'vuex'
 
   export default {
     name: "SignDialogComponent",
     data(){
       return{
         dialog: false,
-        isSign: true,
-        isLogin: false,
+        sign: true,
+        login: false,
         avatar: "person_outline"
       }
     },
     mounted(){
-      console.log(this.$store.state.isLogin)
-      console.log(this.$store.state.isSign)
+      if(localStorage.getItem('token')!==null){
+        this.sign = false
+        this.login = true
+      }
     },
     methods: {
       canceledDialog(){this.dialog = false},
       signin(){
-        this.isSign = false
-        this.isLogin = true
+        this.sign = false
+        this.login = true
         this.dialog = false
       },
       receivedLogin(){
         this.avatar = "face"
         this.dialog = false
+      },
+      ...mapActions([
+        'addTokenAction',
+        'loginAction'
+      ])
+    },
+    computed: {
+      ...mapGetters({
+        token: 'tokenGetter',
+        isLogin: 'loginGetter'
+      }),
+      set(value){
+        this.addTokenAction(value)
       }
     },
     components: {
