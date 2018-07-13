@@ -56,6 +56,7 @@
         modelName: null,
         modelEmail: null,
         modelPass: null,
+        sign: false,
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -71,6 +72,10 @@
         this.addEmailAction(this.$refs.emailRef.value),
         this.addPassAction(this.$refs.passRef.value)
       },
+      addSign(){this.signAction(this.sign)},
+      sendToSign(){
+        this.$emit('sign')
+      },
       postUser() {
         this.addUser()
         axios.post('/api/users/',
@@ -82,7 +87,15 @@
                 'Content-Type': 'application/x-www-form-urlencoded'
               }
             }).then(()=>{
-              this.cancelDialog()
+              this.sign = true
+            }).then(()=>{
+              this.addSign()
+            }).then(()=>{
+              console.log(this.$store.state.isLogin)
+              console.log(this.$store.state.isSign)
+
+              this.sendToSign()
+
               this.$router.push('/')
             }).catch((error) => {
               console.log(error)
@@ -92,18 +105,21 @@
         'addNameAction',
         'addEmailAction',
         'addPassAction',
+        'signAction'
       ])
     },
     computed: {
       ...mapGetters({
         name: 'nameGetter',
         email: 'emailGetter',
-        password: 'passGetter'
+        password: 'passGetter',
+        isSign: 'signGetter'
       }),
       set(value){
         this.addNameAction(value),
         this.addEmailAction(value),
-        this.addPassAction(value)
+        this.addPassAction(value),
+        this.signAction(value)
       },
     }
   }

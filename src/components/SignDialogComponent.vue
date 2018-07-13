@@ -12,11 +12,15 @@
             <v-avatar
                     :tile=false
                     :size=40>
-                <v-icon>person_outline</v-icon>
+                <v-icon>{{avatar}}</v-icon>
             </v-avatar>
         </v-btn>
-        <!--<SignUpForm v-on:cancel="canceledDialog"/>-->
-        <SignInForm v-on:cancel="canceledDialog"/>
+        <SignUpForm v-show="isSign"
+                    v-on:cancel="canceledDialog"
+                    v-on:sign="signin"/>
+        <SignInForm v-show="isLogin"
+                    v-on:cancel="canceledDialog"
+                    v-on:login="receivedLogin"/>
     </v-dialog>
 </template>
 
@@ -29,9 +33,27 @@
     data(){
       return{
         dialog: false,
+        isSign: true,
+        isLogin: false,
+        avatar: "person_outline"
       }
     },
-    methods: {canceledDialog(){this.dialog = false}},
+    mounted(){
+      console.log(this.$store.state.isLogin)
+      console.log(this.$store.state.isSign)
+    },
+    methods: {
+      canceledDialog(){this.dialog = false},
+      signin(){
+        this.isSign = false
+        this.isLogin = true
+        this.dialog = false
+      },
+      receivedLogin(){
+        this.avatar = "face"
+        this.dialog = false
+      }
+    },
     components: {
       SignInForm,
       SignUpForm

@@ -44,10 +44,9 @@
   import axios from 'axios'
 
   export default {
-    name: "SignUpFormComponent",
+    name: "SignInFormComponent",
     data(){
       return{
-        dialog: false,
         modelEmail: null,
         modelPass: null,
         loginToken: null,
@@ -62,16 +61,13 @@
     },
     methods: {
       cancelDialog(){this.$emit('cancel')},
+      sendLogin(){this.$emit('login')},
       loginUser(){
         this.loginEmailAction(this.$refs.emailRef.value),
         this.loginPassAction(this.$refs.passRef.value)
       },
-      addToken(){
-        this.addTokenAction(this.loginToken)
-      },
-      loginPromise(){
-        this.loginAction(this.login)
-      },
+      addToken(){this.addTokenAction(this.loginToken)},
+      loginPromise(){this.loginAction(this.login)},
       postLogin() {
         this.loginUser()
         axios.post('/api/api-auth/',
@@ -81,25 +77,20 @@
               headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
               }
-            }).then((response) => {
-                console.log(response.data)
-                this.loginToken = response.data.token
             }).then(()=>{
                 this.addToken()
             }).then(() => {
-                if (!this.login && this.loginToken === this.$store.state.token){
-                  this.login = true
-                }
+                if (!this.login){this.login = true}
             }).then(() => {
                 this.loginPromise()
             }).then(()=>{
-                this.cancelDialog()
+              console.log(this.$store.state.isLogin)
+              console.log(this.$store.state.isSign)
+                this.sendLogin()
                 this.$router.push('/')
             }).catch((error) => {
                 console.log(error)
             })
-
-        console.log(this.$store.state)
       },
       ...mapActions([
         'loginEmailAction',
