@@ -11,11 +11,11 @@
                 align-cener
                 class="ladder-wrap">
             <div id="ladder-action-wrap" class="ladder-inner">
-                <div v-for="unit in ladderDetailList.unit"
+                <div v-for="units in ladderDetailList.units"
                      @click="ladderClicked"
                      class="ladder-item">
-                    <p>unit:{{ unit.index }}</p>
-                    <p>{{ unit.title }}</p>
+                    <p>unit:{{ units.index }}</p>
+                    <p>{{ units.title }}</p>
                 </div>
             </div>
         </v-flex>
@@ -24,21 +24,21 @@
                 align-start
                 id="unit-items"
                 class="unit-wrap">
-            <div v-for="unit in ladderDetailList.unit"
+            <div v-for="units in ladderDetailList.units"
                  class="unit-item">
-                <p class="unit-head">unit:{{ unit.index }}</p>
-                <h2 class="unit-title">{{ unit.title }}</h2>
+                <p class="unit-head">unit:{{ units.index }}</p>
+                <h2 class="unit-title">{{ units.title }}</h2>
                 <v-flex justify-center
                         align-center
                         class="unit-image-wrap">
-                    <a :href="unit.url" target="_blank">
-                        <img :src="url+unit.url"
+                    <a :href="units.url" target="_blank">
+                        <img :src="url+units.url"
                          :alt="defaultImage.alt"
                              class="unit-image">
                     </a>
                 </v-flex>
                 <div class="unit-description">
-                    {{ unit.description }}
+                    {{ units.description }}
                 </div>
             </div>
         </v-flex>
@@ -60,7 +60,7 @@
                 <h3 class="peg-link-catch">このLADDERの後に最もペグされたLADDER</h3>
                 <p class="peg-link-title">
                     <v-icon size="60" light class="peg-link-icon">person</v-icon>
-                    <span>{{ nextLadderList.title}}</span>
+                    <spaxn>{{ nextLadderList.title}}</spaxn>
                 </p>
             </router-link>
         </transition>
@@ -101,7 +101,7 @@
     }),
     mounted() {
       this.getLadderParam = this.$route.params.id
-      axios.get('/api/ladder/'+this.getLadderParam, {
+      axios.get('/api/ladder/1/', {
         headers: {
           'Access-Control-Allow-Origin': 'http://localhost:8000',
           'Access-Control-Allow-Headers': 'X-PINGOTHER, Content-Type',
@@ -111,6 +111,7 @@
       })
           .then((response) => {
             this.ladderDetailList = response.data
+            console.log(this.ladderDetailList)
           })
           .catch((error) => {
             console.log(error)
@@ -132,7 +133,7 @@
             }
           })
               .then((response) => {
-                this.prevLadderList = response.data
+                this.prevLadderList = JSON.stringify(response.data)
               })
               .catch((error) => {
                 console.log(error)

@@ -33,8 +33,9 @@ const store = new Vuex.Store({
 
     addTokenMutation(state, payload){
       state.token = payload.token
-      localStorage.setItem('token', state.token.replace(/[\"]/g,""))
+      localStorage.setItem('token', state.token)
       console.log(localStorage)
+      console.log(this.state.token)
     },
     loginEmailMutation(state, payload){state.email = payload.email},
     loginPassMutation(state, payload){state.password = payload.password},

@@ -80,14 +80,13 @@
                 'Content-Type': 'application/x-www-form-urlencoded'
               }
             }).then((response)=>{
-                this.loginToken = JSON.stringify(response.data.token)
+                this.loginToken = JSON.stringify(response.data.token).replace(/[\"]/g,"")
                 this.addToken()
             }).then(() => {
                 if (!this.login){this.login = true}
             }).then(() => {
                 this.loginPromise()
             }).then(()=>{
-              console.log(this.$store.state.token)
                 this.sendLogin()
                 this.$router.push('/')
             }).catch((error) => {

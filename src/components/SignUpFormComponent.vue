@@ -103,7 +103,7 @@
       },
       ...mapActions([
         'addNameAction',
-        'addEmailAction',
+        'addEmailA ction',
         'addPassAction',
         'signAction'
       ])

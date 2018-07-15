@@ -10,7 +10,12 @@
                        ripple
                 >投稿する</v-btn>
             </v-flex>
-            <LadderPostItem/>
+            <LadderPostItem
+                v-on:emitTitle="onTitle"
+                v-on:emitSubTitle=""
+                v-on:emitUrl=""
+                v-on:emitDescription=""
+            />
             <div class="ladder-post-icon">
                 <v-icon size="40">control_point</v-icon>
             </div>
@@ -24,35 +29,42 @@
 
   export default {
     name: "LadderPost",
+    data(){
+      return{
+        ladderTitle: null,
+        unitTitle: null,
+        description: null,
+        url: null,
+        index: null
+      }
+    },
     methods: {
-      postLadder(){
+      onTitle(value){console.log(value)},
+      postLadder() {
         let token = this.$store.state.token
-        token = token.replace(/[\"]/g,"")
+        console.log(this.$store.state.token)
 
-        axios.post('/api/ladder',
+        axios.post('/api/ladder/',
             {
-              'headers': {
-                'Authorization': 'JWT'+token,
+              header: {
                 'Content-Type': 'application/json',
-                'Cache-Control': 'no-cache'
               },
-              'body': {
-                'title': "テスト",
-                'units': [
-                  {
-                    'title': "test",
-                    'description': "テスト",
-                    'url': "https://www.google.co.jp/",
-                    'index': 1,
-                  }
-                ],
-              },
+              Authorization: 'JWT '+token,
+              title: 'ladderの使い方',
+              units: [
+                {
+                  title: '会員登録してみよう',
+                  description: '右上の丸いボタンから会員登録のダイアログへ行けます',
+                  url: 'https://www.yahoo.co.jp',
+                  index: 1
+                }
+              ]
             }).then((response)=>{
-              console.log(response.data)
-            }).catch((error) => {
-              console.log(error)
-            })
-      },
+          console.log(response.data)
+        }).catch((error)=>{
+          console.log(error)
+        })
+      }
     },
     components: {
       LadderPostItem

@@ -40,7 +40,7 @@
       }
     },
     mounted() {
-      axios.get('/api/ladder', {
+      axios.get('/api/ladder/', {
         headers: {
           'Access-Control-Allow-Origin': 'http://localhost:8000',
           'Access-Control-Allow-Headers': 'X-PINGOTHER, Content-Type',
