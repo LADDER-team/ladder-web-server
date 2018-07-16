@@ -1,4 +1,5 @@
 .ladder-posts-wrap
+  position: relative
   background-color: #fff
   padding: 40px
 .ladder-post-icon
@@ -9,8 +10,15 @@
   &:hover
    opacity: .7
 .ladder-post-btn
-  position: absolute
-  top: 0
+  position: fixed
+  bottom: 0
   display: flex
   align-items: center
-  justify-content: flex-end
+  justify-content: center
+  margin: 0 auto
+  max-width: 700px
+  width: 100%
+.ladder-post-submit
+  position: absolute
+  top: -100px
+  right: 0

@@ -40,7 +40,6 @@
       }
     },
     mounted(){
-      console.log(localStorage)
       if(localStorage.getItem('token')!==null){
         this.sign = false
         this.login = true

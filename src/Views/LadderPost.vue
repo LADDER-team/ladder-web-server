@@ -9,14 +9,14 @@
             <div class="ladder-post-icon" @click="addUnit" >
                 <v-icon size="40">control_point</v-icon>
             </div>
-        </v-flex>
-        <v-flex class="ladder-post-btn">
-            <v-btn @click="postLadder"
-                   class="contribution-floating-btn"
-                   dark
-                   fab>
-                <v-icon dark >done</v-icon>
-            </v-btn>
+            <v-flex class="ladder-post-btn">
+                <v-btn @click="postLadder"
+                       class="contribution-floating-btn ladder-post-submit"
+                       dark
+                       fab>
+                    <v-icon dark >done</v-icon>
+                </v-btn>
+            </v-flex>
         </v-flex>
     </v-layout>
 </template>
@@ -39,7 +39,6 @@
     },
     methods: {
       addUnit(){this.unit++},
-      onTitle(value){console.log(value)},
       postLadder() {
         axios({
           method: 'POST',
