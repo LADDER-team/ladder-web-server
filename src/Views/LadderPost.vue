@@ -3,8 +3,8 @@
         <v-flex justify-center
                 align-start
                 class="ladder-posts-wrap">
-            <v-flex v-for="i in unit">
-                <LadderPostItem title="aaaaa" />
+            <v-flex v-for="n in unit" :key="n">
+                <LadderPostItem :title="n"/>
             </v-flex>
             <div class="ladder-post-icon" @click="addUnit" >
                 <v-icon size="40">control_point</v-icon>
@@ -66,8 +66,6 @@
           console.log(error)
         })
       }
-    },
-    computed: {
     },
     components: {
       LadderPostItem
