@@ -58,6 +58,9 @@
     },
     mounted(){
       // const registration = JSON.stringify(this.registration)
+      if(localStorage.getItem('token')){
+
+      }
     },
     methods: {
       cancelDialog(){this.$emit('cancel')},

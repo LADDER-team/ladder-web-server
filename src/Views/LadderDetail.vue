@@ -60,7 +60,7 @@
                 <h3 class="peg-link-catch">このLADDERの後に最もペグされたLADDER</h3>
                 <p class="peg-link-title">
                     <v-icon size="60" light class="peg-link-icon">person</v-icon>
-                    <spaxn>{{ nextLadderList.title}}</spaxn>
+                    <span>{{ nextLadderList.title}}</span>
                 </p>
             </router-link>
         </transition>

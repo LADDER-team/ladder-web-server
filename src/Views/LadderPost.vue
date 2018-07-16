@@ -24,8 +24,8 @@
 </template>
 
 <script>
-  import LadderPostItem from '../components/LadderPostItemComponent'
-  import axios from 'axios'
+  import LadderPostItem from "../components/LadderPostItemComponent"
+  import axios from "axios"
 
   export default {
     name: "LadderPost",
@@ -41,26 +41,27 @@
     methods: {
       onTitle(value){console.log(value)},
       postLadder() {
-        let token = this.$store.state.token
-        console.log(this.$store.state.token)
-
-        axios.post('/api/ladder/',
-            {
-              header: {
-                'Content-Type': 'application/json',
-              },
-              Authorization: 'JWT '+token,
-              title: 'ladderの使い方',
-              units: [
-                {
-                  title: '会員登録してみよう',
-                  description: '右上の丸いボタンから会員登録のダイアログへ行けます',
-                  url: 'https://www.yahoo.co.jp',
-                  index: 1
-                }
-              ]
-            }).then((response)=>{
-          console.log(response.data)
+        axios({
+          method: 'POST',
+          url: 'http://127.0.0.1:8000/api/ladder/',
+          headers: {
+            "Accept": "application/json",
+            "Authorization": "JWT "+localStorage.getItem("token"),
+            "Content-type": "application/json"
+          },
+          data: {
+            title: "LADDER TITLE",
+            units: [
+              {
+                title: "LADDER SUB TITLE",
+                description: "LADDER DESCRIPTION",
+                url: "https://www.google.com/",
+                index: 1
+              }
+            ]
+          }
+        }).then((response)=>{
+          console.log(response)
         }).catch((error)=>{
           console.log(error)
         })
@@ -76,3 +77,4 @@
     @import "../styles/base"
     @import "../styles/ladderPost"
 </style>
+
