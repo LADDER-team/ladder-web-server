@@ -101,7 +101,7 @@
     }),
     mounted() {
       this.getLadderParam = this.$route.params.id
-      axios.get('/api/ladder/1/', {
+      axios.get('/api/ladder/'+this.getLadderParam+'/', {
         headers: {
           'Access-Control-Allow-Origin': 'http://localhost:8000',
           'Access-Control-Allow-Headers': 'X-PINGOTHER, Content-Type',
@@ -120,7 +120,7 @@
     },
     beforeUpdate() {
       if (this.ladderDetailList['recommended_prev_ladder']) {
-        const prevId = this.ladderDetailList['recommended_prev_ladder'].id
+        let prevId = this.ladderDetailList['recommended_prev_ladder'].id
         this.prevLadderId = prevId
 
         if (this.prevLadderList.length === 0) {
@@ -141,7 +141,7 @@
         }
       }
       if (this.ladderDetailList['recommended_next_ladder']) {
-        const nextId = this.ladderDetailList['recommended_next_ladder'].id
+        let nextId = this.ladderDetailList['recommended_next_ladder'].id
         this.nextLadderId = nextId
         if (this.nextLadderList.length === 0) {
           axios.get('/api/ladder/' + nextId, {
