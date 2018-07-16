@@ -3,22 +3,20 @@
         <v-flex justify-center
                 align-start
                 class="ladder-posts-wrap">
-            <v-flex class="ladder-post-btn">
-                <v-btn @click="postLadder"
-                       class="contribution-btn"
-                       depressed
-                       ripple
-                >投稿する</v-btn>
+            <v-flex v-for="i in unit">
+                <LadderPostItem title="aaaaa" />
             </v-flex>
-            <LadderPostItem
-                v-on:emitTitle="onTitle"
-                v-on:emitSubTitle=""
-                v-on:emitUrl=""
-                v-on:emitDescription=""
-            />
-            <div class="ladder-post-icon">
+            <div class="ladder-post-icon" @click="addUnit" >
                 <v-icon size="40">control_point</v-icon>
             </div>
+        </v-flex>
+        <v-flex class="ladder-post-btn">
+            <v-btn @click="postLadder"
+                   class="contribution-floating-btn"
+                   dark
+                   fab>
+                <v-icon dark >done</v-icon>
+            </v-btn>
         </v-flex>
     </v-layout>
 </template>
@@ -35,10 +33,12 @@
         unitTitle: null,
         description: null,
         url: null,
-        index: null
+        index: null,
+        unit: 1,
       }
     },
     methods: {
+      addUnit(){this.unit++},
       onTitle(value){console.log(value)},
       postLadder() {
         axios({
@@ -66,6 +66,8 @@
           console.log(error)
         })
       }
+    },
+    computed: {
     },
     components: {
       LadderPostItem
