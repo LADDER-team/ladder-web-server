@@ -78,28 +78,32 @@
       },
       postUser() {
         this.addUser()
-        axios.post('/api/users/',
-            {
-              name: this.$store.state.name,
-              email: this.$store.state.email,
-              password: this.$store.state.password,
-              headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-              }
-            }).then(()=>{
-              this.sign = true
-            }).then(()=>{
-              this.addSign()
-            }).then(()=>{
-              console.log(this.$store.state.isLogin)
-              console.log(this.$store.state.isSign)
+        axios({
+          method: 'POST',
+          url: '/api/users/',
+          headers: {
+            "Accept": "application/json",
+            'Content-Type': 'application/json',
+          },
+          data: {
+            name: this.$store.state.name,
+            email: this.$store.state.email,
+            password: this.$store.state.password
+          }
+        }).then(()=>{
+          this.$data.sign = true
+        }).then(()=>{
+          this.addSign()
+        }).then(()=>{
+          console.log(this.$store.state.isLogin)
+          console.log(this.$store.state.isSign)
 
-              this.sendToSign()
+          this.sendToSign()
 
-              this.$router.push('/')
-            }).catch((error) => {
-              console.log(error)
-            })
+          this.$router.push('/')
+        }).catch((error) => {
+          console.log(error)
+        })
       },
       ...mapActions([
         'addNameAction',

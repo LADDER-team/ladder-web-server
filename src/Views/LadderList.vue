@@ -33,27 +33,20 @@
       return{
         defaultImage: {
           src: "http://via.placeholder.com/350x150",
-          src1: "../assets/img/book1.jpg",
           alt: "placeholder-image"
         },
         ladderList: []
       }
     },
     mounted() {
-      axios.get('/api/ladder/', {
-        headers: {
-          'Access-Control-Allow-Origin': 'http://localhost:8000',
-          'Access-Control-Allow-Headers': 'X-PINGOTHER, Content-Type',
-          'Access-Control-Allow-Methods': 'GET, POST, HEAD, OPTIONS',
-          'Access-Control-Max-Age': '1728000',
-        }
-      })
-          .then((response) => {
+      axios({
+        method: 'GET',
+        url: 'http://127.0.0.1:8000/api/ladder/'
+      }).then((response) => {
             this.ladderList = response.data
-          })
-          .catch((error) => {
+      }).catch((error) => {
             console.log(error)
-          })
+      })
     },
   }
 </script>

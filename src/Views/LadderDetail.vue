@@ -32,8 +32,8 @@
                         align-center
                         class="unit-image-wrap">
                     <a :href="units.url" target="_blank">
-                        <img :src="url+units.url"
-                         :alt="defaultImage.alt"
+                        <img :src="image.src+units.url"
+                             :alt="image.alt"
                              class="unit-image">
                     </a>
                 </v-flex>
@@ -74,93 +74,71 @@
     data: () => ({
       ladderActive: false,
       ladderToUnit: false,
-      prevLadder: false,
       nextLadder: false,
-      prevLadderId: null,
+      prevLadder: false,
       nextLadderId: null,
+      getLadderParam: null,
+      prevLadderId: null,
+      duration: 300,
       offsetTop: 0,
       scrollWrapH: 0,
+      selectedLadder: 0,
+      scrollOffset: 0,
       unitH: 0,
       unitPosition: 0,
       unitScroll: 0,
       unitActivate: 0,
-      selectedLadder: 0,
-      duration: 300,
-      scrollOffset: 0,
-      getLadderParam: null,
       easing: '',
       url: 'https://blinky.nemui.org/shot/xlarge?',
-      defaultImage: {
-        src: "http://via.placeholder.com/350x150",
-        src1: "../assets/img/book1.jpg",
-        alt: "placeholder-image"
+      image: {
+        src: 'https://blinky.nemui.org/shot/xlarge?',
+        defaultSrc: 'http://via.placeholder.com/350x150',
+        alt: 'placeholder-image'
       },
       ladderDetailList: [],
-      prevLadderList: [],
-      nextLadderList: []
+      nextLadderList: [],
+      prevLadderList: []
     }),
     mounted() {
       this.getLadderParam = this.$route.params.id
-      axios.get('/api/ladder/'+this.getLadderParam+'/', {
-        headers: {
-          'Access-Control-Allow-Origin': 'http://localhost:8000',
-          'Access-Control-Allow-Headers': 'X-PINGOTHER, Content-Type',
-          'Access-Control-Allow-Methods': 'GET, POST, HEAD, OPTIONS',
-          'Access-Control-Max-Age': '1728000',
-        }
+      axios({
+        method: 'GET',
+        url: 'http://127.0.0.1:8000/api/ladder/'+this.getLadderParam+'/'
+      }).then((response) => {
+        this.ladderDetailList = response.data
+      }).catch((error) => {
+        console.log(error)
       })
-          .then((response) => {
-            this.ladderDetailList = response.data
-            console.log(this.ladderDetailList)
-          })
-          .catch((error) => {
-            console.log(error)
-          })
       window.addEventListener('scroll', this.handleScroll)
     },
     beforeUpdate() {
       if (this.ladderDetailList['recommended_prev_ladder']) {
-        let prevId = this.ladderDetailList['recommended_prev_ladder'].id
-        this.prevLadderId = prevId
+        this.prevLadderId = this.ladderDetailList['recommended_prev_ladder'].id
 
         if (this.prevLadderList.length === 0) {
-          axios.get('/api/ladder/' + prevId, {
-            headers: {
-              'Access-Control-Allow-Origin': 'http://localhost:8000',
-              'Access-Control-Allow-Headers': 'X-PINGOTHER, Content-Type',
-              'Access-Control-Allow-Methods': 'GET, POST, HEAD, OPTIONS',
-              'Access-Control-Max-Age': '1728000',
-            }
+          axios({
+            method: 'GET',
+            url: 'http://127.0.0.1:8000/api/ladder/'+this.prevLadderId+'/'
+          }).then((response) => {
+            this.prevLadderList = response.data
+          }).catch((error) => {
+            console.log(error)
           })
-              .then((response) => {
-                this.prevLadderList = JSON.stringify(response.data)
-              })
-              .catch((error) => {
-                console.log(error)
-              })
         }
       }
       if (this.ladderDetailList['recommended_next_ladder']) {
-        let nextId = this.ladderDetailList['recommended_next_ladder'].id
-        this.nextLadderId = nextId
+        this.nextLadderId = this.ladderDetailList['recommended_next_ladder'].id
         if (this.nextLadderList.length === 0) {
-          axios.get('/api/ladder/' + nextId, {
-            headers: {
-              'Access-Control-Allow-Origin': 'http://localhost:8000',
-              'Access-Control-Allow-Headers': 'X-PINGOTHER, Content-Type',
-              'Access-Control-Allow-Methods': 'GET, POST, HEAD, OPTIONS',
-              'Access-Control-Max-Age': '1728000',
-            }
+          axios({
+            method: 'GET',
+            url: 'http://127.0.0.1:8000/api/ladder/' + this.nextLadderId + '/'
+          }).then((response) => {
+            this.nextLadderList = response.data
+          }).catch((error) => {
+            console.log(error)
           })
-              .then((response) => {
-                this.nextLadderList = response.data
-              })
-              .catch((error) => {
-                console.log(error)
-              })
         }
       }
-      // when loaded page, true into pegLadder
       if (this.offsetTop<100 && this.prevLadderList.length !== 0){
         this.prevLadder = true
       } else if(this.offsetTop>this.scrollWrapH-window.innerHeight*0.9-200 && this.nextLadderList.length !== 0){
@@ -226,20 +204,14 @@
           this.nextLadderList = [];
           this.prevLadderList = [];
           this.getLadderParam = this.$route.params.id
-          axios.get('/api/ladder/'+this.getLadderParam, {
-            headers: {
-              'Access-Control-Allow-Origin': 'http://localhost:8000',
-              'Access-Control-Allow-Headers': 'X-PINGOTHER, Content-Type',
-              'Access-Control-Allow-Methods': 'GET, POST, HEAD, OPTIONS',
-              'Access-Control-Max-Age': '1728000',
-            }
+          axios({
+            method: 'GET',
+            url: 'http://127.0.0.1:8000/api/ladder/' + this.getLadderParam + '/'
+          }).then((response) => {
+            this.ladderDetailList = response.data
+          }).catch((error) => {
+            console.log(error)
           })
-              .then((response) => {
-                this.ladderDetailList = response.data
-              })
-              .catch((error) => {
-                console.log(error)
-              })
         }
       }
     },

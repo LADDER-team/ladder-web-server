@@ -75,26 +75,30 @@
       loginPromise(){this.loginAction(this.login)},
       postLogin() {
         this.loginUser()
-        axios.post('/api/api-auth/',
-            {
-              email: this.$store.state.email,
-              password: this.$store.state.password,
-              headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-              }
-            }).then((response)=>{
-                this.loginToken = JSON.stringify(response.data.token).replace(/[\"]/g,"")
-                this.addToken()
-            }).then(() => {
-                if (!this.login){this.login = true}
-            }).then(() => {
-                this.loginPromise()
-            }).then(()=>{
-                this.sendLogin()
-                this.$router.push('/')
-            }).catch((error) => {
-                console.log(error)
-            })
+        axios({
+          method: 'POST',
+          url: '/api/api-auth/',
+          headers: {
+            "Accept": "application/json",
+            'Content-Type': 'application/json'
+          },
+          data: {
+            email: this.$store.state.email,
+            password: this.$store.state.password
+          }
+        }).then((response)=>{
+          this.loginToken = JSON.stringify(response.data.token).replace(/[\"]/g,"")
+          this.addToken()
+        }).then(() => {
+          if (!this.login){this.login = true}
+        }).then(() => {
+          this.loginPromise()
+        }).then(()=>{
+          this.sendLogin()
+          this.$router.push('/')
+        }).catch((error) => {
+          console.log(error)
+        })
       },
       ...mapActions([
         'loginEmailAction',
