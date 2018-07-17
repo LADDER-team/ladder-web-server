@@ -66,12 +66,21 @@
           alert('これ以上ユニットは増やせません！')
         }
       },
+      onDescription(descriptionEmit, index){
+        this.$set(this.descriptionList, index, descriptionEmit);
+        console.log('--- description ---')
+        console.log(this.descriptionList)
+      },
       onSubTitle(subTitleEmit, index){
         this.$set(this.subtitleList, index, subTitleEmit);
+        console.log('--- subtitle ---')
         console.log(this.subtitleList)
       },
-      onUrl(urlEmit){this.url = urlEmit},
-      onDescription(descriptionEmit){this.description = descriptionEmit},
+      onUrl(urlEmit, index){
+        this.$set(this.urlList, index, urlEmit);
+        console.log('--- url ---')
+        console.log(this.urlList)
+      },
       clickLadderPost() {
         axios({
           method: 'POST',
@@ -96,7 +105,9 @@
           console.log('Posted Ladder!!')
         }).catch((error)=>{
           if (!this.$store.state.isLogin){
-            alert('投稿内容が不正です！')
+            alert('ログインしてください！')
+          }else{
+            alert('投稿に失敗しました！')
           }
           console.log(error)
           this.$router.push('/')
