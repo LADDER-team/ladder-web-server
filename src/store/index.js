@@ -6,55 +6,49 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
+    isDialog: false,
     isLogin: false,
     isSign: false,
-    token: null,
-    name: null,
     email: null,
+    name: null,
     password: null,
-    isDialog: false,
+    token: null,
   },
   getters: {
-    nameGetter(state){return state.name},
+    dialogGetter(state){return state.isDialog},
     emailGetter(state){return state.email},
+    loginGetter(state){return state.isLogin},
+    nameGetter(state){return state.name},
     passGetter(state){return state.password},
     signGetter(state){return state.isSign},
-
-    tokenGetter(state){return state.token},
-    loginGetter(state){return state.isLogin},
-
-    dialogGetter(state){return state.isDialog}
+    tokenGetter(state){return state.token}
   },
   mutations: {
-    addUserMutation(state, payload){state.name = payload.name},
     addEmailMutation(state, payload){state.email = payload.email},
     addPassMutation(state, payload){state.password = payload.password},
-    signMutation(state, payload){state.isSign = payload.isSign},
-
+    addUserMutation(state, payload){state.name = payload.name},
     addTokenMutation(state, payload){
       state.token = payload.token
       localStorage.setItem('token', state.token)
       console.log(localStorage)
       console.log(this.state.token)
     },
+    dialogMutation(state, payload){state.isDialog = payload.isDialog},
     loginEmailMutation(state, payload){state.email = payload.email},
-    loginPassMutation(state, payload){state.password = payload.password},
     loginMutation(state, payload){state.isLogin = payload.isLogin},
-
-    dialogMutation(state, payload){state.isDialog = payload.isDialog}
+    loginPassMutation(state, payload){state.password = payload.password},
+    signMutation(state, payload){state.isSign = payload.isSign}
   },
   actions: {
-    addNameAction({commit}, name){commit('addUserMutation', {name})},
     addEmailAction({commit}, email){commit('addEmailMutation', {email})},
+    addNameAction({commit}, name){commit('addUserMutation', {name})},
     addPassAction({commit}, password){commit('addPassMutation', {password})},
-    signAction({commit}, isSign){commit('signMutation', {isSign})},
-
     addTokenAction({commit}, token){commit('addTokenMutation', {token})},
-    loginEmailAction({commit}, email){commit('loginEmailMutation', {email})},
-    loginPassAction({commit}, password){commit('loginPassMutation', {password})},
+    dialogAction({commit}, isDialog){commit('dialogMutation', {isDialog})},
+    signAction({commit}, isSign){commit('signMutation', {isSign})},
     loginAction({commit}, isLogin){commit('loginMutation', {isLogin})},
-
-    dialogAction({commit}, isDialog){commit('dialogMutation', {isDialog})}
+    loginEmailAction({commit}, email){commit('loginEmailMutation', {email})},
+    loginPassAction({commit}, password){commit('loginPassMutation', {password})}
   }
 })
 export default store
