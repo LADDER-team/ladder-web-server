@@ -3,17 +3,25 @@
         <v-flex justify-center
                 align-start
                 class="ladder-posts-wrap">
-            <v-flex v-for="n in unit" :key="n">
-                <LadderPostItem :title="n"/>
+            <v-text-field
+                    v-model="modelTitle"
+                    label="Ladder Title"
+                    outline
+                    class="post-text-field post-title"
+                    placeholder="初心者がDjangoアプリケーションを作るまで！"/>
+            <v-flex v-for="n in unitIndex" :key="n">
+                <LadderPostItem :index="n"
+                                v-on:subTitleEmit="onSubTitle"
+                                v-on:urlEmit="onUrl"
+                                v-on:descriptionEmit="onDescription"/>
             </v-flex>
             <div class="ladder-post-icon" @click="addUnit" >
                 <v-icon size="40">control_point</v-icon>
             </div>
             <v-flex class="ladder-post-btn">
                 <v-btn @click="postLadder"
-                       class="contribution-floating-btn ladder-post-submit"
-                       dark
-                       fab>
+                       dark fab large
+                       class="contribution-floating-btn ladder-post-submit">
                     <v-icon dark >done</v-icon>
                 </v-btn>
             </v-flex>
@@ -29,16 +37,22 @@
     name: "LadderPost",
     data(){
       return{
-        ladderTitle: null,
-        unitTitle: null,
-        description: null,
-        url: null,
-        index: null,
-        unit: 1,
+        description: "",
+        ladderTitle: "",
+        modelTitle: "",
+        subtitle: "",
+        unitIndex: 1,
+        url: "",
       }
     },
+    created(){
+      this.modelTitle = this.modelTitle?this.modelTitle:""
+    },
     methods: {
-      addUnit(){this.unit++},
+      addUnit(){this.unitIndex++},
+      onSubTitle(subTitleEmit){this.subtitle = subTitleEmit},
+      onUrl(urlEmit){this.url = urlEmit},
+      onDescription(descriptionEmit){this.description = descriptionEmit},
       postLadder() {
         axios({
           method: 'POST',
@@ -49,12 +63,12 @@
             "Content-type": "application/json"
           },
           data: {
-            title: "LADDER TITLE",
+            title: this.modelTitle,
             units: [
               {
-                title: "LADDER SUB TITLE",
-                description: "LADDER DESCRIPTION",
-                url: "https://www.google.com/",
+                title: this.subtitle,
+                description: this.description,
+                url: this.url,
                 index: 1
               }
             ]
