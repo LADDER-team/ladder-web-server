@@ -12,11 +12,12 @@
                     class="post-text-field post-title"
                     label="Ladder Title"
                     placeholder="初心者がDjangoアプリケーションを作るまで！"/>
-            <v-flex v-for="n in unitIndex" :key="n">
-                <LadderPostItem :index="n"
-                                v-on:subTitleEmit="onSubTitle"
-                                v-on:urlEmit="onUrl"
-                                v-on:descriptionEmit="onDescription"/>
+            <v-flex v-for="index in unitIndex" :key="index">
+                <LadderPostItem :index="index"
+                                @sub-title-emit="onSubTitle"
+                                @url-emit="onUrl"
+                                @description-emit="onDescription"
+                                class="ladder-post-item"/>
             </v-flex>
             <div class="ladder-post-icon" @click="clickUnitAdd" >
                 <v-icon size="40">control_point</v-icon>
@@ -41,11 +42,17 @@
     data(){
       return{
         unitIndex: 1,
-        description: "",
         ladderTitle: "",
         modelTitle: "",
-        subtitle: "",
-        url: "",
+        descriptionList: {
+          1: "",
+        },
+        subtitleList: {
+          1: "",
+        },
+        urlList: {
+          1: "",
+        }
       }
     },
     created(){
@@ -53,7 +60,10 @@
     },
     methods: {
       clickUnitAdd(){this.unitIndex++;},
-      onSubTitle(subTitleEmit){this.subtitle = subTitleEmit},
+      onSubTitle(subTitleEmit, index){
+        this.$set(this.subtitleList, index, subTitleEmit);
+        console.log(this.subtitleList)
+      },
       onUrl(urlEmit){this.url = urlEmit},
       onDescription(descriptionEmit){this.description = descriptionEmit},
       clickLadderPost() {
@@ -76,10 +86,14 @@
               }
             ]
           }
-        }).then((response)=>{
-          console.log(response)
+        }).then(()=>{
+          console.log('Posted Ladder!!')
         }).catch((error)=>{
+          if (!this.$store.state.isLogin){
+            alert('投稿内容が不正です！')
+          }
           console.log(error)
+          this.$router.push('/')
         })
       }
     },

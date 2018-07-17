@@ -34,7 +34,8 @@
       return {
         modelDescription: "",
         modelSubTitle: "",
-        modelUrl: ""
+        modelUrl: "",
+        index: this.props.index
       }
     },
     created(){
@@ -43,9 +44,9 @@
       this.modelUrl = this.modelUrl?this.modelUrl:""
     },
     methods: {
-      inputSubTitle(){this.$emit('subTitleEmit',this.modelSubTitle)},
-      inputUrl(){this.$emit('urlEmit', this.modelUrl)},
-      inputDescription(){this.$emit('descriptionEmit', this.modelDescription)}
+      inputSubTitle(){this.$emit('sub-title-emit',this.modelSubTitle, this.index)},
+      inputUrl(){this.$emit('url-emit', this.modelUrl, this.index)},
+      inputDescription(){this.$emit('description-emit', this.modelDescription, this.index)}
     }
   }
 </script>
