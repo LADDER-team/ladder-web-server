@@ -35,11 +35,9 @@
         </v-card-text>
         <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1"
-                   flat
+            <v-btn color="blue darken-1" flat
                    @click="cancelDialog">キャンセル</v-btn>
-            <v-btn color="blue darken-1"
-                   flat
+            <v-btn color="blue darken-1" flat
                    @click.native="postUser">登録</v-btn>
         </v-card-actions>
     </v-card>

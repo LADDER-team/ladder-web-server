@@ -4,10 +4,7 @@
               max-width="500px"
               class="avatar-btn-wrap">
         <v-btn slot="activator"
-               dark
-               round
-               outline
-               small
+               dark round outline small
                class="avatar-btn">
             <v-avatar
                     :tile=false

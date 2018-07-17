@@ -5,9 +5,9 @@
                 class="ladder-posts-wrap">
             <v-text-field
                     v-model="modelTitle"
-                    label="Ladder Title"
                     outline
                     class="post-text-field post-title"
+                    label="Ladder Title"
                     placeholder="初心者がDjangoアプリケーションを作るまで！"/>
             <v-flex v-for="n in unitIndex" :key="n">
                 <LadderPostItem :index="n"

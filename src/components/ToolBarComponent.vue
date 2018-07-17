@@ -6,20 +6,18 @@
             </router-link>
         </h1>
         <v-flex xs5 sm4 md2 class="g-search-wrap">
-            <v-text-field
-                    class="g-search-field"
-                    name="input-1"
-                    rows=1
-                    prepend-icon="search"
-                    hide-details/>
+            <v-text-field hide-details
+                          name="input-1"
+                          prepend-icon="search"
+                          rows=1
+                          class="g-search-field"/>
         </v-flex>
         <v-spacer/>
         <v-toolbar-items class="hidden-sm-and-down avatar align-center">
             <router-link :to="{name: 'post'}">
-                <v-btn class="contribution-btn"
-                       depressed
-                       ripple
-                >投稿する</v-btn>
+                <v-btn depressed ripple
+                       class="contribution-btn">
+                    投稿する</v-btn>
             </router-link>
             <SignDialog/>
         </v-toolbar-items>

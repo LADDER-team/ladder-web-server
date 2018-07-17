@@ -2,11 +2,12 @@
     <v-layout md8 lg8
               justify-center
               class="layout-ladder-list">
-        <v-flex justify-center
-                align-start
+        <v-flex align-start　justify-center
                 class="ladder-links-wrap">
-            <div v-for="ladder in ladderList" class="ladder-link-wrap">
-                <router-link :to="`detail/${ ladder.id }`" class="ladder-link">
+            <div v-for="ladder in ladderList"
+                 class="ladder-link-wrap">
+                <router-link :to="`detail/${ ladder.id }`"
+                             class="ladder-link">
                     <div class="ladder-thumb-wrap" >
                         <img :src="defaultImage.src"
                              :alt="defaultImage.alt"
