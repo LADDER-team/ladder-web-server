@@ -59,7 +59,13 @@
       this.modelTitle = this.modelTitle?this.modelTitle:""
     },
     methods: {
-      clickUnitAdd(){this.unitIndex++;},
+      clickUnitAdd(){
+        if (this.unitIndex < 8){
+          this.unitIndex++;
+        }else{
+          alert('これ以上ユニットは増やせません！')
+        }
+      },
       onSubTitle(subTitleEmit, index){
         this.$set(this.subtitleList, index, subTitleEmit);
         console.log(this.subtitleList)
