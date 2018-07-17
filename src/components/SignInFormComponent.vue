@@ -29,10 +29,10 @@
         </v-card-text>
         <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" flat
-                   @click="cancelDialog">キャンセル</v-btn>
-            <v-btn color="blue darken-1" flat
-                   @click.native="postLogin">ログイン</v-btn>
+            <v-btn flat　color="blue darken-1"
+                   @click="clickDialogCancel">キャンセル</v-btn>
+            <v-btn flat　color="blue darken-1"
+                   @click.native="clickLoginPost">ログイン</v-btn>
         </v-card-actions>
     </v-card>
 </template>
@@ -54,14 +54,8 @@
         }
       }
     },
-    mounted(){
-      // const registration = JSON.stringify(this.registration)
-      if(localStorage.getItem('token')){
-
-      }
-    },
     methods: {
-      cancelDialog(){this.$emit('cancel')},
+      clickDialogCancel(){this.$emit('cancel')},
       sendLogin(){this.$emit('login')},
       loginUser(){
         this.loginEmailAction(this.$refs.emailRef.value),
@@ -71,7 +65,7 @@
         this.addTokenAction(this.loginToken)
       },
       loginPromise(){this.loginAction(this.login)},
-      postLogin() {
+      clickLoginPost() {
         this.loginUser()
         axios({
           method: 'POST',

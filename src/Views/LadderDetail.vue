@@ -1,7 +1,7 @@
 <template>
     <v-layout align-start justify-center wrap
-              ref="scrolledWrapRef"
-              id="scrolled-wrap"
+              ref="scrollWrapRef"
+              id="scroll-wrap"
               class="layout-ladder-detail">
         <v-flex md2 lg2
                 align-cener
@@ -9,7 +9,7 @@
                 class="ladder-wrap">
             <div id="ladder-action-wrap" class="ladder-inner">
                 <div v-for="units in ladderDetailList.units"
-                     @click="ladderClicked"
+                     @click="clickLadder"
                      class="ladder-item">
                     <p>unit:{{ units.index }}</p>
                     <p>{{ units.title }}</p>
@@ -149,14 +149,14 @@
       handleScroll() {
         this.offsetTop = window.pageYOffset
       },
-      ladderClicked(e) {
+      clickLadder(e) {
         this.duration = 600
         this.easing = 'easeInOutCubic'
         let index = this.foundIndex(e)
 
         this.$nextTick(() => {
           this.scrollOffset = this.$el.getElementsByClassName('unit-item')[index].offsetTop - 100
-          this.$vuetify.goTo('#scrolled-wrap', this.options)
+          this.$vuetify.goTo('#scroll-wrap', this.options)
         })
       },
       foundIndex(e){
@@ -191,7 +191,7 @@
       ladderDetailList: {
         handler() {
           this.$nextTick(() => {
-            this.scrollWrapH = this.$refs.scrolledWrapRef.getBoundingClientRect().height
+            this.scrollWrapH = this.$refs.scrollWrapRef.getBoundingClientRect().height
           })
         }
       },

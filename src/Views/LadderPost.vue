@@ -1,5 +1,8 @@
 <template>
-    <v-layout justify-center class="layout-ladder-post">
+    <v-layout justify-center
+              ref="scrollWrapRef"
+              id="scroll-wrap"
+              class="layout-ladder-post">
         <v-flex justify-center
                 align-start
                 class="ladder-posts-wrap">
@@ -15,14 +18,14 @@
                                 v-on:urlEmit="onUrl"
                                 v-on:descriptionEmit="onDescription"/>
             </v-flex>
-            <div class="ladder-post-icon" @click="addUnit" >
+            <div class="ladder-post-icon" @click="clickUnitAdd" >
                 <v-icon size="40">control_point</v-icon>
             </div>
             <v-flex class="ladder-post-btn">
-                <v-btn @click="postLadder"
+                <v-btn @click="clickLadderPost"
                        dark fab large
                        class="contribution-floating-btn ladder-post-submit">
-                    <v-icon dark >done</v-icon>
+                    <v-icon dark>done</v-icon>
                 </v-btn>
             </v-flex>
         </v-flex>
@@ -37,11 +40,11 @@
     name: "LadderPost",
     data(){
       return{
+        unitIndex: 1,
         description: "",
         ladderTitle: "",
         modelTitle: "",
         subtitle: "",
-        unitIndex: 1,
         url: "",
       }
     },
@@ -49,11 +52,11 @@
       this.modelTitle = this.modelTitle?this.modelTitle:""
     },
     methods: {
-      addUnit(){this.unitIndex++},
+      clickUnitAdd(){this.unitIndex++;},
       onSubTitle(subTitleEmit){this.subtitle = subTitleEmit},
       onUrl(urlEmit){this.url = urlEmit},
       onDescription(descriptionEmit){this.description = descriptionEmit},
-      postLadder() {
+      clickLadderPost() {
         axios({
           method: 'POST',
           url: 'http://127.0.0.1:8000/api/ladder/',

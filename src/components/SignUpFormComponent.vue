@@ -93,11 +93,8 @@
         }).then(()=>{
           this.addSign()
         }).then(()=>{
-          console.log(this.$store.state.isLogin)
-          console.log(this.$store.state.isSign)
-
+          console.log(this.$store.state.isSign?this.$store.state.name+'is Sign in':"sign in failed")
           this.sendToSign()
-
           this.$router.push('/')
         }).catch((error) => {
           console.log(error)
