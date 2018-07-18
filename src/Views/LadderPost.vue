@@ -71,14 +71,16 @@
       onSubTitle(subTitleEmit, index){this.$set(this.subtitleList, index, subTitleEmit);},
       onUrl(urlEmit, index){this.$set(this.urlList, index, urlEmit);},
       clickLadderPost() {
+        let index = this.unitIndex
         for (let i=1;i<=this.unitIndex;i++){
             this.unit[i-1] =
                 {
                   title: this.subtitleList[i],
                   description: this.descriptionList[i],
                   url: this.urlList[i],
-                  index: i
+                  index: index
                 }
+                index--
         }
         let unit = JSON.stringify(this.unit)
         unit = JSON.parse(unit)
@@ -97,7 +99,8 @@
             units: unit
           }
         }).then(()=>{
-          console.log('Posted Ladder!!')
+          alert('ラダーを投稿しました！トップページへ遷移します！')
+          this.$router.push('/')
         }).catch((error)=>{
           if (!this.$store.state.isLogin){
             alert('ログインしてください！')

@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
+import _ from './lib/lodash'
 
 Vue.config.productionTip = false
 

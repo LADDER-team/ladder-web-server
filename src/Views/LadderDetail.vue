@@ -221,7 +221,7 @@
           offset: this.scrollOffset,
           easing: this.easing
         }
-      }
+      },
     }
   }
 </script>
