@@ -36,7 +36,6 @@
     },
     methods: {
       clickContribute(){
-        console.log(this)
       }
     },
     components: {

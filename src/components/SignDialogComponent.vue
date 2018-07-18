@@ -13,10 +13,11 @@
             </v-avatar>
         </v-btn>
         <SignUpForm v-show="sign"
-                    v-on:cancel="canceledDialog"
+                    v-on:cancel="onSignUpDialog"
+                    v-on:direct-login="onDirectLogin"
                     v-on:sign="signin"/>
         <SignInForm v-show="login"
-                    v-on:cancel="canceledDialog"
+                    v-on:cancel="onSignInDialog"
                     v-on:login="receivedLogin"/>
     </v-dialog>
 </template>
@@ -30,8 +31,8 @@
     name: "SignDialogComponent",
     data(){
       return{
-        dialog: false,
         sign: true,
+        dialog: false,
         login: false,
         avatar: "person_outline"
       }
@@ -43,7 +44,16 @@
       }
     },
     methods: {
-      canceledDialog(){this.dialog = false},
+      onSignInDialog(){
+        this.dialog = false
+        this.login = false
+        this.sign = true
+      },
+      onSignUpDialog(){this.dialog = false},
+      onDirectLogin(){
+        this.sign = false
+        this.login = true
+      },
       signin(){
         this.sign = false
         this.login = true

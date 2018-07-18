@@ -20,11 +20,6 @@
                                       required></v-text-field>
                     </v-flex>
                 </v-layout>
-                <p class="dialog-help">
-                    未登録の方はこちらから
-                    <router-link :to="{name: 'list'}">登録</router-link>
-                    してください
-                </p>
             </v-container>
         </v-card-text>
         <v-card-actions>
