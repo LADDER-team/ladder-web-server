@@ -75,9 +75,9 @@
         for (let i=1;i<=this.unitIndex;i++){
             this.unit[i-1] =
                 {
-                  title: this.subtitleList[i],
-                  description: this.descriptionList[i],
-                  url: this.urlList[i],
+                  title: this.subtitleList[index],
+                  description: this.descriptionList[index],
+                  url: this.urlList[index],
                   index: index
                 }
                 index--
