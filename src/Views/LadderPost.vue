@@ -88,7 +88,7 @@
 
         axios({
           method: 'POST',
-          url: 'http://api.ladder.noframeschool.com/ladder/',
+          url: 'http://127.0.0.1:8000/api/ladder/',
           headers: {
             "Accept": "application/json",
             "Authorization": "JWT "+localStorage.getItem("token"),
