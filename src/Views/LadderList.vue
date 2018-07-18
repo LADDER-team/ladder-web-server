@@ -9,8 +9,8 @@
                 <router-link :to="`detail/${ ladder.id }`"
                              class="ladder-link">
                     <div class="ladder-thumb-wrap" >
-                        <img :src="defaultImage.src"
-                             :alt="defaultImage.alt"
+                        <img :alt="defaultImage.alt"
+                             src="../assets/img/ladder_avatar.png"
                              class="ladder-thumb">
                     </div>
                     <div class="ladder-info-wrap">
