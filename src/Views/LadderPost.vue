@@ -80,7 +80,6 @@
                   url: this.urlList[i],
                   index: i
                 }
-                index--
         }
         let unit = JSON.stringify(this.unit)
         unit = JSON.parse(unit)
@@ -91,7 +90,7 @@
           url: 'http://127.0.0.1:8000/api/ladder/',
           headers: {
             "Accept": "application/json",
-            "Authorization": "JWT "+localStorage.getItem("token"),
+            "Authorization": "JWT "+this.$store.state.token,
             "Content-type": "application/json"
           },
           data: {
@@ -108,7 +107,6 @@
             alert('投稿に失敗しました！')
           }
           console.log(error)
-          this.$router.push('/')
         })
       }
     },
