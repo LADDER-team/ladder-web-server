@@ -1,10 +1,14 @@
 .g-toolbar
+  z-index: 300
   background-color: $default_primary_color !important
 .g-toolbar-title
   color: #fff
   display: flex
   align-items: center
+  &:hover
+    opacity: .7
 .g-toolbar-logo
+  vertical-align: middle
   max-width: 150px
   width: 150px
 .g-search-wrap
@@ -17,12 +21,3 @@
   overflow: hidden
 .input-group__details
   display: none
-.avatar-wrap
-  margin: 0 0 0 30px
-.contribution-btn
-  background-color: $default_button_color !important
-  max-height: 30px
-  height: 30px!important
-  border-radius: 6px
-  color: #fff!important
-  font-weight: bold

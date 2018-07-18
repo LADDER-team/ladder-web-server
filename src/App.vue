@@ -8,7 +8,9 @@
                     justify-center
                     align-start
                     class="g-container">
-                <router-view />
+                <transition name="root">
+                    <router-view />
+                </transition>
             </v-container>
         </v-content>
         <Footer/>
@@ -29,13 +31,6 @@
       miniVariant: false,
       rightDrawer: false
     }),
-    mounted(){
-      console.log('Initial Store access')
-      console.log(this.$store.state.test)
-      console.log('Store commit')
-      this.$store.commit('increment')
-      console.log(this.$store.state.test)
-    },
     components: {
       ToolBar,
       LadderList,
@@ -44,6 +39,5 @@
   }
 </script>
 <style scoped lang="sass">
-    @import "./styles/colors"
-    @import "./styles/layout"
+    @import "./styles/base"
 </style>

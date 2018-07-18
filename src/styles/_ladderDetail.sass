@@ -1,10 +1,5 @@
-.project-wrap
-  position: relative
-  top: 100px
-  left: 0
-  padding: 0 0 50px
-  overflow: scroll
 .unit-wrap
+  position: relative
   align-items: flex-start
   margin: 0 0 0 4%
 .unit-head
@@ -30,12 +25,12 @@
   text-align: center
 .unit-image
   margin: 0 auto
-  max-width: 40%
+  max-width: 60%
+  width: 60%
 .unit-description
   font-size: 18px
   border-left: 3px solid #64B5F6
   padding: 0 0 0 10px
-  max-width: 80%
   width: 80%
   margin: 0 auto
 .ladder-item
@@ -116,3 +111,30 @@
       width: 6px
       height: 40px
       background: $default_ladder_activate_color
+
+.peg-link
+  z-index: 100
+  position: fixed
+  top: 65px
+  left: 30%
+  padding: 10px 50px
+  max-height: 120px
+  background-color: rgba(207,216,220 ,.5)
+  max-width: 900px
+  width: 60%
+  height: 120px
+  &:hover
+    opacity: .7
+.peg-link-catch
+  margin: 0 0 10px
+  text-align: center
+  font-size: 18px
+  font-weight: normal
+.peg-link-icon
+  margin: 0 15px 0 0
+.peg-link-title
+  font-size: 30px
+  text-align: left
+  span
+    vertical-align: super
+
