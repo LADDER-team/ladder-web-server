@@ -44,6 +44,7 @@
         unitIndex: 1,
         ladderTitle: "",
         modelTitle: "",
+        unit: [],
         descriptionList: {
           1: "",
         },
@@ -66,22 +67,23 @@
           alert('これ以上ユニットは増やせません！')
         }
       },
-      onDescription(descriptionEmit, index){
-        this.$set(this.descriptionList, index, descriptionEmit);
-        console.log('--- description ---')
-        console.log(this.descriptionList)
-      },
-      onSubTitle(subTitleEmit, index){
-        this.$set(this.subtitleList, index, subTitleEmit);
-        console.log('--- subtitle ---')
-        console.log(this.subtitleList)
-      },
-      onUrl(urlEmit, index){
-        this.$set(this.urlList, index, urlEmit);
-        console.log('--- url ---')
-        console.log(this.urlList)
-      },
+      onDescription(descriptionEmit, index){this.$set(this.descriptionList, index, descriptionEmit);},
+      onSubTitle(subTitleEmit, index){this.$set(this.subtitleList, index, subTitleEmit);},
+      onUrl(urlEmit, index){this.$set(this.urlList, index, urlEmit);},
       clickLadderPost() {
+        for (let i=1;i<=this.unitIndex;i++){
+            this.unit[i-1] =
+                {
+                  title: this.subtitleList[i],
+                  description: this.descriptionList[i],
+                  url: this.urlList[i],
+                  index: i
+                }
+        }
+        let unit = JSON.stringify(this.unit)
+        unit = JSON.parse(unit)
+        console.log(unit)
+
         axios({
           method: 'POST',
           url: 'http://127.0.0.1:8000/api/ladder/',
@@ -92,14 +94,7 @@
           },
           data: {
             title: this.modelTitle,
-            units: [
-              {
-                title: this.subtitle,
-                description: this.description,
-                url: this.url,
-                index: 1
-              }
-            ]
+            units: unit
           }
         }).then(()=>{
           console.log('Posted Ladder!!')
