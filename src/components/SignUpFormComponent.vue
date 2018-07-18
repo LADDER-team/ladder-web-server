@@ -28,7 +28,7 @@
                 </v-layout>
                 <p class="dialog-help">
                     登録済みの方はこちらから
-                    <router-link :to="{name: 'list'}">ログイン</router-link>
+                    <a href="#" @click="clickDirectLogin">ログイン</a>
                     してください
                 </p>
             </v-container>
@@ -65,6 +65,9 @@
     },
     methods: {
       cancelDialog(){this.$emit('cancel')},
+      clickDirectLogin(){
+        this.$emit('direct-login');
+      },
       addUser(){
         this.addNameAction(this.$refs.nameRef.value),
         this.addEmailAction(this.$refs.emailRef.value),
@@ -93,7 +96,6 @@
         }).then(()=>{
           this.addSign()
         }).then(()=>{
-          console.log(this.$store.state.isSign?this.$store.state.name+'is Sign in':"sign in failed")
           this.sendToSign()
           this.$router.push('/')
         }).catch((error) => {

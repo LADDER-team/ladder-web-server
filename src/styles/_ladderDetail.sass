@@ -111,6 +111,26 @@
       width: 6px
       height: 40px
       background: $default_ladder_activate_color
+  &:last-of-type
+    border-bottom: none
+    &:after
+      content: ''
+      position: absolute
+      bottom: -40px
+      left: 0
+      display: inline-block
+      width: 6px
+      height: 40px
+      background: $default_ladder_activate_color
+    &:before
+      content: ''
+      position: absolute
+      bottom: -40px
+      right: 0
+      display: inline-block
+      width: 6px
+      height: 40px
+      background: $default_ladder_activate_color
 
 .peg-link
   z-index: 100
