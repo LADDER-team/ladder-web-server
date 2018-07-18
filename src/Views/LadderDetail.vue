@@ -214,7 +214,7 @@
     },
     computed: {
       unitScrolled(){return (this.offsetTop - 340) / (window.innerHeight * 0.9)},
-      unitActivated(){return Math.round(this.unitScroll)},
+      unitActivated(){return Math.round(this.unitScroll)+1},
       options () {
         return {
           duration: this.duration,
