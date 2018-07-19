@@ -85,7 +85,7 @@
 
         axios({
           method: 'POST',
-          url: 'http://api.ladder.noframeschool.com/ladder/',
+          url: 'https://api.ladder.noframeschool.com/ladder/',
           headers: {
             "Accept": "application/json",
             "Authorization": "JWT "+this.$store.state.token,
