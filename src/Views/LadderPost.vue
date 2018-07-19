@@ -71,15 +71,16 @@
       onSubTitle(subTitleEmit, index){this.$set(this.subtitleList, index, subTitleEmit);},
       onUrl(urlEmit, index){this.$set(this.urlList, index, urlEmit);},
       clickLadderPost() {
-        let index = this.unitIndex
+        let unitIndex = this.unitIndex
         for (let i=1;i<=this.unitIndex;i++){
           this.unit[i-1] =
               {
-                title: this.subtitleList[i],
-                description: this.descriptionList[i],
-                url: this.urlList[i],
-                index: i
+                title: this.subtitleList[unitIndex],
+                description: this.descriptionList[unitIndex],
+                url: this.urlList[unitIndex],
+                index: unitIndex
               }
+          unitIndex--
         }
         let unit = JSON.stringify(this.unit)
         unit = JSON.parse(unit)
