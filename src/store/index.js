@@ -30,8 +30,6 @@ const store = new Vuex.Store({
     addTokenMutation(state, payload){
       state.token = payload.token
       localStorage.setItem('token', state.token)
-      console.log(localStorage)
-      console.log(this.state.token)
     },
     dialogMutation(state, payload){state.isDialog = payload.isDialog},
     loginEmailMutation(state, payload){state.email = payload.email},

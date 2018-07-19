@@ -71,7 +71,6 @@
       onSubTitle(subTitleEmit, index){this.$set(this.subtitleList, index, subTitleEmit);},
       onUrl(urlEmit, index){this.$set(this.urlList, index, urlEmit);},
       clickLadderPost() {
-        let index = this.unitIndex
         for (let i=1;i<=this.unitIndex;i++){
             this.unit[i-1] =
                 {
@@ -83,7 +82,6 @@
         }
         let unit = JSON.stringify(this.unit)
         unit = JSON.parse(unit)
-        console.log(unit)
 
         axios({
           method: 'POST',
