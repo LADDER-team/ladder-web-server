@@ -42,7 +42,7 @@
     mounted() {
       axios({
         method: 'GET',
-        url: 'https://api.ladder.noframeschool.com/ladder/'
+        url: 'https://api.ladder.noframeschools.com/api/ladder/'
       }).then((response) => {
             this.ladderList = response.data
       }).catch((error) => {
