@@ -73,14 +73,13 @@
       clickLadderPost() {
         let index = this.unitIndex
         for (let i=1;i<=this.unitIndex;i++){
-            this.unit[index] =
-                {
-                  title: this.subtitleList[i],
-                  description: this.descriptionList[i],
-                  url: this.urlList[i],
-                  index: i
-                }
-                index--
+          this.unit[i-1] =
+              {
+                title: this.subtitleList[i],
+                description: this.descriptionList[i],
+                url: this.urlList[i],
+                index: i
+              }
         }
         let unit = JSON.stringify(this.unit)
         unit = JSON.parse(unit)
