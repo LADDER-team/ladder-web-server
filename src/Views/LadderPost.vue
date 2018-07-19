@@ -81,7 +81,6 @@
                   index: i
                 }
                 index--
-
         }
         let unit = JSON.stringify(this.unit)
         unit = JSON.parse(unit)
