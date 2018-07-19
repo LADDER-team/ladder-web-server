@@ -81,7 +81,7 @@
         this.addUser()
         axios({
           method: 'POST',
-          url: '/api/users/',
+          url: 'https://api.ladder.noframeschools.com/api/users/',
           headers: {
             "Accept": "application/json",
             'Content-Type': 'application/json',
