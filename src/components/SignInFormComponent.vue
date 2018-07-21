@@ -96,7 +96,6 @@
             this.loginPromise()
           }).then(() => {
             this.sendLogin()
-            this.$router.push('/')
           }).catch((error) => {
             console.log(error)
           })
