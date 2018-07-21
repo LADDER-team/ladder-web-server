@@ -13,14 +13,14 @@
                                 v-model="modelEmail"
                                 :rules="emailRules"
                                 ref="emailRef"
-                                label="E-mail"
+                                label="メールアドレス"
                                 required
                         />
                         <v-text-field
                                 v-model="modelPass"
                                 :rules="passRules"
                                 ref="passRef"
-                                label="Password"
+                                label="パスワード"
                                 required/>
                     </v-form>
                 </v-layout>
