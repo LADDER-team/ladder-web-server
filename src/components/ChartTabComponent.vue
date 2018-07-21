@@ -16,7 +16,13 @@
                 </v-tab-item>
             </v-tabs>
             <v-flex class="text-xs-right mt-3">
-                <v-btn @click="next">次へ</v-btn>
+                <v-btn @click="next">
+                    {{this.slide===this.chartSlide-1?"戻る":"次へ"}}
+                </v-btn>
+                <v-btn v-if="this.slide===this.chartSlide-1"
+                       @click="close">
+                    閉じる
+                </v-btn>
             </v-flex>
         </div>
     </v-dialog>
@@ -44,9 +50,12 @@
         const slide = parseInt(this.slide);
 
         this.active = (active < 3 ? active + 1 : 0);
-        setTimeout(()=>{
-            this.slide = (slide < 3 ? slide + 1 : 0);
-        },300)
+        setTimeout(() => {
+          this.slide = (slide < 3 ? slide + 1 : 0);
+        }, 300)
+      },
+      close() {
+        this.chartDialog = false
       }
     },
   }
