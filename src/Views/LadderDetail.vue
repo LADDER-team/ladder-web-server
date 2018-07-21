@@ -44,7 +44,8 @@
                 <h3 class="peg-link-catch">このLADDERの前に最もペグされたLADDER</h3>
                 <p class="peg-link-title">
                     <v-icon size="60" light
-                            class="peg-link-icon">person</v-icon>
+                            class="peg-link-icon">person
+                    </v-icon>
                     <span>{{ prevLadderList.title}}</span>
                 </p>
             </router-link>
@@ -56,7 +57,8 @@
                 <h3 class="peg-link-catch">このLADDERの後に最もペグされたLADDER</h3>
                 <p class="peg-link-title">
                     <v-icon size="60" light
-                            class="peg-link-icon">person</v-icon>
+                            class="peg-link-icon">person
+                    </v-icon>
                     <span>{{ nextLadderList.title}}</span>
                 </p>
             </router-link>
@@ -100,7 +102,7 @@
       this.getLadderParam = this.$route.params.id
       axios({
         method: 'GET',
-        url: 'http://127.0.0.1:8000/api/ladder/'+this.getLadderParam+'/'
+        url: 'http://127.0.0.1:8000/api/ladder/' + this.getLadderParam + '/'
       }).then((response) => {
         this.ladderDetailList = response.data
       }).catch((error) => {
@@ -115,7 +117,7 @@
         if (this.prevLadderList.length === 0) {
           axios({
             method: 'GET',
-            url: 'http://127.0.0.1:8000/api/ladder/'+this.prevLadderId+'/'
+            url: 'http://127.0.0.1:8000/api/ladder/' + this.prevLadderId + '/'
           }).then((response) => {
             this.prevLadderList = response.data
           }).catch((error) => {
@@ -136,9 +138,9 @@
           })
         }
       }
-      if (this.offsetTop<100 && this.prevLadderList.length !== 0){
+      if (this.offsetTop < 100 && this.prevLadderList.length !== 0) {
         this.prevLadder = true
-      } else if(this.offsetTop>this.scrollWrapH-window.innerHeight*0.9-200 && this.nextLadderList.length !== 0){
+      } else if (this.offsetTop > this.scrollWrapH - window.innerHeight * 0.9 - 200 && this.nextLadderList.length !== 0) {
         this.nextLadder = true
       } else {
         this.prevLadder = false
@@ -159,7 +161,7 @@
           this.$vuetify.goTo('#scroll-wrap', this.options)
         })
       },
-      foundIndex(e){
+      foundIndex(e) {
         let nodeList = document.querySelectorAll('.ladder-item'),
             target = e.target
         return Array.prototype.indexOf.call(nodeList, target)
@@ -167,22 +169,22 @@
     },
     watch: {
       offsetTop: {
-        handler(){
+        handler() {
           //ladder activate
           this.unitScroll = this.unitScrolled
           this.unitActivate = this.unitActivated
-          for (let i=0; i<this.unitActivate; i++){
+          for (let i = 0; i < this.unitActivate; i++) {
             document.getElementsByClassName('ladder-item')[i].classList.add('ladder-item-active')
           }
 
           //peg activate
-          if (this.offsetTop<100 && this.prevLadderList.length !== 0){
+          if (this.offsetTop < 100 && this.prevLadderList.length !== 0) {
             this.prevLadder = true
           }
-          else if(this.offsetTop>this.scrollWrapH-window.innerHeight*0.9-200 && this.nextLadderList.length !== 0){
+          else if (this.offsetTop > this.scrollWrapH - window.innerHeight * 0.9 - 200 && this.nextLadderList.length !== 0) {
             this.nextLadder = true
           }
-          else{
+          else {
             this.prevLadder = false;
             this.nextLadder = false;
           }
@@ -195,8 +197,8 @@
           })
         }
       },
-      $route:{
-        handler(){
+      $route: {
+        handler() {
           this.ladderDetailList = [];
           this.nextLadderList = [];
           this.prevLadderList = [];
@@ -213,9 +215,13 @@
       }
     },
     computed: {
-      unitScrolled(){return (this.offsetTop - 340) / (window.innerHeight * 0.9)},
-      unitActivated(){return Math.round(this.unitScroll)+1},
-      options () {
+      unitScrolled() {
+        return (this.offsetTop - 340) / (window.innerHeight * 0.9)
+      },
+      unitActivated() {
+        return Math.round(this.unitScroll) + 1
+      },
+      options() {
         return {
           duration: this.duration,
           offset: this.scrollOffset,

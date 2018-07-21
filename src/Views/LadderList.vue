@@ -8,7 +8,7 @@
                  class="ladder-link-wrap">
                 <router-link :to="`detail/${ ladder.id }`"
                              class="ladder-link">
-                    <div class="ladder-thumb-wrap" >
+                    <div class="ladder-thumb-wrap">
                         <img :src="defaultImage.src"
                              :alt="defaultImage.alt"
                              class="ladder-thumb">
@@ -21,7 +21,7 @@
                     </div>
                 </router-link>
             </div>
-        </v-flex >
+        </v-flex>
     </v-layout>
 </template>
 
@@ -30,8 +30,8 @@
 
   export default {
     name: "LadderList",
-    data(){
-      return{
+    data() {
+      return {
         chartDialog: false,
         defaultImage: {
           src: "http://via.placeholder.com/350x150",
@@ -46,9 +46,9 @@
         method: 'GET',
         url: 'http://127.0.0.1:8000/api/ladder/'
       }).then((response) => {
-            this.ladderList = response.data
+        this.ladderList = response.data
       }).catch((error) => {
-            console.log(error)
+        console.log(error)
       })
     },
   }

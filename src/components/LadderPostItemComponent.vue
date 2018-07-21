@@ -38,15 +38,21 @@
         index: this.props.index
       }
     },
-    created(){
-      this.modelDescription = this.modelDescription?this.modelDescription:""
-      this.modelSubTitle = this.modelSubTitle?this.modelSubTitle:""
-      this.modelUrl = this.modelUrl?this.modelUrl:""
+    created() {
+      this.modelDescription = this.modelDescription ? this.modelDescription : ""
+      this.modelSubTitle = this.modelSubTitle ? this.modelSubTitle : ""
+      this.modelUrl = this.modelUrl ? this.modelUrl : ""
     },
     methods: {
-      inputSubTitle(){this.$emit('sub-title-emit',this.modelSubTitle, this.index)},
-      inputUrl(){this.$emit('url-emit', this.modelUrl, this.index)},
-      inputDescription(){this.$emit('description-emit', this.modelDescription, this.index)}
+      inputSubTitle() {
+        this.$emit('sub-title-emit', this.modelSubTitle, this.index)
+      },
+      inputUrl() {
+        this.$emit('url-emit', this.modelUrl, this.index)
+      },
+      inputDescription() {
+        this.$emit('description-emit', this.modelDescription, this.index)
+      }
     }
   }
 </script>

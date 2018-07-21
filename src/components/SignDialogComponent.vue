@@ -27,45 +27,47 @@
 <script>
   import SignUpForm from './SignUpFormComponent'
   import SignInForm from './SignInFormComponent'
-  import { mapState, mapGetters, mapMutations, mapActions} from 'vuex'
+  import {mapState, mapGetters, mapMutations, mapActions} from 'vuex'
 
   export default {
     name: "SignDialogComponent",
-    data(){
-      return{
+    data() {
+      return {
         sign: true,
         dialog: false,
         login: false,
         avatar: "person_outline"
       }
     },
-    mounted(){
-      if(localStorage.getItem('token')!==null){
+    mounted() {
+      if (localStorage.getItem('token') !== null) {
         this.sign = false
         this.login = true
       }
     },
     methods: {
-      onSignInDialog(){
+      onSignInDialog() {
         this.dialog = false
-        setTimeout(()=>{
+        setTimeout(() => {
           this.login = false
           this.sign = true
-        },200)
+        }, 200)
       },
-      onSignUpDialog(){this.dialog = false},
-      onDirectLogin(){
+      onSignUpDialog() {
+        this.dialog = false
+      },
+      onDirectLogin() {
         this.sign = false
-        setTimeout(()=>{
+        setTimeout(() => {
           this.login = true
         }, 100)
       },
-      signin(){
+      signin() {
         this.sign = false
         this.login = true
         this.dialog = false
       },
-      receivedLogin(){
+      receivedLogin() {
         this.avatar = "face"
         this.dialog = false
       },
@@ -79,7 +81,7 @@
         token: 'tokenGetter',
         isLogin: 'loginGetter'
       }),
-      set(value){
+      set(value) {
         this.addTokenAction(value)
       }
     },

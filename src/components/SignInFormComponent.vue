@@ -29,21 +29,23 @@
         <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn flat　color="blue darken-1"
-                   @click="clickDialogCancel">キャンセル</v-btn>
+                   @click="clickDialogCancel">キャンセル
+            </v-btn>
             <v-btn flat　color="blue darken-1"
-                   @click.native="clickLoginPost">ログイン</v-btn>
+                   @click.native="clickLoginPost">ログイン
+            </v-btn>
         </v-card-actions>
     </v-card>
 </template>
 
 <script>
-  import { mapState, mapGetters, mapMutations, mapActions} from 'vuex'
+  import {mapState, mapGetters, mapMutations, mapActions} from 'vuex'
   import axios from 'axios'
 
   export default {
     name: "SignInFormComponent",
-    data(){
-      return{
+    data() {
+      return {
         loginToken: null,
         login: false,
         headers: {
@@ -61,16 +63,22 @@
       }
     },
     methods: {
-      clickDialogCancel(){this.$emit('cancel')},
-      sendLogin(){this.$emit('login')},
-      loginUser(){
-        this.loginEmailAction(this.$refs.emailRef.value),
-        this.loginPassAction(this.$refs.passRef.value)
+      clickDialogCancel() {
+        this.$emit('cancel')
       },
-      addToken(){
+      sendLogin() {
+        this.$emit('login')
+      },
+      loginUser() {
+        this.loginEmailAction(this.$refs.emailRef.value),
+            this.loginPassAction(this.$refs.passRef.value)
+      },
+      addToken() {
         this.addTokenAction(this.loginToken)
       },
-      loginPromise(){this.loginAction(this.login)},
+      loginPromise() {
+        this.loginAction(this.login)
+      },
       clickLoginPost() {
         this.loginUser()
         if (this.$refs.form.validate()) {
@@ -115,10 +123,10 @@
         token: 'tokenGetter',
         isLogin: 'loginGetter'
       }),
-      set(value){
+      set(value) {
         this.loginEmailAction(value),
-        this.loginPassAction(value),
-        this.addTokenAction(value)
+            this.loginPassAction(value),
+            this.addTokenAction(value)
       },
     }
   }

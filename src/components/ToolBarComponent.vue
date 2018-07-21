@@ -13,11 +13,12 @@
                           class="g-search-field"/>
         </v-flex>
         <v-spacer/>
-        <v-toolbar-items class="hidden-sm-and-down avatar align-center" >
+        <v-toolbar-items class="hidden-sm-and-down avatar align-center">
             <router-link :to="{name: 'post'}">
                 <v-btn depressed ripple
                        class="contribution-btn">
-                    投稿する</v-btn>
+                    投稿する
+                </v-btn>
             </router-link>
             <SignDialog/>
         </v-toolbar-items>
@@ -29,8 +30,8 @@
 
   export default {
     name: "toolbar-component",
-    data(){
-      return{
+    data() {
+      return {
         avatarPath: '',
       }
     },
