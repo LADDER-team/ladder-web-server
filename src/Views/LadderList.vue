@@ -32,6 +32,7 @@
     name: "LadderList",
     data(){
       return{
+        chartDialog: false,
         defaultImage: {
           src: "http://via.placeholder.com/350x150",
           alt: "placeholder-image"
@@ -40,6 +41,7 @@
       }
     },
     mounted() {
+
       axios({
         method: 'GET',
         url: 'http://127.0.0.1:8000/api/ladder/'

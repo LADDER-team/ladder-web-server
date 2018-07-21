@@ -1,5 +1,6 @@
 <template>
     <v-app id="inspire" indig>
+        <ChartTab/>
         <ToolBar/>
         <v-content id="window">
             <v-container
@@ -17,9 +18,10 @@
     </v-app>
 </template>
 <script>
-  import ToolBar from './components/ToolBarComponent'
+  import ChartTab from './components/ChartTabComponent'
   import Footer from './components/FooterComponent'
   import LadderList from './Views/LadderList'
+  import ToolBar from './components/ToolBarComponent'
 
   export default {
     name: 'Ladder',
@@ -29,15 +31,19 @@
       clipped: false,
       fixed: false,
       miniVariant: false,
-      rightDrawer: false
+      rightDrawer: false,
+      text: "ラダーの使い方！"
     }),
     components: {
-      ToolBar,
+      ChartTab,
+      Footer,
       LadderList,
-      Footer
+      ToolBar
     }
   }
 </script>
 <style scoped lang="sass">
     @import "./styles/base"
+    .chart-dialog-inner
+        background-color: #fff
 </style>
