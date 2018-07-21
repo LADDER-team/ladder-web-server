@@ -6,25 +6,29 @@
         <v-card-text>
             <v-container grid-list-md>
                 <v-layout wrap>
-                    <v-flex xs12 sm6 md4>
-                        <v-text-field v-model="modelName"
-                                      ref="nameRef"
-                                      label="user"
-                                      required></v-text-field>
-                    </v-flex>
-                    <v-flex xs12>
-                        <v-text-field v-model="modelEmail"
-                                      ref="emailRef"
-                                      label="Email"
-                                      required></v-text-field>
-                    </v-flex>
-                    <v-flex xs12>
-                        <v-text-field v-model="modelPass"
-                                      ref="passRef"
-                                      label="Password"
-                                      type="password"
-                                      required></v-text-field>
-                    </v-flex>
+                    <v-form ref="form" v-model="valid"
+                            lazy-validation
+                            class="sign-up-form">
+                        <v-text-field
+                                v-model="modelName"
+                                :rules="nameRules"
+                                label="Name"
+                                ref="nameRef"
+                                required/>
+                        <v-text-field
+                                v-model="modelEmail"
+                                :rules="emailRules"
+                                ref="emailRef"
+                                label="E-mail"
+                                required
+                        />
+                        <v-text-field
+                                v-model="modelPass"
+                                :rules="passRules"
+                                ref="passRef"
+                                label="Password"
+                                required/>
+                    </v-form>
                 </v-layout>
                 <p class="dialog-help">
                     登録済みの方はこちらから
@@ -36,71 +40,90 @@
         <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="blue darken-1" flat
-                   @click="cancelDialog">キャンセル</v-btn>
-            <v-btn color="blue darken-1" flat
-                   @click.native="postUser">登録</v-btn>
+                   @click="cancelDialog">キャンセル
+            </v-btn>
+            <v-btn :disabled="!valid"
+                   color="blue darken-1" flat
+                   @click="postUser">登録
+            </v-btn>
         </v-card-actions>
     </v-card>
 </template>
 
 <script>
-    import { mapState, mapGetters, mapMutations, mapActions} from 'vuex'
-    import axios from 'axios'
+  import {mapState, mapGetters, mapMutations, mapActions} from 'vuex'
+  import axios from 'axios'
 
-    export default {
+  export default {
     name: "SignUpFormComponent",
-    data(){
-      return{
-        modelName: null,
-        modelEmail: null,
-        modelPass: null,
+    data() {
+      return {
         sign: false,
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
-        }
+        },
+        valid: true,
+        modelName: "",
+        nameRules: [v => !!v || '名前を入力してください'],
+        //validation
+        modelEmail: "",
+        emailRules: [
+          v => !!v || 'メールアドレスを入力してください',
+          v => /.+@.+/.test(v) || '正しいメールアドレスを入力してください'
+        ],
+        modelPass: "",
+        passRules: [
+          v => !!v || 'パスワードを入力してください',
+          v => (v && v.length >= 8) || 'パスワードは8文字以上で入力してください'
+        ],
       }
     },
-    mounted(){
-      // const registration = JSON.stringify(this.registration)
-    },
     methods: {
-      cancelDialog(){this.$emit('cancel')},
-      clickDirectLogin(){
+      cancelDialog() {
+        this.$emit('cancel')
+      },
+      clickDirectLogin() {
         this.$emit('direct-login');
       },
-      addUser(){
+      addUser() {
         this.addNameAction(this.$refs.nameRef.value),
-        this.addEmailAction(this.$refs.emailRef.value),
-        this.addPassAction(this.$refs.passRef.value)
+            this.addEmailAction(this.$refs.emailRef.value),
+            this.addPassAction(this.$refs.passRef.value)
       },
-      addSign(){this.signAction(this.sign)},
-      sendToSign(){
+      addSign() {
+        this.signAction(this.sign)
+      },
+      sendToSign() {
         this.$emit('sign')
       },
       postUser() {
+        console.log(this.$refs.form.validate())
         this.addUser()
-        axios({
-          method: 'POST',
-          url: '/api/users/',
-          headers: {
-            "Accept": "application/json",
-            'Content-Type': 'application/json',
-          },
-          data: {
-            name: this.$store.state.name,
-            email: this.$store.state.email,
-            password: this.$store.state.password
-          }
-        }).then(()=>{
-          this.$data.sign = true
-        }).then(()=>{
-          this.addSign()
-        }).then(()=>{
-          this.sendToSign()
-          this.$router.push('/')
-        }).catch((error) => {
-          console.log(error)
-        })
+        if (this.$refs.form.validate()) {
+          axios({
+            method: 'POST',
+            url: '/api/users/',
+            headers: {
+              "Accept": "application/json",
+              'Content-Type': 'application/json',
+            },
+            data: {
+              name: this.$store.state.name,
+              email: this.$store.state.email,
+              password: this.$store.state.password
+            }
+          }).then(() => {
+            this.$data.sign = true
+          }).then(() => {
+            this.addSign()
+          }).then(() => {
+            this.sendToSign()
+            this.$router.push('/')
+          }).catch((error) => {
+            alert("登録に失敗しました")
+            console.log(error)
+          })
+        }
       },
       ...mapActions([
         'addNameAction',
@@ -116,7 +139,7 @@
         password: 'passGetter',
         isSign: 'signGetter'
       }),
-      set(value){
+      set(value) {
         this.addNameAction(value),
         this.addEmailAction(value),
         this.addPassAction(value),

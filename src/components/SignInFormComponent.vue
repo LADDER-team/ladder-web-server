@@ -6,19 +6,23 @@
         <v-card-text>
             <v-container grid-list-md>
                 <v-layout wrap>
-                    <v-flex xs12>
-                        <v-text-field v-model="modelEmail"
-                                      ref="emailRef"
-                                      label="Email"
-                                      required></v-text-field>
-                    </v-flex>
-                    <v-flex xs12>
-                        <v-text-field v-model="modelPass"
-                                      ref="passRef"
-                                      label="Password"
-                                      type="password"
-                                      required></v-text-field>
-                    </v-flex>
+                    <v-form ref="form" v-model="valid"
+                            lazy-validation
+                            class="sign-in-form">
+                        <v-text-field
+                                v-model="modelEmail"
+                                :rules="emailRules"
+                                ref="emailRef"
+                                label="E-mail"
+                                required
+                        />
+                        <v-text-field
+                                v-model="modelPass"
+                                :rules="passRules"
+                                ref="passRef"
+                                label="Password"
+                                required/>
+                    </v-form>
                 </v-layout>
             </v-container>
         </v-card-text>
@@ -40,13 +44,20 @@
     name: "SignInFormComponent",
     data(){
       return{
-        modelEmail: null,
-        modelPass: null,
         loginToken: null,
         login: false,
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
-        }
+        },
+        //validation
+        valid: true,
+        modelEmail: "",
+        emailRules: [
+          v => !!v || 'メールアドレスを入力してください',
+          v => /.+@.+/.test(v) || '正しいメールアドレスを入力してください'
+        ],
+        modelPass: "",
+        passRules: [v => !!v || 'パスワードを入力してください',],
       }
     },
     methods: {
@@ -62,30 +73,34 @@
       loginPromise(){this.loginAction(this.login)},
       clickLoginPost() {
         this.loginUser()
-        axios({
-          method: 'POST',
-          url: '/api/api-auth/',
-          headers: {
-            "Accept": "application/json",
-            'Content-Type': 'application/json'
-          },
-          data: {
-            email: this.$store.state.email,
-            password: this.$store.state.password
-          }
-        }).then((response)=>{
-          this.loginToken = JSON.stringify(response.data.token).replace(/[\"]/g,"")
-          this.addToken()
-        }).then(() => {
-          if (!this.login){this.login = true}
-        }).then(() => {
-          this.loginPromise()
-        }).then(()=>{
-          this.sendLogin()
-          this.$router.push('/')
-        }).catch((error) => {
-          console.log(error)
-        })
+        if (this.$refs.form.validate()) {
+          axios({
+            method: 'POST',
+            url: '/api/api-auth/',
+            headers: {
+              "Accept": "application/json",
+              'Content-Type': 'application/json'
+            },
+            data: {
+              email: this.$store.state.email,
+              password: this.$store.state.password
+            }
+          }).then((response) => {
+            this.loginToken = JSON.stringify(response.data.token).replace(/[\"]/g, "")
+            this.addToken()
+          }).then(() => {
+            if (!this.login) {
+              this.login = true
+            }
+          }).then(() => {
+            this.loginPromise()
+          }).then(() => {
+            this.sendLogin()
+            this.$router.push('/')
+          }).catch((error) => {
+            console.log(error)
+          })
+        }
       },
       ...mapActions([
         'loginEmailAction',
