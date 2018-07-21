@@ -6,9 +6,7 @@
         <v-btn slot="activator"
                dark round outline small
                class="avatar-btn">
-            <v-avatar
-                    :tile=false
-                    :size=40>
+            <v-avatar :tile=false :size=40>
                 <v-icon>{{avatar}}</v-icon>
             </v-avatar>
         </v-btn>

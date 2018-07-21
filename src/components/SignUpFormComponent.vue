@@ -12,21 +12,26 @@
                         <v-text-field
                                 v-model="modelName"
                                 :rules="nameRules"
-                                label="Name"
+                                label="名前"
                                 ref="nameRef"
                                 required/>
                         <v-text-field
                                 v-model="modelEmail"
                                 :rules="emailRules"
                                 ref="emailRef"
-                                label="E-mail"
+                                label="メールアドレス"
                                 required
                         />
                         <v-text-field
                                 v-model="modelPass"
                                 :rules="passRules"
                                 ref="passRef"
-                                label="Password"
+                                label="パスワード"
+                                required/>
+                        <v-text-field
+                                v-model="modelConfirm"
+                                :rules="confirmRules"
+                                label="パスワード（再確認）"
                                 required/>
                     </v-form>
                 </v-layout>
@@ -76,6 +81,11 @@
           v => !!v || 'パスワードを入力してください',
           v => (v && v.length >= 8) || 'パスワードは8文字以上で入力してください'
         ],
+        modelConfirm: "",
+        confirmRules: [
+          v => !!v || 'パスワードを入力してください',
+          v => (v === this.modelPass) || 'パスワードが一致しません'
+        ]
       }
     },
     methods: {
@@ -141,9 +151,9 @@
       }),
       set(value) {
         this.addNameAction(value),
-        this.addEmailAction(value),
-        this.addPassAction(value),
-        this.signAction(value)
+            this.addEmailAction(value),
+            this.addPassAction(value),
+            this.signAction(value)
       },
     }
   }
