@@ -12,13 +12,17 @@
                 <v-icon>{{avatar}}</v-icon>
             </v-avatar>
         </v-btn>
-        <SignUpForm v-show="sign"
-                    v-on:cancel="onSignUpDialog"
-                    v-on:direct-login="onDirectLogin"
-                    v-on:sign="signin"/>
-        <SignInForm v-show="login"
-                    v-on:cancel="onSignInDialog"
-                    v-on:login="receivedLogin"/>
+        <transition name="sign-up">
+            <SignUpForm v-show="sign"
+                        v-on:cancel="onSignUpDialog"
+                        v-on:direct-login="onDirectLogin"
+                        v-on:sign="signin"/>
+        </transition>
+        <transition name="sign-in">
+            <SignInForm v-show="login"
+                        v-on:cancel="onSignInDialog"
+                        v-on:login="receivedLogin"/>
+        </transition>
     </v-dialog>
 </template>
 
@@ -46,13 +50,17 @@
     methods: {
       onSignInDialog(){
         this.dialog = false
-        this.login = false
-        this.sign = true
+        setTimeout(()=>{
+          this.login = false
+          this.sign = true
+        },200)
       },
       onSignUpDialog(){this.dialog = false},
       onDirectLogin(){
         this.sign = false
-        this.login = true
+        setTimeout(()=>{
+          this.login = true
+        }, 100)
       },
       signin(){
         this.sign = false
