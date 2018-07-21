@@ -6,12 +6,12 @@
             <v-tabs v-model="active"
                     color="cyan" dark
                     slider-color="yellow">
-                <v-tab v-for="n in 4" :key="n" ripple>
+                <v-tab v-for="n in chartSlide" :key="n" ripple>
                     {{ n }}
                 </v-tab>
-                <v-tab-item v-for="n in 4" :key="n">
+                <v-tab-item v-for="n in chartSlide" :key="n">
                     <v-card>
-                        <v-card-text>ラダーの使い方</v-card-text>
+                        <v-card-text>{{ charts[slide] }}</v-card-text>
                     </v-card>
                 </v-tab-item>
             </v-tabs>
@@ -24,25 +24,34 @@
 <script>
   export default {
     name: "ChartTabComponent",
-    data(){
-      return{
-        chartDialog: false,
-        active: null
+    data() {
+      return {
+        chartDialog: true,
+        active: 0,
+        slide: 0,
+        chartSlide: 4,
+        charts: {
+          0: "ラダーの使い方1",
+          1: "ラダーの使い方2",
+          2: "ラダーの使い方3",
+          3: "ラダーの使い方4",
+        }
       }
     },
-    mounted(){
-      this.chartDialog = true;
-    },
     methods: {
-      next () {
-        const active = parseInt(this.active)
-        this.active = (active < 3 ? active + 1 : 0)
+      next() {
+        const active = parseInt(this.active);
+        const slide = parseInt(this.slide);
+
+        this.active = (active < 3 ? active + 1 : 0);
+        setTimeout(()=>{
+            this.slide = (slide < 3 ? slide + 1 : 0);
+        },300)
       }
     },
   }
 </script>
 <style scope lang="sass">
     @import "../styles/base"
-    .chart-dialog-inner
-        background-color: #fff
+    @import "../styles/chartTab"
 </style>

@@ -13,7 +13,7 @@
                           class="g-search-field"/>
         </v-flex>
         <v-spacer/>
-        <v-toolbar-items class="hidden-sm-and-down avatar align-center"@click="clickContribute">
+        <v-toolbar-items class="hidden-sm-and-down avatar align-center" >
             <router-link :to="{name: 'post'}">
                 <v-btn depressed ripple
                        class="contribution-btn">
@@ -32,10 +32,6 @@
     data(){
       return{
         avatarPath: '',
-      }
-    },
-    methods: {
-      clickContribute(){
       }
     },
     components: {

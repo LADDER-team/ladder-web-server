@@ -44,6 +44,4 @@
 </script>
 <style scoped lang="sass">
     @import "./styles/base"
-    .chart-dialog-inner
-        background-color: #fff
 </style>
