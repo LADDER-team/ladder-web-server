@@ -114,7 +114,7 @@
         if (this.$refs.form.validate()) {
           axios({
             method: 'POST',
-            url: '/api/users/',
+            url: 'http://127.0.0.1:8000/api/users/',
             headers: {
               "Accept": "application/json",
               'Content-Type': 'application/json',

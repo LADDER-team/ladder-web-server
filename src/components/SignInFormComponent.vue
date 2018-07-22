@@ -85,7 +85,7 @@
         if (this.$refs.form.validate()) {
           axios({
             method: 'POST',
-            url: '/api/api-auth/',
+            url: 'http://127.0.0.1:8000/api/api-auth/',
             headers: {
               "Accept": "application/json",
               'Content-Type': 'application/json'
