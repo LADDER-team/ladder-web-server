@@ -19,9 +19,13 @@
                                 @description-emit="onDescription"
                                 class="ladder-post-item"/>
             </v-flex>
-            <div class="ladder-post-icon" @click="clickUnitAdd">
-                <v-icon size="40">control_point</v-icon>
-            </div>
+            <v-layout flex row justify-center
+                      class="ladder-post-icons">
+                <v-icon size="40" @click="clickUnitAdd"
+                        class="ladder-post-add">add_circle_outline</v-icon>
+                <v-icon size="40" @click="clickUnitRemove"
+                        class="ladder-post-remove">remove_circle</v-icon>
+            </v-layout>
             <v-flex class="ladder-post-btn">
                 <v-btn @click="clickLadderPost"
                        dark fab large
@@ -65,6 +69,13 @@
           this.unitIndex++;
         } else {
           alert('これ以上ユニットは増やせません！')
+        }
+      },
+      clickUnitRemove() {
+        if (this.unitIndex === 1) {
+          alert('これ以上ユニットは削除できません！')
+        } else {
+          this.unitIndex--;
         }
       },
       onDescription(descriptionEmit, index) {
