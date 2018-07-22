@@ -26,11 +26,13 @@
                                 v-model="modelPass"
                                 :rules="passRules"
                                 ref="passRef"
+                                type="password"
                                 label="パスワード"
                                 required/>
                         <v-text-field
                                 v-model="modelConfirm"
                                 :rules="confirmRules"
+                                type="password"
                                 label="パスワード（再確認）"
                                 required/>
                     </v-form>

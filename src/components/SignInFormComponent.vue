@@ -20,6 +20,7 @@
                                 v-model="modelPass"
                                 :rules="passRules"
                                 ref="passRef"
+                                type="password"
                                 label="パスワード"
                                 required/>
                     </v-form>
