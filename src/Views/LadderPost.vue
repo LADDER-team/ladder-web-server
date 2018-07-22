@@ -10,7 +10,7 @@
                     v-model="modelTitle"
                     outline
                     class="post-text-field post-title"
-                    label="Ladder Title"
+                    label="Ladderタイトル"
                     placeholder="初心者がDjangoアプリケーションを作るまで！"/>
             <v-flex v-for="index in unitIndex" :key="index">
                 <LadderPostItem :index="index"

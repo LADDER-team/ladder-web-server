@@ -4,21 +4,21 @@
                 v-model="modelSubTitle"
                 @input="inputSubTitle"
                 outline
-                label="Unit Title"
+                :label="'Unitタイトル'+index"
                 class="post-text-field post-sub-title"
                 placeholder="Pythonに触れよう！"/>
         <v-text-field
                 v-model="modelUrl"
                 @input="inputUrl"
                 outline
-                label="Image URL"
+                label="参考サイトURL"
                 class="post-text-field post-url"
                 placeholder="https://www.python.org/"/>
         <v-textarea
                 v-model="modelDescription"
                 @input="inputDescription"
                 outline
-                label="Description"
+                label="学べること"
                 class="post-text-field post-description"
                 placeholder="Djangoでアプリケーションをつくるには、Pythonから勉強することが必要です！なので、まずはPythonに触れてプログラミングがどういったものかをProgateで試してみましょう！"/>
     </v-flex>
