@@ -32,7 +32,7 @@
     name: "ChartTabComponent",
     data() {
       return {
-        chartDialog: true,
+        chartDialog: false,
         active: 0,
         slide: 0,
         chartSlide: 4,
@@ -42,6 +42,12 @@
           2: "ラダーの使い方3",
           3: "ラダーの使い方4",
         }
+      }
+    },
+    mounted(){
+      console.log(this.$store)
+      if (!this.$store.state.isSign&&!localStorage.getItem("token")) {
+        this.chartDialog = true
       }
     },
     methods: {
