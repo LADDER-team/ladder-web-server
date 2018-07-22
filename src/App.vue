@@ -1,6 +1,7 @@
 <template>
     <v-app id="inspire" indig>
-        <ChartTab/>
+        <FirstChartTab/>
+        <NotifyDialog title="テスト" text="おはよおおお" submit="わかった！"  />
         <ToolBar/>
         <v-content id="window">
             <v-container
@@ -22,6 +23,7 @@
   import Footer from './components/FooterComponent'
   import LadderList from './Views/LadderList'
   import ToolBar from './components/ToolBarComponent'
+  import NotifyDialog from './components/NotifyDialogComponent'
 
   export default {
     name: 'Ladder',
@@ -37,6 +39,7 @@
     components: {
       FirstChartTab,
       Footer,
+      NotifyDialog,
       LadderList,
       ToolBar
     }

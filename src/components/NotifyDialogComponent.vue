@@ -1,0 +1,46 @@
+<template>
+    <div class="text-xs-center">
+        <v-dialog v-model="notifyDialog" width="500">
+            <v-card>
+                <v-card-title class="headline grey lighten-2" primary-title>
+                    {{title}}
+                </v-card-title>
+                <v-card-text>
+                    {{text}}
+                </v-card-text>
+                <v-divider></v-divider>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" flat
+                           @click="notifyDialog = false">
+                        {{submit}}
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+    </div>
+</template>
+
+<script>
+  export default {
+    name: "NotifyDialogComponent",
+    data() {
+      return {
+        notifyDialog: this.$props.opened
+      }
+    },
+    props: {
+      opened: Boolean,
+      text: String,
+      title: String,
+      submit: String
+    },
+    mounted(){
+      console.log(this.$props)
+    }
+  }
+</script>
+
+<style scoped>
+
+</style>
