@@ -54,7 +54,6 @@
       next() {
         const active = parseInt(this.active);
         const slide = parseInt(this.slide);
-
         this.active = (active < 3 ? active + 1 : 0);
         setTimeout(() => {
           this.slide = (slide < 3 ? slide + 1 : 0);

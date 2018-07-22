@@ -20,8 +20,7 @@
                                 :rules="emailRules"
                                 ref="emailRef"
                                 label="メールアドレス"
-                                required
-                        />
+                                required/>
                         <v-text-field
                                 v-model="modelPass"
                                 :rules="passRules"
@@ -109,7 +108,6 @@
         this.$emit('sign')
       },
       postUser() {
-        console.log(this.$refs.form.validate())
         this.addUser()
         if (this.$refs.form.validate()) {
           axios({

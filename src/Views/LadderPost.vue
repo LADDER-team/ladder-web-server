@@ -79,7 +79,6 @@
       clickLadderPost() {
         let unitIndex = this.unitIndex
         for (let i = 1; i <= this.unitIndex; i++) {
-          console.log(i)
           this.unit[i - 1] =
               {
                 title: this.subtitleList[i],
@@ -88,7 +87,6 @@
                 index: i
               }
         }
-        console.log(this.unit)
         let unit = JSON.stringify(this.unit)
         unit = JSON.parse(unit)
 
