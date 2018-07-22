@@ -18,7 +18,7 @@
     </v-app>
 </template>
 <script>
-  import ChartTab from './components/ChartTabComponent'
+  import FirstChartTab from './components/FirstChartComponent'
   import Footer from './components/FooterComponent'
   import LadderList from './Views/LadderList'
   import ToolBar from './components/ToolBarComponent'
@@ -35,7 +35,7 @@
       text: "ラダーの使い方！"
     }),
     components: {
-      ChartTab,
+      FirstChartTab,
       Footer,
       LadderList,
       ToolBar

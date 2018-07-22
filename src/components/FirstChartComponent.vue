@@ -29,18 +29,17 @@
 </template>
 <script>
   export default {
-    name: "ChartTabComponent",
+    name: "FirstChartComponent",
     data() {
       return {
         chartDialog: false,
         active: 0,
         slide: 0,
-        chartSlide: 4,
+        chartSlide: 3,
         charts: {
-          0: "ラダーの使い方1",
-          1: "ラダーの使い方2",
-          2: "ラダーの使い方3",
-          3: "ラダーの使い方4",
+          0: "LADDERへようこそ！まずは投稿されているladderを見学してみよう！",
+          1: "TOPページの一覧から、目に留まったladderを選んでね！",
+          2: "後ろにladderの一覧が並んでいなければ、左上のロゴからTOPへ！"
         }
       }
     },
@@ -54,9 +53,9 @@
       next() {
         const active = parseInt(this.active);
         const slide = parseInt(this.slide);
-        this.active = (active < 3 ? active + 1 : 0);
+        this.active = (active < 2 ? active + 1 : 0);
         setTimeout(() => {
-          this.slide = (slide < 3 ? slide + 1 : 0);
+          this.slide = (slide < 2 ? slide + 1 : 0);
         }, 300)
       },
       close() {
