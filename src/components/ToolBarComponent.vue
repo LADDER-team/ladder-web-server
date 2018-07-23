@@ -14,12 +14,11 @@
         </v-flex>
         <v-spacer/>
         <v-toolbar-items class="hidden-sm-and-down avatar align-center">
-            <router-link :to="{name: 'post'}">
-                <v-btn depressed ripple
-                       class="contribution-btn">
-                    投稿する
-                </v-btn>
-            </router-link>
+            <v-btn depressed ripple
+                   @click="clickToLadderPost"
+                   class="contribution-btn">
+                投稿する
+            </v-btn>
             <SignDialog/>
         </v-toolbar-items>
     </v-toolbar>
@@ -33,6 +32,15 @@
     data() {
       return {
         avatarPath: '',
+      }
+    },
+    methods:{
+      clickToLadderPost(){
+        if(this.$store.state.isLogin) {
+          this.$router.push('post')
+        }else{
+          alert("投稿ですか？まずはログインしてください！")
+        }
       }
     },
     components: {
