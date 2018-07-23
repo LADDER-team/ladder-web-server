@@ -26,7 +26,10 @@
     name: "NotifyDialogComponent",
     data() {
       return {
-        notifyDialog: this.$props.opened
+        notifyDialog: this.$props.opened,
+        notifyText: this.text,
+        notifyTitle: this.title,
+        notifySubmit: this.submit
       }
     },
     props: {
@@ -34,9 +37,6 @@
       text: String,
       title: String,
       submit: String
-    },
-    mounted(){
-      console.log(this.$props)
     }
   }
 </script>

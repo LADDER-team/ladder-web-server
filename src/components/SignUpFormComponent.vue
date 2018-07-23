@@ -128,17 +128,62 @@
             this.addSign()
           }).then(() => {
             this.sendToSign()
-            this.$router.push('/')
+          }).then(() => {
+            this.loginPost()
           }).catch((error) => {
             alert("登録に失敗しました")
             console.log(error)
           })
         }
       },
+      loginUser() {
+        this.loginEmailAction(this.modelEmail);
+        this.loginPassAction(this.modelPass)
+      },
+      addToken() {
+        this.addTokenAction(this.loginToken)
+      },
+      loginPromise() {
+        this.loginAction(this.login)
+      },
+      sendLogin() {
+        this.$emit('login')
+      },
+      loginPost() {
+        this.loginUser()
+        axios({
+          method: 'POST',
+          url: 'http://127.0.0.1:8000/api/api-auth/',
+          headers: {
+            "Accept": "application/json",
+            'Content-Type': 'application/json'
+          },
+          data: {
+            email: this.$store.state.email,
+            password: this.$store.state.password
+          }
+        }).then((response) => {
+          this.loginToken = JSON.stringify(response.data.token).replace(/[\"]/g, "")
+          this.addToken()
+        }).then(() => {
+          this.login = !this.login ? true : alert("ログイン済みです")
+        }).then(() => {
+          this.loginPromise()
+        }).then(() => {
+          this.sendLogin()
+          alert("ご登録ありがとうございます！")
+        }).catch((error) => {
+          console.log(error)
+        })
+      },
       ...mapActions([
-        'addNameAction',
         'addEmailAction',
+        'addNameAction',
         'addPassAction',
+        'addTokenAction',
+        'loginAction',
+        'loginEmailAction',
+        'loginPassAction',
         'signAction'
       ])
     },
@@ -146,16 +191,18 @@
       ...mapGetters({
         name: 'nameGetter',
         email: 'emailGetter',
+        isLogin: 'loginGetter',
+        isSign: 'signGetter',
         password: 'passGetter',
-        isSign: 'signGetter'
+        token: 'tokenGetter'
       }),
       set(value) {
-        this.addNameAction(value),
-            this.addEmailAction(value),
-            this.addPassAction(value),
-            this.signAction(value)
+        this.addNameAction(value)
+        this.addEmailAction(value)
+        this.addPassAction(value)
+        this.signAction(value)
       },
-    }
+    },
   }
 </script>
 

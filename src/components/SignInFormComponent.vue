@@ -71,8 +71,8 @@
         this.$emit('login')
       },
       loginUser() {
-        this.loginEmailAction(this.$refs.emailRef.value),
-            this.loginPassAction(this.$refs.passRef.value)
+        this.loginEmailAction(this.$refs.emailRef.value)
+        this.loginPassAction(this.$refs.passRef.value)
       },
       addToken() {
         this.addTokenAction(this.loginToken)
@@ -98,9 +98,7 @@
             this.loginToken = JSON.stringify(response.data.token).replace(/[\"]/g, "")
             this.addToken()
           }).then(() => {
-            if (!this.login) {
-              this.login = true
-            }
+            this.login = !this.login ? true : alert("ログイン済みです")
           }).then(() => {
             this.loginPromise()
           }).then(() => {
@@ -125,11 +123,11 @@
         isLogin: 'loginGetter'
       }),
       set(value) {
-        this.loginEmailAction(value),
-            this.loginPassAction(value),
-            this.addTokenAction(value)
+        this.loginEmailAction(value)
+        this.loginPassAction(value)
+        this.addTokenAction(value)
       },
-    }
+    },
   }
 </script>
 

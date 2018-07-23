@@ -14,7 +14,8 @@
             <SignUpForm v-show="sign"
                         v-on:cancel="onSignUpDialog"
                         v-on:direct-login="onDirectLogin"
-                        v-on:sign="signin"/>
+                        v-on:sign="signin"
+                        v-on:login="receivedLogin"/>
         </transition>
         <transition name="sign-in">
             <SignInForm v-show="login"
@@ -25,9 +26,9 @@
 </template>
 
 <script>
+  import {mapState, mapGetters, mapMutations, mapActions} from 'vuex'
   import SignUpForm from './SignUpFormComponent'
   import SignInForm from './SignInFormComponent'
-  import {mapState, mapGetters, mapMutations, mapActions} from 'vuex'
 
   export default {
     name: "SignDialogComponent",
@@ -37,12 +38,6 @@
         dialog: false,
         login: false,
         avatar: "person_outline"
-      }
-    },
-    mounted() {
-      if (localStorage.getItem('token') !== null) {
-        this.sign = false
-        this.login = true
       }
     },
     methods: {
@@ -63,13 +58,14 @@
         }, 100)
       },
       signin() {
-        this.sign = false
-        this.login = true
         this.dialog = false
+        this.login = true
+        this.sign = false
       },
       receivedLogin() {
         this.avatar = "face"
         this.dialog = false
+        this.$emit('notify')
       },
       ...mapActions([
         'addTokenAction',
