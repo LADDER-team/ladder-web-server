@@ -1,6 +1,6 @@
 FROM node:10.5.0 as builder
 WORKDIR /root/ladder
-COPY [".", ":root/ladder"]
+COPY [".", "/root/ladder"]
 EXPOSE 80
 RUN npm install && \
     npm run build
