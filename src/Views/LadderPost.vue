@@ -6,33 +6,38 @@
         <v-flex justify-center
                 align-start
                 class="ladder-posts-wrap">
-            <v-text-field
-                    v-model="modelTitle"
-                    outline
-                    class="post-text-field post-title"
-                    label="Ladderタイトル"
-                    placeholder="初心者がDjangoアプリケーションを作るまで！"/>
-            <v-flex v-for="index in unitIndex" :key="index">
-                <LadderPostItem :index="index"
-                                @sub-title-emit="onSubTitle"
-                                @url-emit="onUrl"
-                                @description-emit="onDescription"
-                                class="ladder-post-item"/>
-            </v-flex>
-            <v-layout flex row justify-center
-                      class="ladder-post-icons">
-                <v-icon size="40" @click="clickUnitAdd"
-                        class="ladder-post-add">add_circle_outline</v-icon>
-                <v-icon size="40" @click="clickUnitRemove"
-                        class="ladder-post-remove">remove_circle</v-icon>
-            </v-layout>
-            <v-flex class="ladder-post-btn">
-                <v-btn @click="clickLadderPost"
-                       dark fab large
-                       class="contribution-floating-btn ladder-post-submit">
-                    <v-icon dark>done</v-icon>
-                </v-btn>
-            </v-flex>
+            <v-form ref="form" v-model="valid"
+                    lazy-validation
+                    class="ladder-post-form">
+                <v-text-field
+                        v-model="modelTitle"
+                        outline
+                        :rules="titleRule"
+                        class="post-text-field post-title"
+                        label="Ladderタイトル"
+                        placeholder="初心者がDjangoアプリケーションを作るまで！"/>
+                <v-flex v-for="index in unitIndex" :key="index">
+                    <LadderPostItem :index="index"
+                                    @sub-title-emit="onSubTitle"
+                                    @url-emit="onUrl"
+                                    @description-emit="onDescription"
+                                    class="ladder-post-item"/>
+                </v-flex>
+                <v-layout flex row justify-center
+                          class="ladder-post-icons">
+                    <v-icon size="40" @click="clickUnitAdd"
+                            class="ladder-post-add">add_circle_outline</v-icon>
+                    <v-icon size="40" @click="clickUnitRemove"
+                            class="ladder-post-remove">remove_circle</v-icon>
+                </v-layout>
+                <v-flex class="ladder-post-btn">
+                    <v-btn @click="clickLadderPost"
+                           dark fab large
+                           class="contribution-floating-btn ladder-post-submit">
+                        <v-icon dark>done</v-icon>
+                    </v-btn>
+                </v-flex>
+            </v-form>
         </v-flex>
     </v-layout>
 </template>
@@ -57,7 +62,10 @@
         },
         urlList: {
           1: "",
-        }
+        },
+        //validation
+        valid: true,
+        titleRule: [v => !!v || 'タイトルを入力してください'],
       }
     },
     created() {
@@ -101,29 +109,31 @@
         let unit = JSON.stringify(this.unit)
         unit = JSON.parse(unit)
 
-        axios({
-          method: 'POST',
-          url: 'http://127.0.0.1:8000/api/ladder/',
-          headers: {
-            "Accept": "application/json",
-            "Authorization": "JWT " + this.$store.state.token,
-            "Content-type": "application/json"
-          },
-          data: {
-            title: this.modelTitle,
-            units: unit
-          }
-        }).then(() => {
-          alert('ラダーを投稿しました！トップページへ遷移します！')
-          this.$router.push('/')
-        }).catch((error) => {
-          if (!this.$store.state.isLogin) {
-            alert('ログインしてください！')
-          } else {
-            alert('投稿に不備があります！！')
-          }
-          console.log(error)
-        })
+        if (this.$refs.form.validate()) {
+          axios({
+            method: 'POST',
+            url: 'http://127.0.0.1:8000/api/ladder/',
+            headers: {
+              "Accept": "application/json",
+              "Authorization": "JWT " + this.$store.state.token,
+              "Content-type": "application/json"
+            },
+            data: {
+              title: this.modelTitle,
+              units: unit
+            }
+          }).then(() => {
+            alert('ラダーを投稿しました！トップページへ遷移します！')
+            this.$router.push('/')
+          }).catch((error) => {
+            if (!this.$store.state.isLogin) {
+              alert('ログインしてください！')
+            } else {
+              alert('投稿に不備があります！！')
+            }
+            console.log(error)
+          })
+        }
       }
     },
     components: {

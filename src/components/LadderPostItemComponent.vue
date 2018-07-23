@@ -5,12 +5,14 @@
                 @input="inputSubTitle"
                 outline
                 :label="'Unitタイトル'+index"
+                :rules="[v => !!v || 'Unitタイトルを入力してください']"
                 class="post-text-field post-sub-title"
                 placeholder="Pythonに触れよう！"/>
         <v-text-field
                 v-model="modelUrl"
                 @input="inputUrl"
                 outline
+                :rules="[v => !!v || '参考サイトURLを入力してください']"
                 label="参考サイトURL"
                 class="post-text-field post-url"
                 placeholder="https://www.python.org/"/>
@@ -18,6 +20,9 @@
                 v-model="modelDescription"
                 @input="inputDescription"
                 outline
+                :counter="200"
+                :rules="[v => !!v || '学べることを入力してください',
+                         v => v.length <= 150 || '学べることは150字以内で入力してください']"
                 label="学べること"
                 class="post-text-field post-description"
                 placeholder="Djangoでアプリケーションをつくるには、Pythonから勉強することが必要です！なので、まずはPythonに触れてプログラミングがどういったものかをProgateで試してみましょう！"/>
@@ -32,10 +37,11 @@
     },
     date() {
       return {
+        testRule: [v => !!v || 'タイトルを入力してください'],
         modelDescription: "",
         modelSubTitle: "",
         modelUrl: "",
-        index: this.props.index
+        index: this.props.index,
       }
     },
     created() {

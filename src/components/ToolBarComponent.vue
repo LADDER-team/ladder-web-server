@@ -37,7 +37,7 @@
     methods:{
       clickToLadderPost(){
         if(this.$store.state.isLogin) {
-          this.$router.push('post')
+          this.$router.push('/post')
         }else{
           alert("投稿ですか？まずはログインしてください！")
         }
