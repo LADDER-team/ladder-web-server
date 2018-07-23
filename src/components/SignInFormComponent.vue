@@ -102,14 +102,10 @@
           }).then(() => {
             if (!this.$store.state.isLogin) {
               this.loginPromise()
+              alert("ログインしました！")
             }
           }).then(() => {
-            if (!this.$store.state.isLogin) {
-              this.sendLogin()
-              alert("ログインしました！")
-            }else{
-              this.sendLogin()
-            }
+            this.sendLogin()
           }).catch((error) => {
             console.log(error)
           })

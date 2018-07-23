@@ -120,7 +120,7 @@
           if (!this.$store.state.isLogin) {
             alert('ログインしてください！')
           } else {
-            alert('投稿に失敗しました！')
+            alert('投稿に不備があります！！')
           }
           console.log(error)
         })
