@@ -65,7 +65,6 @@
       receivedLogin() {
         this.avatar = "face"
         this.dialog = false
-        this.$emit('notify')
       },
       ...mapActions([
         'addTokenAction',

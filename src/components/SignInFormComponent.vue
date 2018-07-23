@@ -98,11 +98,18 @@
             this.loginToken = JSON.stringify(response.data.token).replace(/[\"]/g, "")
             this.addToken()
           }).then(() => {
-            this.login = !this.login ? true : alert("ログイン済みです")
+            this.login = !this.$store.state.isLogin ? true : alert("ログイン済みです")
           }).then(() => {
-            this.loginPromise()
+            if (!this.$store.state.isLogin) {
+              this.loginPromise()
+            }
           }).then(() => {
-            this.sendLogin()
+            if (!this.$store.state.isLogin) {
+              this.sendLogin()
+              alert("ログインしました！")
+            }else{
+              this.sendLogin()
+            }
           }).catch((error) => {
             console.log(error)
           })
