@@ -13,8 +13,8 @@ jobs:
       - deploy:
           name: push app Docker image
           command: |
-            if [ "${CIRCLE_BRANCH}" == "develop" ]; then
+            if [ "${CIRCLE_BRANCH}" == "develop" ] || [ "${CIRCLE_BRANCH}" == "release" ] || [ "${CIRCLE_BRANCH}" == "master" ]; then
               echo ${DOCKERHUB_PASS} | docker login -u ${DOCKERHUB_USER} --password-stdin
-              docker tag app "${DOCKERHUB_USER}/ladder-web-server:develop"
-              docker push "${DOCKERHUB_USER}/ladder-web-server:develop"
+              docker tag app "${DOCKERHUB_USER}/ladder-web-server:${CIRCLE_BRANCH}"
+              docker push "${DOCKERHUB_USER}/ladder-web-server:${CIRCLE_BRANCH}"
             fi
