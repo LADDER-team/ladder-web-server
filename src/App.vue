@@ -1,5 +1,6 @@
 <template>
     <v-app id="inspire" indig>
+        <FirstChartTab/>
         <ToolBar/>
         <v-content id="window">
             <v-container
@@ -17,9 +18,10 @@
     </v-app>
 </template>
 <script>
-  import ToolBar from './components/ToolBarComponent'
+  import FirstChartTab from './components/FirstChartComponent'
   import Footer from './components/FooterComponent'
   import LadderList from './Views/LadderList'
+  import ToolBar from './components/ToolBarComponent'
 
   export default {
     name: 'Ladder',
@@ -29,12 +31,14 @@
       clipped: false,
       fixed: false,
       miniVariant: false,
-      rightDrawer: false
+      rightDrawer: false,
+      text: "ラダーの使い方！"
     }),
     components: {
-      ToolBar,
+      FirstChartTab,
+      Footer,
       LadderList,
-      Footer
+      ToolBar
     }
   }
 </script>

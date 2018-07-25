@@ -9,7 +9,7 @@ import _ from './lib/lodash'
 Vue.config.productionTip = false
 
 Vue.use(
-    Vuetify
+    Vuetify,
 )
 
 new Vue({
@@ -21,6 +21,3 @@ new Vue({
   render: h => h(App)
 })
 
-Vue.use(
-    Vuetify
-)

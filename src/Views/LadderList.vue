@@ -8,7 +8,7 @@
                  class="ladder-link-wrap">
                 <router-link :to="`detail/${ ladder.id }`"
                              class="ladder-link">
-                    <div class="ladder-thumb-wrap" >
+                    <div class="ladder-thumb-wrap">
                         <img :alt="defaultImage.alt"
                              src="../assets/img/ladder_avatar.png"
                              class="ladder-thumb">
@@ -21,7 +21,7 @@
                     </div>
                 </router-link>
             </div>
-        </v-flex >
+        </v-flex>
     </v-layout>
 </template>
 
@@ -30,8 +30,9 @@
 
   export default {
     name: "LadderList",
-    data(){
-      return{
+    data() {
+      return {
+        chartDialog: false,
         defaultImage: {
           src: "http://via.placeholder.com/350x150",
           alt: "placeholder-image"
@@ -44,9 +45,9 @@
         method: 'GET',
         url: 'https://api.ladder.noframeschools.com/api/ladder/'
       }).then((response) => {
-            this.ladderList = response.data
+        this.ladderList = response.data
       }).catch((error) => {
-            console.log(error)
+        console.log(error)
       })
     },
   }

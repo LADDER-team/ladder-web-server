@@ -6,60 +6,63 @@
         <v-btn slot="activator"
                dark round outline small
                class="avatar-btn">
-            <v-avatar
-                    :tile=false
-                    :size=40>
+            <v-avatar :tile=false :size=40>
                 <v-icon>{{avatar}}</v-icon>
             </v-avatar>
         </v-btn>
-        <SignUpForm v-show="sign"
-                    v-on:cancel="onSignUpDialog"
-                    v-on:direct-login="onDirectLogin"
-                    v-on:sign="signin"/>
-        <SignInForm v-show="login"
-                    v-on:cancel="onSignInDialog"
-                    v-on:login="receivedLogin"/>
+        <transition name="sign-up">
+            <SignUpForm v-show="sign"
+                        v-on:cancel="onSignUpDialog"
+                        v-on:direct-login="onDirectLogin"
+                        v-on:sign="signin"
+                        v-on:login="receivedLogin"/>
+        </transition>
+        <transition name="sign-in">
+            <SignInForm v-show="login"
+                        v-on:cancel="onSignInDialog"
+                        v-on:login="receivedLogin"/>
+        </transition>
     </v-dialog>
 </template>
 
 <script>
+  import {mapState, mapGetters, mapMutations, mapActions} from 'vuex'
   import SignUpForm from './SignUpFormComponent'
   import SignInForm from './SignInFormComponent'
-  import { mapState, mapGetters, mapMutations, mapActions} from 'vuex'
 
   export default {
     name: "SignDialogComponent",
-    data(){
-      return{
+    data() {
+      return {
         sign: true,
         dialog: false,
         login: false,
         avatar: "person_outline"
       }
     },
-    mounted(){
-      if(localStorage.getItem('token')!==null){
-        this.sign = false
-        this.login = true
-      }
-    },
     methods: {
-      onSignInDialog(){
+      onSignInDialog() {
         this.dialog = false
-        this.login = false
-        this.sign = true
+        setTimeout(() => {
+          this.login = false
+          this.sign = true
+        }, 200)
       },
-      onSignUpDialog(){this.dialog = false},
-      onDirectLogin(){
-        this.sign = false
-        this.login = true
-      },
-      signin(){
-        this.sign = false
-        this.login = true
+      onSignUpDialog() {
         this.dialog = false
       },
-      receivedLogin(){
+      onDirectLogin() {
+        this.sign = false
+        setTimeout(() => {
+          this.login = true
+        }, 100)
+      },
+      signin() {
+        this.dialog = false
+        this.login = true
+        this.sign = false
+      },
+      receivedLogin() {
         this.avatar = "face"
         this.dialog = false
       },
@@ -73,7 +76,7 @@
         token: 'tokenGetter',
         isLogin: 'loginGetter'
       }),
-      set(value){
+      set(value) {
         this.addTokenAction(value)
       }
     },

@@ -8,8 +8,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       'https://api.ladder.noframeschools.com/api/*' : {
-        target: 'https://api.ladder.noframeschools.comhttps://api.ladder.noframeschools.com/api/',
-        changeOrigin: true,
+        target: 'https://api.ladder.noframeschools.com',
       }
     },
     // Various Dev Server settings
