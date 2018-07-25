@@ -27,7 +27,7 @@
                 <v-flex align-center　justify-center
                         class="unit-image-wrap">
                     <a :href="units.url" target="_blank">
-                        <img :src="image.src?image.src+units.url+'?w='+image.width+'&h='+image.height+'?':image.defaultSrc"
+                        <img :src="image.src+units.url+'?w='+image.width+'&h='+image.height+'?'"
                              :alt="image.alt"
                              class="unit-image">
                     </a>
@@ -91,7 +91,6 @@
       url: 'https://blinky.nemui.org/shot/xlarge?',
       image: {
         src: 'https://s.wordpress.com/mshots/v1/',
-        defaultSrc: 'http://via.placeholder.com/350x150',
         height: 1000,
         width: 1000,
         alt: '画像がないよ！'
