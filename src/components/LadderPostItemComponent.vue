@@ -12,7 +12,8 @@
                 v-model="modelUrl"
                 @input="inputUrl"
                 outline
-                :rules="[v => !!v || '参考サイトURLを入力してください']"
+                :rules="[v => !!v || '参考サイトURLを入力してください',
+                         v => /(^http:\/\/|^https:\/\/)\w{1,}/.test(v) || 'http://xxxもしくはhttps://xxxの形式で入力してください']"
                 label="参考サイトURL"
                 class="post-text-field post-url"
                 placeholder="https://www.python.org/"/>
