@@ -1,24 +1,29 @@
-version: 2
-jobs:
-  build:
-    filters:
-      branches:
-        only:
-          - develop
-          - release
-          - master
-    working_directory: /app
-    docker:
-      - image: docker:18.06.0-ce-git
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run:
-          name: build app Docker image
-          command: docker build -t app .
+workflows:
+  version: 2
+  simple_deploy:
+    jobs:
+      - build
       - deploy:
-          name: push app Docker image
-          command: |
-            echo ${DOCKERHUB_PASS} | docker login -u ${DOCKERHUB_USER} --password-stdin
-            docker tag app "${DOCKERHUB_USER}/ladder-web-server:${CIRCLE_BRANCH}"
-            docker push "${DOCKERHUB_USER}/ladder-web-server:${CIRCLE_BRANCH}"
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - develop
+                - release
+                - master
+          working_directory: /app
+          docker:
+            - image: docker:18.06.0-ce-git
+          steps:
+            - checkout
+            - setup_remote_docker
+            - run:
+                name: build app Docker image
+                command: docker build -t app .
+            - deploy:
+                name: push app Docker image
+                command: |
+                  echo ${DOCKERHUB_PASS} | docker login -u ${DOCKERHUB_USER} --password-stdin
+                  docker tag app "${DOCKERHUB_USER}/ladder-web-server:${CIRCLE_BRANCH}"
+                  docker push "${DOCKERHUB_USER}/ladder-web-server:${CIRCLE_BRANCH}"
