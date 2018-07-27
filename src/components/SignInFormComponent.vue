@@ -90,7 +90,7 @@
               alert("ログインしました！")
             }
           }).then(() => {
-            this.sendLogin()
+            this.emitLogin()
           }).then(() => {
             this.tokenDecoded()
           }).then(() => {
@@ -106,7 +106,7 @@
       loginPromise() {
         this.loginAction(this.login)
       },
-      sendLogin() {
+      emitLogin() {
         this.$emit('login')
       },
       tokenDecoded() {

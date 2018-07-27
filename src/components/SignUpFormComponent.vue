@@ -96,12 +96,7 @@
       clickDirectLogin() {
         this.$emit('direct-login');
       },
-      // addUser() {
-      //   this.addNameAction(this.$refs.nameRef.value)
-      //   this.addEmailAction(this.$refs.emailRef.value)
-      //   this.addPassAction(this.$refs.passRef.value)
       postUser() {
-        this.addUser()
         if (this.$refs.form.validate()) {
           axios({
             method: 'POST',
@@ -137,7 +132,6 @@
         this.$emit('sign')
       },
       loginPost() {
-        this.loginUser()
         axios({
           method: 'POST',
           url: 'http://127.0.0.1:8000/api/api-auth/',
@@ -159,13 +153,11 @@
         }).then(() => {
           this.emitLogin()
           alert("ご登録ありがとうございます！")
+        }).then(() => {
+          this.setUser()
         }).catch((error) => {
           console.log(error)
         })
-      },
-      loginUser() {
-        this.loginEmailAction(this.modelEmail);
-        this.loginPassAction(this.modelPass)
       },
       addToken() {
         this.addTokenAction(this.loginToken)
@@ -176,14 +168,16 @@
       emitLogin() {
         this.$emit('login')
       },
+      setUser() {
+        this.addNameAction(this.modelName);
+        this.addEmailAction(this.modelEmail);
+        console.log(this.$store.state)
+      },
       ...mapActions([
         'addEmailAction',
         'addNameAction',
-        'addPassAction',
         'addTokenAction',
         'loginAction',
-        'loginEmailAction',
-        'loginPassAction',
         'signAction'
       ])
     },
@@ -193,13 +187,11 @@
         email: 'emailGetter',
         isLogin: 'loginGetter',
         isSign: 'signGetter',
-        password: 'passGetter',
         token: 'tokenGetter'
       }),
       set(value) {
         this.addNameAction(value)
         this.addEmailAction(value)
-        this.addPassAction(value)
         this.signAction(value)
       },
     },
