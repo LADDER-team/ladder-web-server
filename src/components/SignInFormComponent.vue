@@ -42,6 +42,7 @@
 <script>
   import {mapState, mapGetters, mapMutations, mapActions} from 'vuex'
   import axios from 'axios'
+  import jwt from 'jwt-decode'
 
   export default {
     name: "SignInFormComponent",
@@ -49,9 +50,10 @@
       return {
         loginToken: null,
         login: false,
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
+        userId: 0,
+        userDetail: {},
+        decodedToken: {},
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         //validation
         valid: true,
         modelEmail: "",
@@ -64,22 +66,6 @@
       }
     },
     methods: {
-      clickDialogCancel() {
-        this.$emit('cancel')
-      },
-      sendLogin() {
-        this.$emit('login')
-      },
-      loginUser() {
-        this.loginEmailAction(this.$refs.emailRef.value)
-        this.loginPassAction(this.$refs.passRef.value)
-      },
-      addToken() {
-        this.addTokenAction(this.loginToken)
-      },
-      loginPromise() {
-        this.loginAction(this.login)
-      },
       clickLoginPost() {
         this.loginUser()
         if (this.$refs.form.validate()) {
@@ -95,7 +81,7 @@
               password: this.$store.state.password
             }
           }).then((response) => {
-            this.loginToken = JSON.stringify(response.data.token).replace(/[\"]/g, "")
+            this.loginToken = JSON.stringify(response.data.token).replace(/[\"]/g, "");
             this.addToken()
           }).then(() => {
             this.login = !this.$store.state.isLogin ? true : alert("ログイン済みです")
@@ -106,29 +92,73 @@
             }
           }).then(() => {
             this.sendLogin()
+          }).then(() => {
+            this.tokenDecoded()
+          }).then(() => {
+            this.getUser()
           }).catch((error) => {
             console.log(error)
           })
         }
       },
+      loginUser() {
+        this.loginEmailAction(this.$refs.emailRef.value)
+        this.loginPassAction(this.$refs.passRef.value)
+      },
+      addToken() {
+        this.addTokenAction(this.loginToken)
+      },
+      loginPromise() {
+        this.loginAction(this.login)
+      },
+      sendLogin() {
+        this.$emit('login')
+      },
+      tokenDecoded() {
+        this.decodedToken = jwt(this.loginToken);
+        this.userId = this.decodedToken.user_id;
+      },
+      getUser() {
+        axios({
+          method: 'GET',
+          url: 'http://127.0.0.1:8000/api/users/' + this.userId + '/',
+        }).then((response) => {
+          this.userDetail = response.data
+        }).then(() => {
+          this.setUser()
+          console.log(this.$store.state)
+        }).catch((error) => {
+          alert("ユーザの取得に失敗しました")
+          console.log(error)
+        })
+      },
+      setUser() {
+        this.addNameAction(this.userDetail.name);
+        this.addEmailAction(this.decodedToken.email);
+      },
+      clickDialogCancel() {
+        this.$emit('cancel')
+      },
       ...mapActions([
+        'addEmailAction',
+        'addNameAction',
+        'addTokenAction',
         'loginEmailAction',
         'loginPassAction',
-        'addTokenAction',
-        'loginAction'
+        'loginAction',
       ])
     },
     computed: {
       ...mapGetters({
         email: 'emailGetter',
+        isLogin: 'loginGetter',
         password: 'passGetter',
         token: 'tokenGetter',
-        isLogin: 'loginGetter'
       }),
       set(value) {
+        this.addTokenAction(value)
         this.loginEmailAction(value)
         this.loginPassAction(value)
-        this.addTokenAction(value)
       },
     },
   }

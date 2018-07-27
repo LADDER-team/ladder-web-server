@@ -100,11 +100,12 @@
         for (let i = 1; i <= this.unitIndex; i++) {
           this.unit[i - 1] =
               {
-                title: this.subtitleList[i],
-                url: this.urlList[i],
-                description: this.descriptionList[i],
-                index: i
+                title: this.subtitleList[unitIndex],
+                url: this.urlList[unitIndex],
+                description: this.descriptionList[unitIndex],
+                index: unitIndex
               }
+                unitIndex--;
         }
         let unit = JSON.stringify(this.unit)
         unit = JSON.parse(unit)
@@ -120,6 +121,7 @@
             },
             data: {
               title: this.modelTitle,
+              tags: [],
               units: unit
             }
           }).then(() => {

@@ -97,9 +97,9 @@
         this.$emit('direct-login');
       },
       addUser() {
-        this.addNameAction(this.$refs.nameRef.value),
-            this.addEmailAction(this.$refs.emailRef.value),
-            this.addPassAction(this.$refs.passRef.value)
+        this.addNameAction(this.$refs.nameRef.value)
+        this.addEmailAction(this.$refs.emailRef.value)
+        this.addPassAction(this.$refs.passRef.value)
       },
       addSign() {
         this.signAction(this.sign)

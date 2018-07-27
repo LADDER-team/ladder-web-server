@@ -18,10 +18,11 @@
                         v-on:login="receivedLogin"/>
         </transition>
         <transition name="sign-in">
-            <SignInForm v-show="login"
+            <SignInForm v-show="login&&!this.$store.state.isLogin"
                         v-on:cancel="onSignInDialog"
                         v-on:login="receivedLogin"/>
         </transition>
+        <UserInfoCard v-show="this.$store.state.isLogin"/>
     </v-dialog>
 </template>
 
@@ -29,6 +30,7 @@
   import {mapState, mapGetters, mapMutations, mapActions} from 'vuex'
   import SignUpForm from './SignUpFormComponent'
   import SignInForm from './SignInFormComponent'
+  import UserInfoCard from './UserInfoCardComponent'
 
   export default {
     name: "SignDialogComponent",
@@ -82,7 +84,8 @@
     },
     components: {
       SignInForm,
-      SignUpForm
+      SignUpForm,
+      UserInfoCard
     }
   }
 </script>
