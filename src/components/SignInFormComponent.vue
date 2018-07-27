@@ -67,7 +67,6 @@
     },
     methods: {
       clickLoginPost() {
-        this.loginUser()
         if (this.$refs.form.validate()) {
           axios({
             method: 'POST',
@@ -77,12 +76,12 @@
               'Content-Type': 'application/json'
             },
             data: {
-              email: this.$store.state.email,
-              password: this.$store.state.password
+              email: this.modelEmail,
+              password: this.modelPass
             }
           }).then((response) => {
             this.loginToken = JSON.stringify(response.data.token).replace(/[\"]/g, "");
-            this.addToken()
+            this.addToken();
           }).then(() => {
             this.login = !this.$store.state.isLogin ? true : alert("ログイン済みです")
           }).then(() => {
@@ -100,10 +99,6 @@
             console.log(error)
           })
         }
-      },
-      loginUser() {
-        this.loginEmailAction(this.$refs.emailRef.value)
-        this.loginPassAction(this.$refs.passRef.value)
       },
       addToken() {
         this.addTokenAction(this.loginToken)
@@ -143,8 +138,6 @@
         'addEmailAction',
         'addNameAction',
         'addTokenAction',
-        'loginEmailAction',
-        'loginPassAction',
         'loginAction',
       ])
     },
@@ -157,8 +150,6 @@
       }),
       set(value) {
         this.addTokenAction(value)
-        this.loginEmailAction(value)
-        this.loginPassAction(value)
       },
     },
   }

@@ -96,17 +96,10 @@
       clickDirectLogin() {
         this.$emit('direct-login');
       },
-      addUser() {
-        this.addNameAction(this.$refs.nameRef.value)
-        this.addEmailAction(this.$refs.emailRef.value)
-        this.addPassAction(this.$refs.passRef.value)
-      },
-      addSign() {
-        this.signAction(this.sign)
-      },
-      sendToSign() {
-        this.$emit('sign')
-      },
+      // addUser() {
+      //   this.addNameAction(this.$refs.nameRef.value)
+      //   this.addEmailAction(this.$refs.emailRef.value)
+      //   this.addPassAction(this.$refs.passRef.value)
       postUser() {
         this.addUser()
         if (this.$refs.form.validate()) {
@@ -118,16 +111,16 @@
               'Content-Type': 'application/json',
             },
             data: {
-              name: this.$store.state.name,
-              email: this.$store.state.email,
-              password: this.$store.state.password
+              name: this.modelName,
+              email: this.modelEmail,
+              password: this.modelPass
             }
           }).then(() => {
             this.$data.sign = true
           }).then(() => {
             this.addSign()
           }).then(() => {
-            this.sendToSign()
+            this.emitSign()
           }).then(() => {
             this.loginPost()
           }).catch((error) => {
@@ -136,18 +129,12 @@
           })
         }
       },
-      loginUser() {
-        this.loginEmailAction(this.modelEmail);
-        this.loginPassAction(this.modelPass)
+      // },
+      addSign() {
+        this.signAction(this.sign)
       },
-      addToken() {
-        this.addTokenAction(this.loginToken)
-      },
-      loginPromise() {
-        this.loginAction(this.login)
-      },
-      sendLogin() {
-        this.$emit('login')
+      emitSign() {
+        this.$emit('sign')
       },
       loginPost() {
         this.loginUser()
@@ -159,8 +146,8 @@
             'Content-Type': 'application/json'
           },
           data: {
-            email: this.$store.state.email,
-            password: this.$store.state.password
+            email: this.modelEmail,
+            password: this.modelPass
           }
         }).then((response) => {
           this.loginToken = JSON.stringify(response.data.token).replace(/[\"]/g, "")
@@ -170,11 +157,24 @@
         }).then(() => {
           this.loginPromise()
         }).then(() => {
-          this.sendLogin()
+          this.emitLogin()
           alert("ご登録ありがとうございます！")
         }).catch((error) => {
           console.log(error)
         })
+      },
+      loginUser() {
+        this.loginEmailAction(this.modelEmail);
+        this.loginPassAction(this.modelPass)
+      },
+      addToken() {
+        this.addTokenAction(this.loginToken)
+      },
+      loginPromise() {
+        this.loginAction(this.login)
+      },
+      emitLogin() {
+        this.$emit('login')
       },
       ...mapActions([
         'addEmailAction',
