@@ -29,7 +29,7 @@
   import axios from 'axios'
 
   export default {
-    name: "LadderList",
+    name: "LadderListPage",
     data() {
       return {
         chartDialog: false,

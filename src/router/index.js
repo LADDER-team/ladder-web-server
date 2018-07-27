@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import LadderDetail from '../Views/LadderDetail'
-import LadderList from '../Views/LadderList'
-import LadderPost from '../Views/LadderPost'
+import LadderDetail from '../Views/LadderDetailPage'
+import LadderList from '../Views/LadderListPage'
+import LadderPost from '../Views/LadderPostPage'
 
 Vue.use(Router)
 

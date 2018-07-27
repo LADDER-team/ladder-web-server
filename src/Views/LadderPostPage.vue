@@ -47,7 +47,7 @@
   import axios from "axios"
 
   export default {
-    name: "LadderPost",
+    name: "LadderPostDetail",
     data() {
       return {
         unitIndex: 1,

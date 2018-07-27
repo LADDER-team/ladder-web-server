@@ -69,7 +69,7 @@
   import axios from 'axios'
 
   export default {
-    name: 'Ladder',
+    name: 'LadderDetailPage',
     data: () => ({
       ladderActive: false,
       ladderToUnit: false,
