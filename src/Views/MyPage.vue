@@ -1,16 +1,14 @@
 <template>
-    <v-layout align-start justify-center wrap col
+    <v-layout align-center justify-center col
               class="layout-my-page">
         <v-flex layout align-start justify-center row class="my-page-wrap">
             <v-flex md3 align-center justify-center layout>
-                <v-avatar
-                        :size="avatarSize"
-                        color="grey lighten-4">
+                <v-avatar :size="avatarSize" color="grey lighten-4">
                     <img src="../assets/img/logo.png" alt="avatar">
                 </v-avatar>
             </v-flex>
             <v-flex md9 justify-start align-center col>
-                <h2 class="">{{compUser}}</h2>
+                <h2>{{compUser}}</h2>
                 <p>{{compProfile}}</p>
             </v-flex>
         </v-flex>
