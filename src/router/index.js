@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import LadderDetail from '../Views/LadderDetailPage'
 import LadderList from '../Views/LadderListPage'
 import LadderPost from '../Views/LadderPostPage'
+import MyPage from '../Views/MyPage'
 
 Vue.use(Router)
 
@@ -22,6 +23,11 @@ export default new Router({
       path: '/post',
       name: 'post',
       component: LadderPost
+    },
+    {
+      path: '/user/:name',
+      name: 'user',
+      component: MyPage
     }
   ]
 })

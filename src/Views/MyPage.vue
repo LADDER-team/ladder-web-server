@@ -1,31 +1,87 @@
 <template>
-    <v-layout align-start justify-center wrap
+    <v-layout align-start justify-center wrap col
               class="layout-my-page">
-        <v-flex>
-            <v-flex align-center justify-center
-                    layout text-xs-center>
+        <v-flex layout align-start justify-center row class="my-page-wrap">
+            <v-flex md3 align-center justify-center layout>
                 <v-avatar
-                        :tile="tile"
                         :size="avatarSize"
                         color="grey lighten-4">
                     <img src="../assets/img/logo.png" alt="avatar">
                 </v-avatar>
             </v-flex>
+            <v-flex md9 justify-start align-center col>
+                <h2 class="">{{compUser}}</h2>
+                <p>{{compProfile}}</p>
+            </v-flex>
         </v-flex>
-        <v-flex>
-            <h2></h2>
-            <p></p>
+        <v-flex align-start　justify-center
+                class="ladder-links-wrap my-page-ladders-wrap">
+            <div v-for="ladder in myLadderList"
+                 class="ladder-link-wrap">
+                <router-link :to="`/detail/${ ladder.id }`"
+                             class="ladder-link">
+                    <div class="ladder-thumb-wrap">
+                        <img :alt="defaultImage.alt"
+                             src="../assets/img/ladder_avatar.png"
+                             class="ladder-thumb">
+                    </div>
+                    <div class="ladder-info-wrap">
+                        <h2 class="ladder-link-title">{{ ladder.title }}</h2>
+                    </div>
+                </router-link>
+            </div>
         </v-flex>
     </v-layout>
 </template>
 
 <script>
+  import axios from 'axios'
+
   export default {
     name: "MyPage",
+    data() {
+      return {
+        avatarSize: 80,
+        defaultUsername: 'ユーザー',
+        defaultProfile: 'プロフィール文',
+        defaultImage: {
+          src: "http://via.placeholder.com/350x150",
+          alt: "placeholder-image"
+        },
+        myLadderList: []
+      }
+    },
+    mounted() {
+      axios({
+        method: 'GET',
+        url: 'http://127.0.0.1:8000/api/users/2/'
+      }).then((response) => {
+        this.myLadderList = response.data.my_ladders
+      }).catch((error) => {
+        console.log(error)
+      })
+    },
+    computed: {
+      compUser() {
+        if (this.$store.state.name) {
+          return this.$store.state.name
+        } else {
+          return this.defaultUsername
+        }
+      },
+      compProfile() {
+        if (this.$store.state.profile) {
+          return this.$store.state.profile
+        } else {
+          return this.defaultProfile
+        }
+      }
+    },
   }
 </script>
 
 <style scoped lang="sass">
     @import "../styles/base"
     @import "../styles/myPage"
+    @import "../styles/ladderList"
 </style>
