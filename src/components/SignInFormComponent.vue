@@ -50,7 +50,7 @@
       return {
         loginToken: null,
         login: false,
-        userId: 0,
+        temporaryUserId: 0,
         userDetail: {},
         decodedToken: {},
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -111,12 +111,12 @@
       },
       tokenDecoded() {
         this.decodedToken = jwt(this.loginToken);
-        this.userId = this.decodedToken.user_id;
+        this.temporaryUserId = this.decodedToken.user_id;
       },
       getUser() {
         axios({
           method: 'GET',
-          url: 'http://127.0.0.1:8000/api/users/' + this.userId + '/',
+          url: 'http://127.0.0.1:8000/api/users/' + this.temporaryUserId + '/',
         }).then((response) => {
           this.userDetail = response.data
         }).then(() => {
@@ -130,6 +130,7 @@
       setUser() {
         this.addNameAction(this.userDetail.name);
         this.addEmailAction(this.decodedToken.email);
+        this.addUserIdAction(this.temporaryUserId);
       },
       clickDialogCancel() {
         this.$emit('cancel')
@@ -138,6 +139,7 @@
         'addEmailAction',
         'addNameAction',
         'addTokenAction',
+        'addUserIdAction',
         'loginAction',
       ])
     },
@@ -147,9 +149,11 @@
         isLogin: 'loginGetter',
         password: 'passGetter',
         token: 'tokenGetter',
+        userId: 'userIdGetter'
       }),
       set(value) {
         this.addTokenAction(value)
+        this.addUserIdAction(value)
       },
     },
   }

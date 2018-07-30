@@ -43,6 +43,7 @@
         avatarSize: 80,
         defaultUsername: 'ユーザー',
         defaultProfile: 'プロフィール文',
+        userId: 0,
         defaultImage: {
           src: "http://via.placeholder.com/350x150",
           alt: "placeholder-image"
@@ -51,9 +52,10 @@
       }
     },
     mounted() {
+      this.userId = this.$store.state.userId?this.$store.state.userId:0
       axios({
         method: 'GET',
-        url: 'http://127.0.0.1:8000/api/users/2/'
+        url: 'http://127.0.0.1:8000/api/users/'+this.userId+'/'
       }).then((response) => {
         this.myLadderList = response.data.my_ladders
       }).catch((error) => {
