@@ -14,6 +14,7 @@
         </div>
         <v-flex align-start　justify-center
                 class="ladder-links-wrap my-page-ladders-wrap">
+            <h2 class="my-page-ladders-title">投稿したLadder</h2>
             <div v-for="ladder in myLadderList"
                  class="ladder-link-wrap">
                 <router-link :to="`/detail/${ ladder.id }`"
