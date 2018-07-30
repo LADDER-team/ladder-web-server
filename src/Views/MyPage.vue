@@ -1,17 +1,17 @@
 <template>
-    <v-layout align-center justify-center col
+    <v-layout align-center justify-center column
               class="layout-my-page">
-        <v-flex layout align-start justify-center row class="my-page-wrap">
+        <div class="my-page-wrap">
             <v-flex md3 align-center justify-center layout>
                 <v-avatar :size="avatarSize" color="grey lighten-4">
                     <img src="../assets/img/logo.png" alt="avatar">
                 </v-avatar>
             </v-flex>
-            <v-flex md9 justify-start align-center col>
+            <v-flex md9 justify-start align-center>
                 <h2>{{compUser}}</h2>
                 <p>{{compProfile}}</p>
             </v-flex>
-        </v-flex>
+        </div>
         <v-flex align-start　justify-center
                 class="ladder-links-wrap my-page-ladders-wrap">
             <div v-for="ladder in myLadderList"
