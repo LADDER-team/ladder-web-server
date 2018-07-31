@@ -98,6 +98,7 @@
         this.$set(this.urlList, index, urlEmit);
       },
       clickLadderPost() {
+        let unitIndex = this.unitIndex
         for (let i = 1; i <= this.unitIndex; i++) {
           this.unit[i - 1] =
               {
@@ -106,7 +107,7 @@
                 description: this.descriptionList[unitIndex],
                 index: unitIndex
               }
-                unitIndex--;
+          unitIndex--;
         }
         let unit = JSON.stringify(this.unit)
         unit = JSON.parse(unit)
