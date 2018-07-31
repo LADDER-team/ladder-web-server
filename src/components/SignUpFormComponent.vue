@@ -171,7 +171,6 @@
       setUser() {
         this.addNameAction(this.modelName);
         this.addEmailAction(this.modelEmail);
-        console.log(this.$store.state)
       },
       ...mapActions([
         'addEmailAction',

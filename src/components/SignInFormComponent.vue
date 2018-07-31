@@ -121,7 +121,6 @@
           this.userDetail = response.data
         }).then(() => {
           this.setUser()
-          console.log(this.$store.state)
         }).catch((error) => {
           alert("ユーザの取得に失敗しました")
           console.log(error)
