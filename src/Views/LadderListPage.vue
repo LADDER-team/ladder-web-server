@@ -29,7 +29,7 @@
   import axios from 'axios'
 
   export default {
-    name: "LadderList",
+    name: "LadderListPage",
     data() {
       return {
         chartDialog: false,
@@ -45,7 +45,7 @@
         method: 'GET',
         url: 'https://api.ladder.noframeschools.com/api/ladder/'
       }).then((response) => {
-        this.ladderList = response.data
+        this.ladderList = response.data.results
       }).catch((error) => {
         console.log(error)
       })

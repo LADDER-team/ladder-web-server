@@ -13,6 +13,7 @@ const store = new Vuex.Store({
     name: null,
     password: null,
     token: null,
+    userId: null
   },
   getters: {
     dialogGetter(state) {
@@ -35,6 +36,9 @@ const store = new Vuex.Store({
     },
     tokenGetter(state) {
       return state.token
+    },
+    userIdGetter(state){
+      return state.userId
     }
   },
   mutations: {
@@ -50,6 +54,9 @@ const store = new Vuex.Store({
     addTokenMutation(state, payload) {
       state.token = payload.token
       localStorage.setItem('token', state.token)
+    },
+    addUserIdMutation(state, payload){
+      state.userId = payload.userId
     },
     dialogMutation(state, payload) {
       state.isDialog = payload.isDialog
@@ -79,6 +86,9 @@ const store = new Vuex.Store({
     },
     addTokenAction({commit}, token) {
       commit('addTokenMutation', {token})
+    },
+    addUserIdAction({commit}, userId){
+      commit('addUserIdMutation', {userId})
     },
     dialogAction({commit}, isDialog) {
       commit('dialogMutation', {isDialog})

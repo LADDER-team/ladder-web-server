@@ -96,19 +96,7 @@
       clickDirectLogin() {
         this.$emit('direct-login');
       },
-      addUser() {
-        this.addNameAction(this.$refs.nameRef.value),
-            this.addEmailAction(this.$refs.emailRef.value),
-            this.addPassAction(this.$refs.passRef.value)
-      },
-      addSign() {
-        this.signAction(this.sign)
-      },
-      sendToSign() {
-        this.$emit('sign')
-      },
       postUser() {
-        this.addUser()
         if (this.$refs.form.validate()) {
           axios({
             method: 'POST',
@@ -118,16 +106,16 @@
               'Content-Type': 'application/json',
             },
             data: {
-              name: this.$store.state.name,
-              email: this.$store.state.email,
-              password: this.$store.state.password
+              name: this.modelName,
+              email: this.modelEmail,
+              password: this.modelPass
             }
           }).then(() => {
             this.$data.sign = true
           }).then(() => {
             this.addSign()
           }).then(() => {
-            this.sendToSign()
+            this.emitSign()
           }).then(() => {
             this.loginPost()
           }).catch((error) => {
@@ -136,21 +124,14 @@
           })
         }
       },
-      loginUser() {
-        this.loginEmailAction(this.modelEmail);
-        this.loginPassAction(this.modelPass)
+      // },
+      addSign() {
+        this.signAction(this.sign)
       },
-      addToken() {
-        this.addTokenAction(this.loginToken)
-      },
-      loginPromise() {
-        this.loginAction(this.login)
-      },
-      sendLogin() {
-        this.$emit('login')
+      emitSign() {
+        this.$emit('sign')
       },
       loginPost() {
-        this.loginUser()
         axios({
           method: 'POST',
           url: 'https://api.ladder.noframeschools.com/api/api-auth/',
@@ -159,8 +140,8 @@
             'Content-Type': 'application/json'
           },
           data: {
-            email: this.$store.state.email,
-            password: this.$store.state.password
+            email: this.modelEmail,
+            password: this.modelPass
           }
         }).then((response) => {
           this.loginToken = JSON.stringify(response.data.token).replace(/[\"]/g, "")
@@ -170,20 +151,33 @@
         }).then(() => {
           this.loginPromise()
         }).then(() => {
-          this.sendLogin()
+          this.emitLogin()
           alert("ご登録ありがとうございます！")
+        }).then(() => {
+          this.setUser()
         }).catch((error) => {
           console.log(error)
         })
       },
+      addToken() {
+        this.addTokenAction(this.loginToken)
+      },
+      loginPromise() {
+        this.loginAction(this.login)
+      },
+      emitLogin() {
+        this.$emit('login')
+      },
+      setUser() {
+        this.addNameAction(this.modelName);
+        this.addEmailAction(this.modelEmail);
+        console.log(this.$store.state)
+      },
       ...mapActions([
         'addEmailAction',
         'addNameAction',
-        'addPassAction',
         'addTokenAction',
         'loginAction',
-        'loginEmailAction',
-        'loginPassAction',
         'signAction'
       ])
     },
@@ -193,13 +187,11 @@
         email: 'emailGetter',
         isLogin: 'loginGetter',
         isSign: 'signGetter',
-        password: 'passGetter',
         token: 'tokenGetter'
       }),
       set(value) {
         this.addNameAction(value)
         this.addEmailAction(value)
-        this.addPassAction(value)
         this.signAction(value)
       },
     },

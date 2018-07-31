@@ -12,16 +12,18 @@
         </v-btn>
         <transition name="sign-up">
             <SignUpForm v-show="sign"
-                        v-on:cancel="onSignUpDialog"
+                        v-on:cancel="onCancelDialog"
                         v-on:direct-login="onDirectLogin"
                         v-on:sign="signin"
                         v-on:login="receivedLogin"/>
         </transition>
         <transition name="sign-in">
-            <SignInForm v-show="login"
+            <SignInForm v-show="login&&!this.$store.state.isLogin"
                         v-on:cancel="onSignInDialog"
                         v-on:login="receivedLogin"/>
         </transition>
+        <UserInfoCard v-show="this.$store.state.isLogin"
+                      v-on:cancel="onCancelDialog"/>
     </v-dialog>
 </template>
 
@@ -29,7 +31,7 @@
   import {mapState, mapGetters, mapMutations, mapActions} from 'vuex'
   import SignUpForm from './SignUpFormComponent'
   import SignInForm from './SignInFormComponent'
-
+  import UserInfoCard from './UserInfoCardComponent'
   export default {
     name: "SignDialogComponent",
     data() {
@@ -37,7 +39,7 @@
         sign: true,
         dialog: false,
         login: false,
-        avatar: "person_outline"
+        avatar: "person_outline",
       }
     },
     methods: {
@@ -48,7 +50,7 @@
           this.sign = true
         }, 200)
       },
-      onSignUpDialog() {
+      onCancelDialog() {
         this.dialog = false
       },
       onDirectLogin() {
@@ -82,7 +84,8 @@
     },
     components: {
       SignInForm,
-      SignUpForm
+      SignUpForm,
+      UserInfoCard
     }
   }
 </script>

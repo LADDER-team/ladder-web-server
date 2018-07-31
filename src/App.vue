@@ -20,7 +20,7 @@
 <script>
   import FirstChartTab from './components/FirstChartComponent'
   import Footer from './components/FooterComponent'
-  import LadderList from './Views/LadderList'
+  import LadderList from './Views/LadderListPage'
   import ToolBar from './components/ToolBarComponent'
 
   export default {
