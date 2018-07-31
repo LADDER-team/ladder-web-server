@@ -55,7 +55,7 @@
       this.userId = this.$store.state.userId?this.$store.state.userId:0
       axios({
         method: 'GET',
-        url: 'http://127.0.0.1:8000/api/users/'+this.userId+'/'
+        url: 'https://api.ladder.noframeschools.com/api/users/'+this.userId+'/'
       }).then((response) => {
         this.myLadderList = response.data.my_ladders
       }).catch((error) => {
