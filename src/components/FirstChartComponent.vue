@@ -44,7 +44,6 @@
       }
     },
     mounted(){
-      console.log(this.$store)
       if (!this.$store.state.isSign&&!localStorage.getItem("token")) {
         this.chartDialog = true
       }

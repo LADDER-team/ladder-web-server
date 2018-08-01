@@ -70,7 +70,7 @@
         if (this.$refs.form.validate()) {
           axios({
             method: 'POST',
-            url: 'http://127.0.0.1:8000/api/api-auth/',
+            url: 'https://api.ladder.noframeschools.com/api/api-auth/',
             headers: {
               "Accept": "application/json",
               'Content-Type': 'application/json'
@@ -116,12 +116,11 @@
       getUser() {
         axios({
           method: 'GET',
-          url: 'http://127.0.0.1:8000/api/users/' + this.temporaryUserId + '/',
+          url: 'https://api.ladder.noframeschools.com/api/users/' + this.temporaryUserId + '/',
         }).then((response) => {
           this.userDetail = response.data
         }).then(() => {
           this.setUser()
-          console.log(this.$store.state)
         }).catch((error) => {
           alert("ユーザの取得に失敗しました")
           console.log(error)

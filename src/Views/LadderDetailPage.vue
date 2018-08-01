@@ -103,7 +103,7 @@
       this.getLadderParam = this.$route.params.id
       axios({
         method: 'GET',
-        url: 'http://127.0.0.1:8000/api/ladder/' + this.getLadderParam + '/'
+        url: 'https://api.ladder.noframeschools.com/api/ladder/' + this.getLadderParam + '/'
       }).then((response) => {
         this.ladderDetailList = response.data
       }).catch((error) => {
@@ -118,7 +118,7 @@
         if (this.prevLadderList.length === 0) {
           axios({
             method: 'GET',
-            url: 'http://127.0.0.1:8000/api/ladder/' + this.prevLadderId + '/'
+            url: 'https://api.ladder.noframeschools.com/api/ladder/' + this.prevLadderId + '/'
           }).then((response) => {
             this.prevLadderList = response.data
           }).catch((error) => {
@@ -131,7 +131,7 @@
         if (this.nextLadderList.length === 0) {
           axios({
             method: 'GET',
-            url: 'http://127.0.0.1:8000/api/ladder/' + this.nextLadderId + '/'
+            url: 'https://api.ladder.noframeschools.com/api/ladder/' + this.nextLadderId + '/'
           }).then((response) => {
             this.nextLadderList = response.data
           }).catch((error) => {
@@ -206,7 +206,7 @@
           this.getLadderParam = this.$route.params.id
           axios({
             method: 'GET',
-            url: 'http://127.0.0.1:8000/api/ladder/' + this.getLadderParam + '/'
+            url: 'https://api.ladder.noframeschools.com/api/ladder/' + this.getLadderParam + '/'
           }).then((response) => {
             this.ladderDetailList = response.data
           }).catch((error) => {
@@ -233,8 +233,6 @@
   }
 </script>
 <style scoped lang="sass">
-    @import "../styles/colors"
-    @import "../styles/layout"
     @import "../styles/base"
     @import "../styles/ladderDetail"
 </style>
