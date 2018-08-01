@@ -85,12 +85,13 @@
           }).then(() => {
             this.login = !this.$store.state.isLogin ? true : alert("ログイン済みです")
           }).then(() => {
-            if (!this.$store.state.isLogin) {
-              this.loginPromise()
-              alert("ログインしました！")
-            }
-          }).then(() => {
             this.emitLogin()
+            alert("ログインしました！")
+            if (!this.$store.state.isLogin) {
+              setTimeout(()=>{
+                this.loginPromise()
+              }, 200)
+            }
           }).then(() => {
             this.tokenDecoded()
           }).then(() => {
