@@ -4,7 +4,7 @@ module.exports = {
   dev: {
     mode: 'develop',
     // Paths
-    assetsSubDirectory: 'static',
+    assetsSubDirectory: 'src/assets',
     assetsPublicPath: '/',
     proxyTable: {
       'https://api.ladder.noframeschools.com/api/*' : {
@@ -48,7 +48,7 @@ module.exports = {
 
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: 'static',
+    assetsSubDirectory: 'assets',
     assetsPublicPath: '',
 
     /**
