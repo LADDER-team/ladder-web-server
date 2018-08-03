@@ -113,7 +113,7 @@
         if (this.$refs.form.validate()) {
           axios({
             method: 'POST',
-            url: 'http://127.0.0.1:8000/api/ladder/',
+            url: 'https://api.ladder.noframeschools.com/api/ladder/',
             headers: {
               "Accept": "application/json",
               "Authorization": "JWT " + this.$store.state.token,

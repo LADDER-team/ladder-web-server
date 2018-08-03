@@ -8,7 +8,7 @@
                 justify-center
                 class="ladder-wrap">
             <div id="ladder-action-wrap" class="ladder-inner">
-                <div v-for="units in ladderDetailList.units"
+                <div v-for="units in unitList"
                      @click="clickLadder"
                      class="ladder-item">
                     <p>unit:{{ units.index }}</p>
@@ -20,7 +20,7 @@
                 align-start justify-center
                 id="unit-items"
                 class="unit-wrap">
-            <div v-for="units in ladderDetailList.units"
+            <div v-for="units in unitList"
                  class="unit-item">
                 <p class="unit-head">unit:{{ units.index }}</p>
                 <h2 class="unit-title">{{ units.title }}</h2>
@@ -67,6 +67,7 @@
 </template>
 <script>
   import axios from 'axios'
+  import _ from 'underscore'
 
   export default {
     name: 'LadderDetailPage',
@@ -96,6 +97,7 @@
         alt: '画像がないよ！'
       },
       ladderDetailList: [],
+      unitList: [],
       nextLadderList: [],
       prevLadderList: []
     }),
@@ -103,9 +105,12 @@
       this.getLadderParam = this.$route.params.id
       axios({
         method: 'GET',
-        url: 'http://127.0.0.1:8000/api/ladder/' + this.getLadderParam + '/'
+        url: 'https://api.ladder.noframeschools.com/api/ladder/' + this.getLadderParam + '/'
       }).then((response) => {
         this.ladderDetailList = response.data
+        this.unitList = response.data.units
+      }).then(()=>{
+        this.unitList = _.indexBy(this.unitList, 'index')
       }).catch((error) => {
         console.log(error)
       })
@@ -118,7 +123,7 @@
         if (this.prevLadderList.length === 0) {
           axios({
             method: 'GET',
-            url: 'http://127.0.0.1:8000/api/ladder/' + this.prevLadderId + '/'
+            url: 'https://api.ladder.noframeschools.com/api/ladder/' + this.prevLadderId + '/'
           }).then((response) => {
             this.prevLadderList = response.data
           }).catch((error) => {
@@ -131,7 +136,7 @@
         if (this.nextLadderList.length === 0) {
           axios({
             method: 'GET',
-            url: 'http://127.0.0.1:8000/api/ladder/' + this.nextLadderId + '/'
+            url: 'https://api.ladder.noframeschools.com/api/ladder/' + this.nextLadderId + '/'
           }).then((response) => {
             this.nextLadderList = response.data
           }).catch((error) => {
@@ -167,6 +172,9 @@
             target = e.target
         return Array.prototype.indexOf.call(nodeList, target)
       },
+      sortedUnit(list, key){
+
+      }
     },
     watch: {
       offsetTop: {
@@ -206,7 +214,7 @@
           this.getLadderParam = this.$route.params.id
           axios({
             method: 'GET',
-            url: 'http://127.0.0.1:8000/api/ladder/' + this.getLadderParam + '/'
+            url: 'https://api.ladder.noframeschools.com/api/ladder/' + this.getLadderParam + '/'
           }).then((response) => {
             this.ladderDetailList = response.data
           }).catch((error) => {
