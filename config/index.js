@@ -9,6 +9,7 @@ module.exports = {
     proxyTable: {
       'https://api.ladder.noframeschools.com/api/*' : {
         target: 'https://api.ladder.noframeschools.com',
+        changeOrigin: true,
       }
     },
     // Various Dev Server settings
