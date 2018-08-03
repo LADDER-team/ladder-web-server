@@ -16,7 +16,7 @@
         <v-toolbar-items class="hidden-sm-and-down avatar align-center">
             <v-btn depressed ripple
                    @click="clickToLadderPost"
-                   class="contribution-btn">
+                   class="primary-btn">
                 投稿する
             </v-btn>
             <SignDialog/>
