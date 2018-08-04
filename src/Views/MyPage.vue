@@ -24,7 +24,7 @@
                 slider-color="blue"
                 class="my-page-tabs">
             <v-tab href="#tab-1" class="my-page-tab">プロフィール</v-tab>
-            <v-tab href="#tab-2" class="my-page-tab">投稿したLadder</v-tab>
+            <v-tab href="#tab-2" class="my-page-tab">投稿Ladder</v-tab>
         </v-tabs>
         <v-tabs-items v-model="model" class="my-page-tab-items">
             <v-tab-item id="tab-1" class="my-page-tab-item my-page-profile">
@@ -36,6 +36,7 @@
                 </v-flex>
             </v-tab-item>
             <v-tab-item id="tab-2" class="my-page-tab-item">
+                <p v-show="!posted" class="my-page-not-ladder">投稿したLadderがありません</p>
                 <v-flex align-start　justify-center
                         class="ladder-links-wrap my-page-ladders-wrap">
                     <div v-for="ladder in myLadderList"
@@ -65,6 +66,7 @@
     name: "MyPage",
     data() {
       return {
+        posted: false,
         avatarSize: 100,
         userId: 0,
         defaultUsername: 'ユーザー',
@@ -84,6 +86,7 @@
         url: 'https://api.ladder.noframeschools.com/api/users/' + this.userId + '/'
       }).then((response) => {
         this.myLadderList = response.data.my_ladders
+        this.posted = response.data.my_ladders.length!==0
       }).catch((error) => {
         console.log(error)
       })
