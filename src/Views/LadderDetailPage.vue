@@ -172,20 +172,10 @@
             target = e.target
         return Array.prototype.indexOf.call(nodeList, target)
       },
-      sortedUnit(list, key){
-
-      }
     },
     watch: {
       offsetTop: {
         handler() {
-          //ladder activate
-          this.unitScroll = this.unitScrolled
-          this.unitActivate = this.unitActivated
-          for (let i = 0; i < this.unitActivate; i++) {
-            document.getElementsByClassName('ladder-item')[i].classList.add('ladder-item-active')
-          }
-
           //peg activate
           if (this.offsetTop < 100 && this.prevLadderList.length !== 0) {
             this.prevLadder = true
