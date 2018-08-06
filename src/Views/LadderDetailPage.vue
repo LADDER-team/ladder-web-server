@@ -22,8 +22,7 @@
                 class="unit-wrap">
             <div v-for="units in unitList"
                  class="unit-item">
-                <p class="unit-head">unit:{{ units.index }}</p>
-                <h2 class="unit-title">{{ units.title }}</h2>
+                <h2 class="unit-title display-1">{{ units.title }}</h2>
                 <v-flex align-center　justify-center
                         class="unit-image-wrap">
                     <a :href="units.url" target="_blank">
@@ -77,7 +76,7 @@
       nextLadder: false,
       prevLadder: false,
       nextLadderId: null,
-      getLadderParam: null,
+      ladderParam: null,
       prevLadderId: null,
       duration: 300,
       offsetTop: 0,
@@ -102,46 +101,21 @@
       prevLadderList: []
     }),
     mounted() {
-      this.getLadderParam = this.$route.params.id
-      axios({
-        method: 'GET',
-        url: 'https://api.ladder.noframeschools.com/api/ladder/' + this.getLadderParam + '/'
-      }).then((response) => {
-        this.ladderDetailList = response.data
-        this.unitList = response.data.units
-      }).then(()=>{
-        this.unitList = _.indexBy(this.unitList, 'index')
-      }).catch((error) => {
-        console.log(error)
-      })
+      this.ladderParam = this.$route.params.id
+      this.getLadder()
       window.addEventListener('scroll', this.handleScroll)
     },
     beforeUpdate() {
       if (this.ladderDetailList['recommended_prev_ladder']) {
         this.prevLadderId = this.ladderDetailList['recommended_prev_ladder'].id
-
         if (this.prevLadderList.length === 0) {
-          axios({
-            method: 'GET',
-            url: 'https://api.ladder.noframeschools.com/api/ladder/' + this.prevLadderId + '/'
-          }).then((response) => {
-            this.prevLadderList = response.data
-          }).catch((error) => {
-            console.log(error)
-          })
+          this.getPrevLadder()
         }
       }
       if (this.ladderDetailList['recommended_next_ladder']) {
         this.nextLadderId = this.ladderDetailList['recommended_next_ladder'].id
         if (this.nextLadderList.length === 0) {
-          axios({
-            method: 'GET',
-            url: 'https://api.ladder.noframeschools.com/api/ladder/' + this.nextLadderId + '/'
-          }).then((response) => {
-            this.nextLadderList = response.data
-          }).catch((error) => {
-            console.log(error)
-          })
+          this.getNextLadder()
         }
       }
       if (this.offsetTop < 100 && this.prevLadderList.length !== 0) {
@@ -154,6 +128,39 @@
       }
     },
     methods: {
+      getLadder(){
+        axios({
+          method: 'GET',
+          url: 'https://api.ladder.noframeschools.com/api/ladder/' + this.ladderParam + '/'
+        }).then((response) => {
+          this.ladderDetailList = response.data
+          this.unitList = response.data.units
+        }).then(()=>{
+          this.unitList = _.indexBy(this.unitList, 'index')
+        }).catch((error) => {
+          console.log(error)
+        })
+      },
+      getPrevLadder(){
+        axios({
+          method: 'GET',
+          url: 'https://api.ladder.noframeschools.com/api/ladder/' + this.prevLadderId + '/'
+        }).then((response) => {
+          this.prevLadderList = response.data
+        }).catch((error) => {
+          console.log(error)
+        })
+      },
+      getNextLadder(){
+        axios({
+          method: 'GET',
+          url: 'https://api.ladder.noframeschools.com/api/ladder/' + this.nextLadderId + '/'
+        }).then((response) => {
+          this.nextLadderList = response.data
+        }).catch((error) => {
+          console.log(error)
+        })
+      },
       handleScroll() {
         this.offsetTop = window.pageYOffset
       },
@@ -201,15 +208,8 @@
           this.ladderDetailList = [];
           this.nextLadderList = [];
           this.prevLadderList = [];
-          this.getLadderParam = this.$route.params.id
-          axios({
-            method: 'GET',
-            url: 'https://api.ladder.noframeschools.com/api/ladder/' + this.getLadderParam + '/'
-          }).then((response) => {
-            this.ladderDetailList = response.data
-          }).catch((error) => {
-            console.log(error)
-          })
+          this.ladderParam = this.$route.params.id
+          this.getLadder()
         }
       }
     },

@@ -62,7 +62,7 @@
         login.then(() => {
           this.addToken()
         }).then(() => {
-          if(!this.$store.state.isLogin){
+          if (!this.$store.state.isLogin) {
             this.login = true
             this.loginPromise()
           }
