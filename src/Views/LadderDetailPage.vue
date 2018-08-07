@@ -8,6 +8,9 @@
                 justify-center
                 class="ladder-wrap">
             <div id="ladder-action-wrap" class="ladder-inner">
+                <div @click="clickLadder" class="ladder-item" >
+                    <p>{{ladderDetailList.title}}</p>
+                </div>
                 <div v-for="units in unitList"
                      @click="clickLadder"
                      class="ladder-item">
@@ -20,6 +23,21 @@
                 align-start justify-center
                 id="unit-items"
                 class="unit-wrap">
+            <div class="unit-item unit-cover">
+                <v-flex layout row class="unit-cover-info-wrap">
+                    <v-avatar tile :size=40 class="unit-cover-avatar">
+                        <img src="../assets/img/ladder_avatar.png" alt="avatar">
+                    </v-avatar>
+                    <div class="unit-cover-info">
+                        <p class="unit-cover-info-name subheading">{{name}}</p>
+                        <p class="unit-cover-info-date body-1">2018年1月1日に更新</p>
+                    </div>
+                    <div class="unit-cover-btn-wrap">
+                        <v-btn class="primary-btn">このLadderで学習する</v-btn>
+                    </div>
+                </v-flex>
+                <h2 class="unit-title display-1">{{ladderDetailList.title}}</h2>
+            </div>
             <div v-for="units in unitList"
                  class="unit-item">
                 <h2 class="unit-title display-1">{{ units.title }}</h2>
@@ -66,6 +84,7 @@
 </template>
 <script>
   import axios from 'axios'
+  import {mapGetters} from 'vuex'
   import _ from 'underscore'
 
   export default {
@@ -226,6 +245,9 @@
           easing: this.easing
         }
       },
+      ...mapGetters({
+        name: 'nameGetter',
+      }),
     }
   }
 </script>
