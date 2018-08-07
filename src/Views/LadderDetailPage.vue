@@ -9,7 +9,7 @@
                 class="ladder-wrap">
             <div id="ladder-action-wrap" class="ladder-inner">
                 <div @click="clickLadder" class="ladder-item" >
-                    <p>{{ladderDetailList.user}}</p>
+                    <p>{{ladderDetailList.title}}</p>
                 </div>
                 <div v-for="units in unitList"
                      @click="clickLadder"
