@@ -62,11 +62,6 @@
         login.then(() => {
           this.addToken()
         }).then(() => {
-          if (!this.$store.state.isLogin) {
-            this.login = true
-            this.loginPromise()
-          }
-        }).then(() => {
           this.tokenDecoded()
         }).then(() => {
           this.getUser()
@@ -94,9 +89,12 @@
           this.userDetail = response.data
         }).then(() => {
           this.setUser()
-          console.log(this.$store.state)
+        }).then(() => {
+          if (!this.$store.state.isLogin) {
+            this.login = true
+            this.loginPromise()
+          }
         }).catch((error) => {
-          alert("ユーザの取得に失敗しました")
           console.log(error)
         })
       },
