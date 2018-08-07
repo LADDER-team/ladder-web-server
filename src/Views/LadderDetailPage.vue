@@ -9,7 +9,7 @@
                 class="ladder-wrap">
             <div id="ladder-action-wrap" class="ladder-inner">
                 <div @click="clickLadder" class="ladder-item" >
-                    <p>{{ladderDetailList.title}}</p>
+                    <p>{{ladderDetailList.user}}</p>
                 </div>
                 <div v-for="units in unitList"
                      @click="clickLadder"
@@ -29,7 +29,7 @@
                         <img src="../assets/img/ladder_avatar.png" alt="avatar">
                     </v-avatar>
                     <div class="unit-cover-info">
-                        <p class="unit-cover-info-name subheading">{{name}}</p>
+                        <p class="unit-cover-info-name subheading">{{ladderCreator}}</p>
                         <p class="unit-cover-info-date body-1">2018年1月1日に更新</p>
                     </div>
                     <div class="unit-cover-btn-wrap">
@@ -110,6 +110,7 @@
       unitScroll: 0,
       unitActivate: 0,
       easing: '',
+      ladderCreator: '',
       url: 'https://blinky.nemui.org/shot/xlarge?',
       image: {
         src: 'https://s.wordpress.com/mshots/v1/',
@@ -123,9 +124,9 @@
       prevLadderList: []
     }),
     mounted() {
-      this.ladderParam = this.$route.params.id
-      this.getLadder()
-      window.addEventListener('scroll', this.handleScroll)
+      this.ladderParam = this.$route.params.id;
+      this.mountedLadderDetail()
+      window.addEventListener('scroll', this.handleScroll);
     },
     beforeUpdate() {
       if (this.ladderDetailList['recommended_prev_ladder']) {
@@ -150,19 +151,6 @@
       }
     },
     methods: {
-      getLadder(){
-        axios({
-          method: 'GET',
-          url: 'https://api.ladder.noframeschools.com/api/ladder/' + this.ladderParam + '/'
-        }).then((response) => {
-          this.ladderDetailList = response.data
-          this.unitList = response.data.units
-        }).then(()=>{
-          this.unitList = _.indexBy(this.unitList, 'index')
-        }).catch((error) => {
-          console.log(error)
-        })
-      },
       getPrevLadder(){
         axios({
           method: 'GET',
@@ -202,7 +190,34 @@
         return Array.prototype.indexOf.call(nodeList, target)
       },
       clickLearnStart(){
-
+        alert("機能搭載まであと少し！お待ちください！")
+      },
+      getLadderCreater(){
+        let userId = this.ladderDetailList.user
+        console.log(this.ladderDetailList)
+        axios({
+          method: 'GET',
+          url: 'https://api.ladder.noframeschools.com/api/users/' + userId + '/'
+        }).then((response) => {
+          this.ladderCreator = response.data.name
+        }).catch((error) => {
+          console.log(error)
+        })
+      },
+      mountedLadderDetail(){
+        axios({
+          method: 'GET',
+          url: 'https://api.ladder.noframeschools.com/api/ladder/' + this.ladderParam + '/'
+        }).then((response) => {
+          this.ladderDetailList = response.data
+          this.unitList = response.data.units
+        }).then(()=>{
+          this.unitList = _.indexBy(this.unitList, 'index')
+        }).then(()=>{
+          this.getLadderCreater();
+        }).catch((error) => {
+          console.log(error)
+        })
       }
     },
     watch: {
@@ -227,15 +242,15 @@
           })
         }
       },
-      $route: {
-        handler() {
-          this.ladderDetailList = [];
-          this.nextLadderList = [];
-          this.prevLadderList = [];
-          this.ladderParam = this.$route.params.id
-          this.getLadder()
-        }
-      }
+      // $route: {
+      //   handler() {
+      //     this.ladderDetailList = [];
+      //     this.nextLadderList = [];
+      //     this.prevLadderList = [];
+      //     this.ladderParam = this.$route.params.id
+      //     this.getLadder()
+      //   }
+      // }
     },
     computed: {
       unitScrolled() {
