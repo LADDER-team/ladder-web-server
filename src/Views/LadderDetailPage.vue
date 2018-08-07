@@ -129,18 +129,6 @@
       window.addEventListener('scroll', this.handleScroll);
     },
     beforeUpdate() {
-      if (this.ladderDetailList['recommended_prev_ladder']) {
-        this.prevLadderId = this.ladderDetailList['recommended_prev_ladder'].id
-        if (this.prevLadderList.length === 0) {
-          this.getPrevLadder()
-        }
-      }
-      if (this.ladderDetailList['recommended_next_ladder']) {
-        this.nextLadderId = this.ladderDetailList['recommended_next_ladder'].id
-        if (this.nextLadderList.length === 0) {
-          this.getNextLadder()
-        }
-      }
       if (this.offsetTop < 100 && this.prevLadderList.length !== 0) {
         this.prevLadder = true
       } else if (this.offsetTop > this.scrollWrapH - window.innerHeight * 0.9 - 200 && this.nextLadderList.length !== 0) {
@@ -149,6 +137,18 @@
         this.prevLadder = false
         this.nextLadder = false
       }
+      // if (this.ladderDetailList['recommended_prev_ladder']) {
+      //   this.prevLadderId = this.ladderDetailList['recommended_prev_ladder'].id
+      //   if (this.prevLadderList.length === 0) {
+      //     this.getPrevLadder()
+      //   }
+      // }
+      // if (this.ladderDetailList['recommended_next_ladder']) {
+      //   this.nextLadderId = this.ladderDetailList['recommended_next_ladder'].id
+      //   if (this.nextLadderList.length === 0) {
+      //     this.getNextLadder()
+      //   }
+      // }
     },
     methods: {
       getPrevLadder(){
@@ -223,6 +223,11 @@
     watch: {
       offsetTop: {
         handler() {
+          this.unitScroll = this.unitScrolled
+          this.unitActivate = this.unitActivated
+          for (let i = 0; i < this.unitActivate; i++) {
+            document.getElementsByClassName('ladder-item')[i].classList.add('ladder-item-active')
+          }
           if (this.offsetTop < 100 && this.prevLadderList.length !== 0) {
             this.prevLadder = true
           }
@@ -274,8 +279,6 @@
   }
 </script>
 <style scoped lang="sass">
-    @import "../styles/colors"
-    @import "../styles/layout"
     @import "../styles/base"
     @import "../styles/ladderDetail"
 </style>
