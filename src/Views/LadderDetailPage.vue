@@ -183,7 +183,6 @@
     watch: {
       offsetTop: {
         handler() {
-          //peg activate
           if (this.offsetTop < 100 && this.prevLadderList.length !== 0) {
             this.prevLadder = true
           }
