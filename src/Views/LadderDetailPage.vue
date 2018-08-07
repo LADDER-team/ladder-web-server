@@ -33,10 +33,13 @@
                         <p class="unit-cover-info-date body-1">2018年1月1日に更新</p>
                     </div>
                     <div class="unit-cover-btn-wrap">
-                        <v-btn class="primary-btn">このLadderで学習する</v-btn>
+                        <v-btn @click="clickLearnStart" class="primary-btn">このLadderで学習する</v-btn>
                     </div>
                 </v-flex>
-                <h2 class="unit-title display-1">{{ladderDetailList.title}}</h2>
+                <h2 class="unit-title unit-cover-title display-1">{{ladderDetailList.title}}</h2>
+                <div class="unit-description">
+                    Ladderの説明文が入ります
+                </div>
             </div>
             <div v-for="units in unitList"
                  class="unit-item">
@@ -198,6 +201,9 @@
             target = e.target
         return Array.prototype.indexOf.call(nodeList, target)
       },
+      clickLearnStart(){
+
+      }
     },
     watch: {
       offsetTop: {
@@ -247,6 +253,7 @@
       },
       ...mapGetters({
         name: 'nameGetter',
+        token: 'tokenGetter'
       }),
     }
   }
