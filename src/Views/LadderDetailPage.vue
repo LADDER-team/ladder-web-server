@@ -123,8 +123,8 @@
       url: 'https://blinky.nemui.org/shot/xlarge?',
       image: {
         src: 'https://s.wordpress.com/mshots/v1/',
-        height: 1000,
-        width: 1000,
+        height: 1600,
+        width: 1600,
         alt: '画像がないよ！'
       },
       ladderDetailList: [],
