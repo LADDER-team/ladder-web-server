@@ -8,6 +8,9 @@
                 justify-center
                 class="ladder-wrap">
             <div id="ladder-action-wrap" class="ladder-inner">
+                <div @click="clickLadder" class="ladder-item">
+                    <p>{{ladderDetailList.title}}</p>
+                </div>
                 <div v-for="units in unitList"
                      @click="clickLadder"
                      class="ladder-item">
@@ -20,10 +23,31 @@
                 align-start justify-center
                 id="unit-items"
                 class="unit-wrap">
+            <div class="unit-item unit-cover">
+                <v-flex layout row class="unit-cover-info-wrap">
+                    <v-avatar tile :size=40 class="unit-cover-avatar">
+                        <img src="../assets/img/ladder_avatar.png" alt="avatar">
+                    </v-avatar>
+                    <div class="unit-cover-info">
+                        <p class="unit-cover-info-name subheading">{{ladderCreator}}</p>
+                        <p class="unit-cover-info-date body-1">
+                            {{ladderUpdated.year}}-
+                            {{ladderUpdated.month}}-
+                            {{ladderUpdated.day}}に更新
+                        </p>
+                    </div>
+                    <div class="unit-cover-btn-wrap">
+                        <v-btn @click="clickLearnStart" class="primary-btn">このLadderで学習する</v-btn>
+                    </div>
+                </v-flex>
+                <h2 class="unit-title unit-cover-title display-1">{{ladderDetailList.title}}</h2>
+                <div class="unit-description">
+                    Ladderの説明文が入ります
+                </div>
+            </div>
             <div v-for="units in unitList"
                  class="unit-item">
-                <p class="unit-head">unit:{{ units.index }}</p>
-                <h2 class="unit-title">{{ units.title }}</h2>
+                <h2 class="unit-title display-1">{{ units.title }}</h2>
                 <v-flex align-center　justify-center
                         class="unit-image-wrap">
                     <a :href="units.url" target="_blank">
@@ -67,6 +91,7 @@
 </template>
 <script>
   import axios from 'axios'
+  import {mapGetters} from 'vuex'
   import _ from 'underscore'
 
   export default {
@@ -77,7 +102,7 @@
       nextLadder: false,
       prevLadder: false,
       nextLadderId: null,
-      getLadderParam: null,
+      ladderParam: null,
       prevLadderId: null,
       duration: 300,
       offsetTop: 0,
@@ -89,6 +114,12 @@
       unitScroll: 0,
       unitActivate: 0,
       easing: '',
+      ladderCreator: '',
+      ladderUpdated: {
+        year: '',
+        month: '',
+        day: '',
+      },
       url: 'https://blinky.nemui.org/shot/xlarge?',
       image: {
         src: 'https://s.wordpress.com/mshots/v1/',
@@ -102,48 +133,11 @@
       prevLadderList: []
     }),
     mounted() {
-      this.getLadderParam = this.$route.params.id
-      axios({
-        method: 'GET',
-        url: 'https://api.ladder.noframeschools.com/api/ladder/' + this.getLadderParam + '/'
-      }).then((response) => {
-        this.ladderDetailList = response.data
-        this.unitList = response.data.units
-      }).then(()=>{
-        this.unitList = _.indexBy(this.unitList, 'index')
-      }).catch((error) => {
-        console.log(error)
-      })
-      window.addEventListener('scroll', this.handleScroll)
+      this.ladderParam = this.$route.params.id;
+      this.mountedLadderDetail()
+      window.addEventListener('scroll', this.handleScroll);
     },
     beforeUpdate() {
-      if (this.ladderDetailList['recommended_prev_ladder']) {
-        this.prevLadderId = this.ladderDetailList['recommended_prev_ladder'].id
-
-        if (this.prevLadderList.length === 0) {
-          axios({
-            method: 'GET',
-            url: 'https://api.ladder.noframeschools.com/api/ladder/' + this.prevLadderId + '/'
-          }).then((response) => {
-            this.prevLadderList = response.data
-          }).catch((error) => {
-            console.log(error)
-          })
-        }
-      }
-      if (this.ladderDetailList['recommended_next_ladder']) {
-        this.nextLadderId = this.ladderDetailList['recommended_next_ladder'].id
-        if (this.nextLadderList.length === 0) {
-          axios({
-            method: 'GET',
-            url: 'https://api.ladder.noframeschools.com/api/ladder/' + this.nextLadderId + '/'
-          }).then((response) => {
-            this.nextLadderList = response.data
-          }).catch((error) => {
-            console.log(error)
-          })
-        }
-      }
       if (this.offsetTop < 100 && this.prevLadderList.length !== 0) {
         this.prevLadder = true
       } else if (this.offsetTop > this.scrollWrapH - window.innerHeight * 0.9 - 200 && this.nextLadderList.length !== 0) {
@@ -152,8 +146,40 @@
         this.prevLadder = false
         this.nextLadder = false
       }
+      // if (this.ladderDetailList['recommended_prev_ladder']) {
+      //   this.prevLadderId = this.ladderDetailList['recommended_prev_ladder'].id
+      //   if (this.prevLadderList.length === 0) {
+      //     this.getPrevLadder()
+      //   }
+      // }
+      // if (this.ladderDetailList['recommended_next_ladder']) {
+      //   this.nextLadderId = this.ladderDetailList['recommended_next_ladder'].id
+      //   if (this.nextLadderList.length === 0) {
+      //     this.getNextLadder()
+      //   }
+      // }
     },
     methods: {
+      getPrevLadder() {
+        axios({
+          method: 'GET',
+          url: 'https://api.ladder.noframeschools.com/api/ladder/' + this.prevLadderId + '/'
+        }).then((response) => {
+          this.prevLadderList = response.data
+        }).catch((error) => {
+          console.log(error)
+        })
+      },
+      getNextLadder() {
+        axios({
+          method: 'GET',
+          url: 'https://api.ladder.noframeschools.com/api/ladder/' + this.nextLadderId + '/'
+        }).then((response) => {
+          this.nextLadderList = response.data
+        }).catch((error) => {
+          console.log(error)
+        })
+      },
       handleScroll() {
         this.offsetTop = window.pageYOffset
       },
@@ -172,21 +198,55 @@
             target = e.target
         return Array.prototype.indexOf.call(nodeList, target)
       },
-      sortedUnit(list, key){
-
+      clickLearnStart() {
+        alert("機能搭載まであと少し！お待ちください！")
+      },
+      getLadderCreater() {
+        let userId = this.ladderDetailList.user
+        axios({
+          method: 'GET',
+          url: 'https://api.ladder.noframeschools.com/api/users/' + userId + '/'
+        }).then((response) => {
+          this.ladderCreator = response.data.name
+        }).catch((error) => {
+          console.log(error)
+        })
+      },
+      mountedLadderDetail() {
+        let updated = 0;
+        axios({
+          method: 'GET',
+          url: 'https://api.ladder.noframeschools.com/api/ladder/' + this.ladderParam + '/'
+        }).then((response) => {
+          this.ladderDetailList = response.data
+          this.unitList = response.data.units
+        }).then((response) => {
+          this.unitList = _.indexBy(this.unitList, 'index')
+        }).then((response) => {
+          updated = this.ladderDetailList.update_at
+        }).then(() => {
+          this.createLadderDate(updated)
+        }).then(() => {
+          this.getLadderCreater();
+        }).catch((error) => {
+          console.log(error)
+        })
+      },
+      createLadderDate(date) {
+        date = date.toString()
+        this.ladderUpdated.year = date.slice(0, 4)
+        this.ladderUpdated.month = date.slice(5, 7)
+        this.ladderUpdated.day = date.slice(8, 10)
       }
     },
     watch: {
       offsetTop: {
         handler() {
-          //ladder activate
           this.unitScroll = this.unitScrolled
           this.unitActivate = this.unitActivated
           for (let i = 0; i < this.unitActivate; i++) {
             document.getElementsByClassName('ladder-item')[i].classList.add('ladder-item-active')
           }
-
-          //peg activate
           if (this.offsetTop < 100 && this.prevLadderList.length !== 0) {
             this.prevLadder = true
           }
@@ -206,22 +266,15 @@
           })
         }
       },
-      $route: {
-        handler() {
-          this.ladderDetailList = [];
-          this.nextLadderList = [];
-          this.prevLadderList = [];
-          this.getLadderParam = this.$route.params.id
-          axios({
-            method: 'GET',
-            url: 'https://api.ladder.noframeschools.com/api/ladder/' + this.getLadderParam + '/'
-          }).then((response) => {
-            this.ladderDetailList = response.data
-          }).catch((error) => {
-            console.log(error)
-          })
-        }
-      }
+      // $route: {
+      //   handler() {
+      //     this.ladderDetailList = [];
+      //     this.nextLadderList = [];
+      //     this.prevLadderList = [];
+      //     this.ladderParam = this.$route.params.id
+      //     this.getLadder()
+      //   }
+      // }
     },
     computed: {
       unitScrolled() {
@@ -237,6 +290,10 @@
           easing: this.easing
         }
       },
+      ...mapGetters({
+        name: 'nameGetter',
+        token: 'tokenGetter'
+      }),
     }
   }
 </script>

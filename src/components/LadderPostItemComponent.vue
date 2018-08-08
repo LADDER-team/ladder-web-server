@@ -23,7 +23,7 @@
                 outline
                 :counter="200"
                 :rules="[v => !!v || '学べることを入力してください',
-                         v => v.length <= 150 || '学べることは150字以内で入力してください']"
+                         v => v.length <= 200 || '学べることは200字以内で入力してください']"
                 label="学べること"
                 class="post-text-field post-description"
                 placeholder="Djangoでアプリケーションをつくるには、Pythonから勉強することが必要です！なので、まずはPythonに触れてプログラミングがどういったものかをProgateで試してみましょう！"/>

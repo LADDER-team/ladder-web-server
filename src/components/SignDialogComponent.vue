@@ -7,11 +7,11 @@
                dark round outline small
                class="avatar-btn">
             <v-avatar :tile=false :size=40>
-                <v-icon>{{avatar}}</v-icon>
+                <v-icon>{{switchedAvatar}}</v-icon>
             </v-avatar>
         </v-btn>
         <transition name="sign-up">
-            <SignUpForm v-show="sign"
+            <SignUpForm v-show="sign&&!this.$store.state.isLogin"
                         v-on:cancel="onCancelDialog"
                         v-on:direct-login="onDirectLogin"
                         v-on:sign="signin"
@@ -32,6 +32,7 @@
   import SignUpForm from './SignUpFormComponent'
   import SignInForm from './SignInFormComponent'
   import UserInfoCard from './UserInfoCardComponent'
+
   export default {
     name: "SignDialogComponent",
     data() {
@@ -40,6 +41,11 @@
         dialog: false,
         login: false,
         avatar: "person_outline",
+      }
+    },
+    mounted() {
+      if (this.isLogin) {
+        this.sign = false;
       }
     },
     methods: {
@@ -80,7 +86,10 @@
       }),
       set(value) {
         this.addTokenAction(value)
-      }
+      },
+      switchedAvatar() {
+        return this.isLogin ? "face" : "person_outline";
+      },
     },
     components: {
       SignInForm,

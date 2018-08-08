@@ -97,6 +97,7 @@
           }).then(() => {
             this.getUser()
           }).catch((error) => {
+            alert('ログインに失敗しました！')
             console.log(error)
           })
         }
