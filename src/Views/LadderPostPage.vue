@@ -16,6 +16,14 @@
                         class="post-text-field post-title"
                         label="Ladderタイトル"
                         placeholder="初心者がDjangoアプリケーションを作るまで！"/>
+                <v-textarea
+                        v-model="modelLadderDescription"
+                        outline
+                        :rules="ladderDescriptionRule"
+                        :counter="200"
+                        class="post-text-field post-description"
+                        label="Ladderの説明"
+                        placeholder="半年前までプログラミング初心者だった私がDjangoでアプリケーションをどんな順序で開発することができたのか。初心者の方に参考になればなと思います！諦めずに最後までやりきってみましょう！"/>
                 <v-flex v-for="index in unitIndex" :key="index">
                     <LadderPostItem :index="index"
                                     @sub-title-emit="onSubTitle"
@@ -55,6 +63,7 @@
         unitIndex: 1,
         ladderTitle: "",
         modelTitle: "",
+        modelLadderDescription: "",
         unit: [],
         descriptionList: {
           1: "",
@@ -68,6 +77,8 @@
         //validation
         valid: true,
         titleRule: [v => !!v || 'タイトルを入力してください'],
+        ladderDescriptionRule: [v => !!v || '説明文を入力してください',
+                                v => v.length <= 200 || '説明文は200字以内で入力してください'],
       }
     },
     created() {
@@ -112,7 +123,9 @@
         let unit = JSON.stringify(this.unit)
         unit = JSON.parse(unit)
 
-        if (this.$refs.form.validate()) {
+        if (!this.$refs.form.validate()) {
+          alert('投稿に不備があります！')
+        }else{
           axios({
             method: 'POST',
             url: 'https://api.ladder.noframeschools.com/api/ladder/',
@@ -123,6 +136,7 @@
             },
             data: {
               title: this.modelTitle,
+              ladder_description: this.modelLadderDescription,
               tags: [],
               units: unit
             }
@@ -133,7 +147,7 @@
             if (!this.$store.state.isLogin) {
               alert('ログインしてください！')
             } else {
-              alert('投稿に不備があります！！')
+              alert('投稿に失敗しました！！')
             }
             console.log(error)
           })

@@ -42,7 +42,7 @@
                 </v-flex>
                 <h2 class="unit-title unit-cover-title display-1">{{ladderDetailList.title}}</h2>
                 <div class="unit-description">
-                    Ladderの説明文が入ります
+                    <p class="unit-description-text">{{ladderDetailList.ladder_description}}</p>
                 </div>
             </div>
             <div v-for="units in unitList"
@@ -220,9 +220,9 @@
         }).then((response) => {
           this.ladderDetailList = response.data
           this.unitList = response.data.units
-        }).then((response) => {
+        }).then(() => {
           this.unitList = _.indexBy(this.unitList, 'index')
-        }).then((response) => {
+        }).then(() => {
           updated = this.ladderDetailList.update_at
         }).then(() => {
           this.createLadderDate(updated)
