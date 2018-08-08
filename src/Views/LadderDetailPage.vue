@@ -8,7 +8,7 @@
                 justify-center
                 class="ladder-wrap">
             <div id="ladder-action-wrap" class="ladder-inner">
-                <div @click="clickLadder" class="ladder-item" >
+                <div @click="clickLadder" class="ladder-item">
                     <p>{{ladderDetailList.title}}</p>
                 </div>
                 <div v-for="units in unitList"
@@ -30,7 +30,11 @@
                     </v-avatar>
                     <div class="unit-cover-info">
                         <p class="unit-cover-info-name subheading">{{ladderCreator}}</p>
-                        <p class="unit-cover-info-date body-1">2018年1月1日に更新</p>
+                        <p class="unit-cover-info-date body-1">
+                            {{ladderUpdated.year}}-
+                            {{ladderUpdated.month}}-
+                            {{ladderUpdated.day}}に更新
+                        </p>
                     </div>
                     <div class="unit-cover-btn-wrap">
                         <v-btn @click="clickLearnStart" class="primary-btn">このLadderで学習する</v-btn>
@@ -38,7 +42,7 @@
                 </v-flex>
                 <h2 class="unit-title unit-cover-title display-1">{{ladderDetailList.title}}</h2>
                 <div class="unit-description">
-                    Ladderの説明文が入ります
+                    Ladderの説明文が入ります{{day}}
                 </div>
             </div>
             <div v-for="units in unitList"
@@ -111,6 +115,11 @@
       unitActivate: 0,
       easing: '',
       ladderCreator: '',
+      ladderUpdated: {
+        year: '',
+        month: '',
+        day: '',
+      },
       url: 'https://blinky.nemui.org/shot/xlarge?',
       image: {
         src: 'https://s.wordpress.com/mshots/v1/',
@@ -151,7 +160,7 @@
       // }
     },
     methods: {
-      getPrevLadder(){
+      getPrevLadder() {
         axios({
           method: 'GET',
           url: 'https://api.ladder.noframeschools.com/api/ladder/' + this.prevLadderId + '/'
@@ -161,7 +170,7 @@
           console.log(error)
         })
       },
-      getNextLadder(){
+      getNextLadder() {
         axios({
           method: 'GET',
           url: 'https://api.ladder.noframeschools.com/api/ladder/' + this.nextLadderId + '/'
@@ -189,12 +198,11 @@
             target = e.target
         return Array.prototype.indexOf.call(nodeList, target)
       },
-      clickLearnStart(){
+      clickLearnStart() {
         alert("機能搭載まであと少し！お待ちください！")
       },
-      getLadderCreater(){
+      getLadderCreater() {
         let userId = this.ladderDetailList.user
-        console.log(this.ladderDetailList)
         axios({
           method: 'GET',
           url: 'https://api.ladder.noframeschools.com/api/users/' + userId + '/'
@@ -204,20 +212,31 @@
           console.log(error)
         })
       },
-      mountedLadderDetail(){
+      mountedLadderDetail() {
+        let updated = 0;
         axios({
           method: 'GET',
           url: 'https://api.ladder.noframeschools.com/api/ladder/' + this.ladderParam + '/'
         }).then((response) => {
           this.ladderDetailList = response.data
           this.unitList = response.data.units
-        }).then(()=>{
+        }).then((response) => {
           this.unitList = _.indexBy(this.unitList, 'index')
-        }).then(()=>{
+        }).then((response) => {
+          updated = this.ladderDetailList.update_at
+        }).then(() => {
+          this.createLadderDate(updated)
+        }).then(() => {
           this.getLadderCreater();
         }).catch((error) => {
           console.log(error)
         })
+      },
+      createLadderDate(date) {
+        date = date.toString()
+        this.ladderUpdated.year = date.slice(0, 4)
+        this.ladderUpdated.month = date.slice(5, 7)
+        this.ladderUpdated.day = date.slice(8, 10)
       }
     },
     watch: {
