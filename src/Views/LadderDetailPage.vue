@@ -42,7 +42,7 @@
                 </v-flex>
                 <h2 class="unit-title unit-cover-title display-1">{{ladderDetailList.title}}</h2>
                 <div class="unit-description">
-                    Ladderの説明文が入ります{{day}}
+                    Ladderの説明文が入ります
                 </div>
             </div>
             <div v-for="units in unitList"
