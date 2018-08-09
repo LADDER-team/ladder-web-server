@@ -48,7 +48,7 @@
       LadderList,
       ToolBar
     },
-    mounted() {
+    created() {
       if (localStorage.getItem('token')) {
         this.loginToken = localStorage.getItem('token')
         this.autoAuth()
@@ -102,6 +102,7 @@
         this.addNameAction(this.userDetail.name);
         this.addEmailAction(this.decodedToken.email);
         this.addUserIdAction(this.temporaryUserId);
+        console.log(this.$store.state)
       },
       clickDialogCancel() {
         this.$emit('cancel')

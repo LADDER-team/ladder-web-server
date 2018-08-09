@@ -31,7 +31,7 @@
                 <v-flex>
                     <div>
                         <h3 class="my-page-profile-title">自己紹介</h3>
-                        <p>{{profile}}</p>
+                        <p>これはプロフィールの例文になります！こんにちは！ここは{{compUser}}のマイページです！今後たくさんの機能が追加予定ですので楽しみにしていてくださいね！</p>
                     </div>
                 </v-flex>
             </v-tab-item>
@@ -61,6 +61,7 @@
 
 <script>
   import axios from 'axios'
+  import {mapGetters} from 'vuex'
 
   export default {
     name: "MyPage",
@@ -68,10 +69,9 @@
       return {
         posted: false,
         avatarSize: 100,
-        userId: 0,
         defaultUsername: 'ユーザー',
         model: 'tab-1',
-        profile: 'これはプロフィールの例文になります！こんにちは！ここは'+this.compUser+'のマイページです！今後たくさんの機能が追加予定ですので楽しみにしていてくださいね！',
+        profile: '',
         defaultImage: {
           src: "http://via.placeholder.com/350x150",
           alt: "placeholder-image"
@@ -79,21 +79,26 @@
         myLadderList: [],
       }
     },
-    mounted() {
-      this.userId = this.$store.state.userId ? this.$store.state.userId : 0
-      axios({
-        method: 'GET',
-        url: 'https://api.ladder.noframeschools.com/api/users/' + this.userId + '/'
-      }).then((response) => {
-        this.myLadderList = response.data.my_ladders
-        this.posted = response.data.my_ladders.length!==0
-      }).catch((error) => {
-        console.log(error)
-      })
+    created() {
+      setTimeout(()=>{
+        this.getUserLadders()
+      }, 100)
     },
     methods: {
       unimplemented() {
         alert("機能搭載までお待ちください！")
+      },
+      getUserLadders(){
+        console.log(this.$store.state.userId)
+        axios({
+          method: 'GET',
+          url: 'https://api.ladder.noframeschools.com/api/users/' + this.$store.state.userId + '/'
+        }).then((response) => {
+          this.myLadderList = response.data.my_ladders
+          this.posted = response.data.my_ladders.length!==0
+        }).catch((error) => {
+          console.log(error)
+        })
       }
     },
     computed: {
@@ -110,7 +115,11 @@
         } else {
           return this.defaultProfile
         }
-      }
+      },
+      ...mapGetters({
+        userId: 'userIdGetter',
+        isLogin: 'loginGetter'
+      })
     },
   }
 </script>
