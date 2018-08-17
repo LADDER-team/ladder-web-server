@@ -102,6 +102,7 @@
         this.addNameAction(this.userDetail.name);
         this.addEmailAction(this.decodedToken.email);
         this.addUserIdAction(this.temporaryUserId);
+        console.log("store status")
         console.log(this.$store.state)
       },
       clickDialogCancel() {
