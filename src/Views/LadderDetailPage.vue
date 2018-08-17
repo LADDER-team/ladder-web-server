@@ -8,11 +8,14 @@
                 justify-center
                 class="ladder-wrap">
             <div id="ladder-action-wrap" class="ladder-inner">
-                <div @click="clickLadder" class="ladder-item">
+                <div @click="clickLadder"
+                     :class="{'ladder-item-active': isLearning||isLearned}"
+                     class="ladder-item">
                     <p>{{ladderDetailList.title}}</p>
                 </div>
-                <div v-for="units in unitList"
+                <div v-for="(units, key) in unitList"
                      @click="clickLadder"
+                     :class="{'ladder-item-active': isLearning&&!learnedStatus(learningUnits, key)||isLearned}"
                      class="ladder-item">
                     <p>unit:{{ units.index }}</p>
                     <p>{{ units.title }}</p>
@@ -38,17 +41,17 @@
                     </div>
                     <div class="unit-cover-btn-wrap">
                         <v-btn @click="clickLearnStart"
-                               v-show="!learningStatus"
+                               v-show="isWillLearning"
                                class="primary-btn">
                             このLadderで学習する
                         </v-btn>
                         <v-btn @click="clickLearnStart"
-                               v-show="learningStatus"
+                               v-show="isLearning"
                                class="learning-btn">
                             このLadderで学習中
                         </v-btn>
                         <v-btn @click="clickLearnStart"
-                               v-show=""
+                               v-show="isLearned"
                                class="learned-btn">
                             このLadderは学習済み
                         </v-btn>
@@ -63,12 +66,12 @@
                  class="unit-item">
                 <div class="unit-btn-wrap">
                     <v-btn @click="clickLearnEnd"
-                           v-if="learningStatus&&learnedStatus(learningUnits, key)"
+                           v-if="isLearning&&learnedStatus(learningUnits, key)"
                            class="primary-btn unit-btn">
                         学習済みにする
                     </v-btn>
                     <v-btn @click="clickLearnEnd"
-                           v-if="learningStatus&&!learnedStatus(learningUnits, key)"
+                           v-if="isLearning&&!learnedStatus(learningUnits, key)"
                            class="learned-btn unit-btn">
                         学習済みです！
                     </v-btn>
@@ -127,7 +130,7 @@
       ladderToUnit: false,
       nextLadder: false,
       prevLadder: false,
-      learning: false,
+      learning: 'willLearning',
       nextLadderId: null,
       ladderParam: null,
       prevLadderId: null,
@@ -161,7 +164,8 @@
       prevLadderList: [],
       learningList: [],
       learningStatusList: [],
-      learningIndexes: []
+      learningIndexes: [],
+      finishLadderList: [],
     }),
     created() {
       this.ladderParam = this.$route.params.id
@@ -234,15 +238,17 @@
         return Array.prototype.indexOf.call(nodeList, target)
       },
       clickLearnStart() {
-        if (!this.learningStatus || this.learningList === 0) {
+        if (this.isWillLearning || this.learningList === 0) {
           let list = this.unitList
           for (let index in list) {
             setTimeout(() => {
               this.postLearnInitialize(index)
             }, 50)
           }
-        } else {
+        } else if (this.isLearning) {
           alert('学習ファイトです！')
+        } else {
+          alert('学習お疲れ様でし')
         }
       },
       postLearnInitialize(index) {
@@ -260,7 +266,7 @@
             status: false
           }
         }).then(() => {
-          this.learning = true
+          this.learning = 'learning'
         }).catch((error) => {
           console.log(error)
         })
@@ -340,21 +346,39 @@
         }).then((response) => {
           this.learningList = response.data
         }).then(() => {
-          if (!this.learningStatus) {
+          this.isFinishLadder()
+        }).then(() => {
+          if (this.isWillLearning) {
             this.doLearning()
           }
         }).then(() => {
-          if (this.learningStatus) {
+          if (this.isLearning) {
             this.getLearningStatus()
           }
         }).then(() => {
-          if (this.learningStatus) {
-            setTimeout(()=>{
+          if (this.isLearning) {
+            setTimeout(() => {
               this.getLearningIndexes()
             }, 50)
           }
         }).catch((error) => {
-          this.learning = false
+          console.log(error)
+        })
+      },
+      isFinishLadder() {
+        let id = this.userId
+        let thisTitle = this.ladderDetailList.title
+        axios({
+          method: 'GET',
+          url: 'http://127.0.0.1:8000/api/users/' + id + '/finish-ladder/'
+        }).then((response) => {
+          response.data.forEach((value) => {
+            if (value.title === thisTitle) {
+              console.log('true')
+              this.learning = 'learned'
+            }
+          })
+        }).catch((error) => {
           console.log(error)
         })
       },
@@ -363,7 +387,7 @@
             ladderTitle = this.ladderDetailList.title
         learningList.map((value) => {
           if (value.title === ladderTitle) {
-            this.learning = true
+            this.learning = 'learning'
           }
         })
       },
@@ -455,7 +479,7 @@
         }
       },
       learningStatusList: {
-        handler(){
+        handler() {
           console.log('update list')
           console.log(this.learningStatusList)
         }
@@ -494,6 +518,15 @@
       },
       learningUnits() {
         return this.learningIndexes
+      },
+      isWillLearning() {
+        return this.learning === 'willLearning'
+      },
+      isLearning() {
+        return this.learning === 'learning'
+      },
+      isLearned() {
+        return this.learning === 'learned'
       },
       ...mapGetters({
         name: 'nameGetter',
