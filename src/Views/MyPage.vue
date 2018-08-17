@@ -80,9 +80,21 @@
       }
     },
     created() {
-      setTimeout(()=>{
+      setTimeout(() => {
         this.getUserLadders()
       }, 100)
+    },
+    monted() {
+      this.userId = this.$store.state.userId ? this.$store.state.userId : 0
+      axios({
+        method: 'GET',
+        url: 'http://127.0.0.1:8000/api/users/' + this.userId + '/'
+      }).then((response) => {
+        this.myLadderList = response.data.my_ladders
+        this.posted = response.data.my_ladders.length!==0
+      }).catch((error) => {
+        console.log(error)
+      })
     },
     methods: {
       unimplemented() {
