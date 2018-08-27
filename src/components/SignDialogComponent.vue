@@ -2,7 +2,7 @@
     <v-dialog v-model="dialog"
               persistent
               max-width="500px"
-              class="avatar-btn-wrap">
+              class="sign-dialog-btn-wrap">
         <v-btn slot="activator"
                dark round outline small
                class="avatar-btn">
