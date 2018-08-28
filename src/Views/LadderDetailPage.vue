@@ -41,7 +41,7 @@
                     </div>
                     <div class="unit-cover-btn-wrap">
                         <v-btn @click="clickLearnStart"
-                               v-show="isWillLearning"
+                               v-show="isWillLearning&&isLogin"
                                class="primary-btn">
                             このLadderで学習する
                         </v-btn>
@@ -64,6 +64,7 @@
             </div>
             <div v-for="(units, key) in unitList"
                  class="unit-item">
+                {{learningUnits}}
                 <div class="unit-btn-wrap">
                     <v-btn @click="clickLearnEnd"
                            v-if="isLearning&&learnedStatus(learningUnits, key)"
@@ -243,7 +244,7 @@
           for (let index in list) {
             setTimeout(() => {
               this.postLearnInitialize(index)
-            }, 50)
+            }, 100)
           }
         } else if (this.isLearning) {
           alert('学習ファイトです！')
@@ -284,7 +285,7 @@
             status: true
           },
         }).then(() => {
-          this.updateId = id
+          this.updateId = Math.random()
         }).catch((error) => {
           console.log(error)
         })
@@ -293,8 +294,13 @@
         let list = []
         let units = this.unitList
         let unitIndex = units[index].id
+        let learningStatusList = []
 
-        this.learningStatusList.forEach((value) => {
+        learningStatusList = _.sortBy(this.learningStatusList, (value) => {
+          return value.id
+        })
+
+        learningStatusList.forEach((value) => {
           if (value.unit === unitIndex) {
             list.push(value)
           }
@@ -355,12 +361,6 @@
           if (this.isLearning) {
             this.getLearningStatus()
           }
-        }).then(() => {
-          if (this.isLearning) {
-            setTimeout(() => {
-              this.getLearningIndexes()
-            }, 50)
-          }
         }).catch((error) => {
           console.log(error)
         })
@@ -375,6 +375,7 @@
           response.data.forEach((value) => {
             if (value.title === thisTitle) {
               this.learning = 'learned'
+              if(this.updateId){alert('学習お疲れ様でした！')}
             }
           })
         }).catch((error) => {
@@ -402,6 +403,8 @@
             }
           })
           this.learningStatusList = learningStatusList
+        }).then(()=>{
+          this.getLearningIndexes()
         }).catch((error) => {
           console.log(error)
         })
@@ -414,7 +417,6 @@
       getIsLearning(activateId) {
         let learningStatusList = this.learningStatusList
         let isLearned = false
-
         learningStatusList = _.sortBy(this.learningStatusList, (value) => {
           return value.unit
         })
@@ -501,9 +503,6 @@
           easing: this.easing
         }
       },
-      learningStatus() {
-        return this.learning
-      },
       learnedStatus() {
         return (array, key) => {
           return array.indexOf(parseInt(key)) === -1
@@ -524,7 +523,8 @@
       ...mapGetters({
         name: 'nameGetter',
         token: 'tokenGetter',
-        userId: 'userIdGetter'
+        userId: 'userIdGetter',
+        isLogin: 'loginGetter'
       }),
     }
   }
