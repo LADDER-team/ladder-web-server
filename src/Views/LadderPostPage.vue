@@ -34,9 +34,11 @@
                 <v-layout flex row justify-center
                           class="ladder-post-icons">
                     <v-icon size="40" @click="clickUnitAdd"
-                            class="ladder-post-add">add_circle_outline</v-icon>
+                            class="ladder-post-add">add_circle_outline
+                    </v-icon>
                     <v-icon size="40" @click="clickUnitRemove"
-                            class="ladder-post-remove">remove_circle</v-icon>
+                            class="ladder-post-remove">remove_circle
+                    </v-icon>
                 </v-layout>
                 <v-flex class="ladder-post-btn">
                     <v-btn @click="clickLadderPost"
@@ -124,7 +126,7 @@
         }else{
           axios({
             method: 'POST',
-            url: 'http://127.0.0.1:8000/api/ladder/',
+            url: 'https://api.ladder.noframeschools.com/api/ladder/',
             headers: {
               "Accept": "application/json",
               "Authorization": "JWT " + this.$store.state.token,

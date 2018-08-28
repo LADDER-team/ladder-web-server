@@ -84,7 +84,7 @@
       getUser() {
         axios({
           method: 'GET',
-          url: 'http://127.0.0.1:8000/api/users/' + this.temporaryUserId + '/',
+          url: 'https://api.ladder.noframeschools.com/api/users/' + this.temporaryUserId + '/',
         }).then((response) => {
           this.userDetail = response.data
         }).then(() => {
@@ -102,6 +102,7 @@
         this.addNameAction(this.userDetail.name);
         this.addEmailAction(this.decodedToken.email);
         this.addUserIdAction(this.temporaryUserId);
+        console.log("store status")
         console.log(this.$store.state)
       },
       clickDialogCancel() {

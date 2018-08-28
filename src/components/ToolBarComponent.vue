@@ -19,6 +19,16 @@
                    class="primary-btn">
                 投稿する
             </v-btn>
+            <v-btn slot="activator"
+                   dark round outline small
+                   @click="clickToLadderManagement"
+                   class="avatar-btn g-toolbar-btn">
+                <v-avatar :tile=false :size=40>
+                    <img class="g-toolbar-btn-icon"
+                         src="../assets/img/ladder_icon_white.png"
+                         alt="">
+                </v-avatar>
+            </v-btn>
             <SignDialog/>
         </v-toolbar-items>
     </v-toolbar>
@@ -26,6 +36,7 @@
 
 <script>
   import SignDialog from '../components/SignDialogComponent'
+  import {mapGetters} from 'vuex'
 
   export default {
     name: "toolbar-component",
@@ -34,14 +45,27 @@
         avatarPath: '',
       }
     },
-    methods:{
-      clickToLadderPost(){
-        if(this.$store.state.isLogin) {
+    methods: {
+      clickToLadderPost() {
+        if (this.isLogin) {
           this.$router.push('/post')
-        }else{
+        } else {
           alert("投稿ですか？まずはログインしてください！")
         }
+      },
+      clickToLadderManagement() {
+        if (this.isLogin) {
+          this.$router.push('/user/' + this.userId + '/ladders/')
+        } else {
+          alert("ラダーページのご利用はログイン後に可能となります！")
+        }
       }
+    },
+    computed: {
+      ...mapGetters({
+        isLogin: 'loginGetter',
+        userId: 'userIdGetter'
+      })
     },
     components: {
       SignDialog
