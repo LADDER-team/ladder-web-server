@@ -248,7 +248,7 @@
         } else if (this.isLearning) {
           alert('学習ファイトです！')
         } else {
-          alert('学習お疲れ様でし')
+          alert('学習お疲れ様でした！')
         }
       },
       postLearnInitialize(index) {
