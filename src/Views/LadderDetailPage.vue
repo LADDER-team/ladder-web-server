@@ -64,7 +64,6 @@
             </div>
             <div v-for="(units, key) in unitList"
                  class="unit-item">
-                {{learningUnits}}
                 <div class="unit-btn-wrap">
                     <v-btn @click="clickLearnEnd"
                            v-if="isLearning&&learnedStatus(learningUnits, key)"
