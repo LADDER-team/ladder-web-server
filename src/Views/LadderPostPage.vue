@@ -126,7 +126,7 @@
         }else{
           axios({
             method: 'POST',
-            url: 'https://api.ladder.noframeschools.com/api/ladder/',
+            url: 'http://127.0.0.1:8000/api/ladder/',
             headers: {
               "Accept": "application/json",
               "Authorization": "JWT " + this.$store.state.token,
