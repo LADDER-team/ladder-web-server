@@ -248,7 +248,7 @@
         } else if (this.isLearning) {
           alert('学習ファイトです！')
         } else {
-          alert('学習お疲れ様でし')
+          alert('学習お疲れ様でした！')
         }
       },
       postLearnInitialize(index) {
@@ -374,7 +374,6 @@
         }).then((response) => {
           response.data.forEach((value) => {
             if (value.title === thisTitle) {
-              console.log('true')
               this.learning = 'learned'
             }
           })
@@ -478,12 +477,6 @@
           this.getLearningStatus()
         }
       },
-      learningStatusList: {
-        handler() {
-          console.log('update list')
-          console.log(this.learningStatusList)
-        }
-      }
       // $route: {
       //   handler() {
       //     this.ladderDetailList = []

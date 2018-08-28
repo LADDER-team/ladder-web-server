@@ -79,27 +79,22 @@
         myLadderList: [],
       }
     },
-    created() {
-      setTimeout(() => {
-        this.getUserLadders()
-      }, 300)
+    mounted() {
+      this.userId = this.$store.state.userId ? this.$store.state.userId : 0
+      axios({
+        method: 'GET',
+        url: 'https://api.ladder.noframeschools.com/api/users/' + this.userId + '/'
+      }).then((response) => {
+        this.myLadderList = response.data.my_ladders
+        this.posted = response.data.my_ladders.length!==0
+      }).catch((error) => {
+        console.log(error)
+      })
     },
     methods: {
       unimplemented() {
         alert("機能搭載までお待ちください！")
       },
-      getUserLadders(){
-        console.log(this.userId)
-        axios({
-          method: 'GET',
-          url: 'https://api.ladder.noframeschools.com/api/users/' + this.userId + '/'
-        }).then((response) => {
-          this.myLadderList = response.data.my_ladders
-          this.posted = response.data.my_ladders.length!==0
-        }).catch((error) => {
-          console.log(error)
-        })
-      }
     },
     computed: {
       compUser() {
